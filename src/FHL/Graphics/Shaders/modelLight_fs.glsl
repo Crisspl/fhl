@@ -1,0 +1,112 @@
+"#version 330 core\n"
+
+"#define INFINITE_LIGHT 0\n"
+"#define POINT_LIGHT 1\n"
+"#define SPOT_LIGHT 2\n"
+
+"struct Light\n"
+"{\n"
+	 "vec3 direction;\n"
+	 "vec3 position;\n"
+	 "vec4 color;\n"
+	 "float linear;\n"
+	 "float quadratic;\n"
+	 "float cutOff;\n"
+	 "float outerCutOff;\n"
+	 "float illuminance;\n"
+	 "int type;\n"
+"};\n"
+
+"struct Material\n"
+"{\n"
+	 "sampler2D texture_diffuse;\n"
+	 "sampler2D texture_specular;\n"
+	 "float shininess;\n"
+"};\n"
+
+"in vec3 Normal;\n"
+"in vec3 FragPos;\n"
+"in vec2 TexCoords;\n"
+
+"out vec4 color;\n"
+
+"uniform Material material;\n"
+"uniform vec3 cameraPos;\n"
+"uniform Light light[50];\n"
+"uniform int lightsCount;\n"
+"uniform bool useColorOnly;\n"
+"uniform vec4 singleColor;\n"
+
+"vec4 d_color = useColorOnly ? singleColor : texture(material.texture_diffuse, TexCoords);\n"
+"vec4 s_color = useColorOnly ? singleColor : texture(material.texture_specular, TexCoords);\n"
+
+"vec4 calcLight(Light, vec3, vec3);\n"
+"vec4 calcInfiniteLight(Light, vec3, vec3);\n"
+"vec4 calcPointLight(Light, vec3, vec3);\n"
+"vec4 calcSpotLight(Light, vec3, vec3);\n"
+"vec4 mixLightWithSurface(vec3 _diffuse, vec3 _specualar);\n"
+
+"void main()\n"
+"{\n"
+	 "vec3 normal = normalize(Normal);\n"
+	 "vec3 viewDir = normalize(cameraPos - FragPos);\n"
+
+	 "for(int i = 0; i < lightsCount; i++)\n"
+		  "color += calcLight(light[i], normal, viewDir);\n"
+"}\n"
+
+"vec4 calcLight(Light _light, vec3 _normal, vec3 _viewDir)\n"
+"{\n"
+	 "vec4 ret = vec4(vec3(0.f), 1.f);\n"
+	 "if(_light.type == INFINITE_LIGHT)\n"
+		  "ret = calcInfiniteLight(_light, _normal, _viewDir);\n"
+	 "else if(_light.type == POINT_LIGHT)\n"
+		  "ret = calcPointLight(_light, _normal, _viewDir);\n"
+	 "else if(_light.type == SPOT_LIGHT)\n"
+		  "ret = calcSpotLight(_light, _normal, _viewDir);\n"
+	 "return vec4(ret.xyz * _light.illuminance, 1.f);\n"
+"}\n"
+
+"vec4 calcInfiniteLight(Light _light, vec3 _normal, vec3 _viewDir)\n"
+"{\n"
+	 "vec3 lightDir = normalize(-_light.direction);\n"
+	 "float diff = max(dot(_normal, lightDir), 0.f);\n"
+	 "vec3 reflectDir = normalize(reflect(-lightDir, _normal));\n"
+	 "float spec = pow(max(dot(_viewDir, reflectDir), 0.f), material.shininess);\n"
+
+	 "vec3 diffuse = _light.color.xyz * diff;\n"
+	 "vec3 specular = _light.color.xyz * spec;\n"
+
+	 "return mixLightWithSurface(diffuse, specular);\n"
+"}\n"
+
+"vec4 calcPointLight(Light _light, vec3 _normal, vec3 _viewDir)\n"
+"{\n"
+	 "vec3 lightDir = normalize(_light.position - FragPos);\n"
+	 "float diff = max(dot(_normal, lightDir), 0.f);\n"
+	 "vec3 reflectDir = normalize(reflect(-lightDir, _normal));\n"
+	 "float spec = pow(max(dot(_viewDir, reflectDir), 0.f), material.shininess);\n"
+
+	 "vec3 diffuse = _light.color.xyz * diff;\n"
+	 "vec3 specular = _light.color.xyz * spec;\n"
+	 "float distance = length(_light.position - FragPos);\n"
+	 "float attenuation = 1.f / (1.f + _light.linear * distance + _light.quadratic * pow(distance, 2));\n"
+
+	 "return mixLightWithSurface(diffuse * attenuation, specular * attenuation);\n"
+"}\n"
+
+"vec4 calcSpotLight(Light _light, vec3 _normal, vec3 _viewDir)\n"
+"{\n"
+	 "vec3 lightDir = normalize(_light.position - FragPos);\n"
+	 "vec4 pointLightResult = calcPointLight(_light, _normal, _viewDir);\n"
+
+	 "float angleCos = dot(lightDir, normalize(-_light.direction));\n"
+	 "float intensity = clamp((angleCos - _light.outerCutOff) / (_light.cutOff - _light.outerCutOff), 0.f, 1.f);\n"
+
+	 "return vec4(pointLightResult.xyz * intensity, pointLightResult.w);\n"
+"}\n"
+
+"vec4 mixLightWithSurface(vec3 _diffuse, vec3 _specular)\n"
+"{\n"
+	"return vec4(_diffuse * d_color.xyz + _specular * s_color.xyz, max(d_color.w, s_color.w));\n"
+"}"
