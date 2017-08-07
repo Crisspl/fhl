@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(FHL)
 
 set_property(GLOBAL PROPERTY CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake-modules/")
 set(FHL_PYTHON27_EXEC_PATH CACHE FILEPATH "Path to Python 2.7 executable")
