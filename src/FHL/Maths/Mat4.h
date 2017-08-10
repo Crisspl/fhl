@@ -22,7 +22,6 @@ namespace fhl
 		Mat4<_T> & operator-=(const Mat4<_T> & _other);
 
 		Mat4<_T> operator*(_T _n) const;
-		friend Mat4<_T> operator*(_T _n, const Mat4<_T> & _m);
 		Mat4<_T> operator*(const Mat4<_T> & _other) const;
 
 		Mat4<_T> & operator*=(_T _n);

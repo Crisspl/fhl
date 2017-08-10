@@ -31,11 +31,10 @@ namespace fhl { namespace internal
 
 		template<typename ...Args>
 		constexpr VecBase(_T _first, Args... _args) : m_data{ _first, _T(_args)... }
-		{ 
+		{
 			static_assert(sizeof...(Args) == _N - 1, "Arguments count must be equal to `Dimensions`");
 		}
-		template<>
-		constexpr explicit VecBase(_T _value) : VecBase(std::make_index_sequence<_N>{}, _T(_value)) {}
+		constexpr VecBase(_T _value) : VecBase(std::make_index_sequence<_N>{}, _T(_value)) {}
 	private:
 		template<std::size_t... Is> /* helper ctor for one value constexpr init */
 		constexpr VecBase(std::index_sequence<Is...>, _T _value) : m_data{ impl::repeatValue(_value, Is)... } {}
@@ -180,48 +179,48 @@ namespace fhl { namespace internal
 /* put inside class definition in public scope */
 /* implements also normalized() method */
 #define _FHL_VECTOR_OPERATORS_IMPLEMENTATION(ValueType, VecType) \
-VecType<ValueType> operator+(const VecType<ValueType> & _other) const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::operator+(_other); } \
+VecType<ValueType> operator+(const VecType<ValueType> & _other) const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator+(_other); } \
 \
-VecType<ValueType> operator-(const VecType<ValueType> & _other) const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::operator-(_other); } \
+VecType<ValueType> operator-(const VecType<ValueType> & _other) const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator-(_other); } \
 \
-VecType<ValueType> operator*(const VecType<ValueType> & _other) const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*(_other); } \
-VecType<ValueType> operator*(_T _scalar) const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*(_scalar); } \
+VecType<ValueType> operator*(const VecType<ValueType> & _other) const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*(_other); } \
+VecType<ValueType> operator*(_T _scalar) const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*(_scalar); } \
 \
-VecType<ValueType> operator/(const VecType<ValueType> & _other) const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/(_other); } \
-VecType<ValueType> operator/(_T _scalar) const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/(_scalar); } \
+VecType<ValueType> operator/(const VecType<ValueType> & _other) const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/(_other); } \
+VecType<ValueType> operator/(_T _scalar) const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/(_scalar); } \
 \
-VecType<ValueType> operator-() const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::operator-(); } \
+VecType<ValueType> operator-() const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator-(); } \
 \
 VecType<ValueType> & operator+=(const VecType<ValueType> & _other) \
 { \
-	VecBase<VecType<ValueType>::Dimensions, ValueType>::operator+=(_other); \
+	fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator+=(_other); \
 	return *this; \
 } \
 VecType<ValueType> & operator-=(const VecType<ValueType> & _other) \
 { \
-	VecBase<VecType<ValueType>::Dimensions, ValueType>::operator-=(_other); \
+	fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator-=(_other); \
 	return *this; \
 } \
 VecType<ValueType> & operator*=(const VecType<ValueType> & _other) \
 { \
-	VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*=(_other); \
+	fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*=(_other); \
 	return *this; \
 } \
 VecType<ValueType> & operator*=(_T _scalar) \
 { \
-	VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*=(_scalar); \
+	fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator*=(_scalar); \
 	return *this; \
 } \
 VecType<ValueType> & operator/=(const VecType<ValueType> & _other) \
 { \
-	VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/=(_other); \
+	fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/=(_other); \
 	return *this; \
 } \
 VecType<ValueType> & operator/=(_T _scalar) \
 { \
-	VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/=(_scalar); \
+	fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::operator/=(_scalar); \
 	return *this; \
 } \
-VecType<ValueType> normalized() const { return VecBase<VecType<ValueType>::Dimensions, ValueType>::normalized(); }
+VecType<ValueType> normalized() const { return fhl::internal::VecBase<VecType<ValueType>::Dimensions, ValueType>::normalized(); }
 
 #endif

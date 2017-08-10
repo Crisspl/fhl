@@ -10,7 +10,6 @@ struct aiMesh;
 struct aiMaterial;
 struct aiScene;
 struct aiNode;
-enum aiTextureType;
 
 namespace fhl
 {
@@ -33,7 +32,7 @@ namespace fhl
 		void processNode(aiNode * _nodePtr, const aiScene * _scenePtr);
 		internal::Mesh processMesh(aiMesh * _meshPtr, const aiScene * _scenePtr);
 		void calcSize();
-		GLuint loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, aiTextureType _texType);
+		GLuint loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType);
 
 	public:
 		const std::vector<internal::Mesh> & getMeshes() const { return m_meshes; }

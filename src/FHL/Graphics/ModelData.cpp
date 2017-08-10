@@ -136,18 +136,18 @@ namespace fhl
 		};
 	}
 
-	GLuint ModelData::loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, aiTextureType _texType)
+	GLuint ModelData::loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType)
 	{
-		if (_materialPtr->GetTextureCount(_texType) > 1)
+		if (_materialPtr->GetTextureCount(static_cast<aiTextureType>(_texType)) > 1)
 			Debug::Log() << "FHL only supports one texture per type (diffuse, specular) per mesh. Only the first one was loaded.\n";
-		else if (_texType == aiTextureType_DIFFUSE && _materialPtr->GetTextureCount(_texType) == 0)
+		else if (_texType == aiTextureType_DIFFUSE && _materialPtr->GetTextureCount(static_cast<aiTextureType>(_texType)) == 0)
 			throw std::runtime_error{"No texture of diffuse type associated to model"};
 
 		aiString fileName;
-		_materialPtr->GetTexture(_texType, 0u, &fileName);
+		_materialPtr->GetTexture(static_cast<aiTextureType>(_texType), 0u, &fileName);
 		const std::string filePath = m_directory + '/' + fileName.C_Str();
 		const std::string modelName = "_FHL_M" + std::to_string(s_createdCount);
-		const std::string texName = modelName + '_' + std::to_string(m_meshCount++) + '_' + impl::texTypeToString(_texType);
+		const std::string texName = modelName + '_' + std::to_string(m_meshCount++) + '_' + impl::texTypeToString(static_cast<aiTextureType>(_texType));
 		
 		GLuint id = ResMgr::loadTexture(texName, filePath).setRepeated(true).getId();
 		if (!id) ResMgr::removeTexture(texName);

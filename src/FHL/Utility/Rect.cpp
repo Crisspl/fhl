@@ -5,6 +5,8 @@
 
 namespace fhl
 {
+	constexpr std::array<Vec2f, 2> Rect::s_axes;
+
 	bool Rect::contains(const Vec2f & _p) const
 	{
 		return (_p.x() < m_verts[BR].x() && _p.x() > getPosition().x()) && (_p.y() < m_verts[UR].y() && _p.y() > getPosition().y());

@@ -10,8 +10,8 @@
 #include <FHL/Maths/vectors.h>
 
 
-namespace fhl 
-{ 
+namespace fhl
+{
 	 class Model;
 	 class ModelData;
 
@@ -21,8 +21,8 @@ namespace internal
 	class FHL_API Mesh
 	{
 		using tuple3pair_t = std::tuple<std::pair<float, float>, std::pair<float, float>, std::pair<float, float>>;
-		friend class Model;
-		friend class ModelData;
+		friend class fhl::Model;
+		friend class fhl::ModelData;
 
 		struct Vertex
 		{

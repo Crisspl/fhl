@@ -73,10 +73,9 @@ namespace fhl
 		{
 			static_assert(sizeof...(Rest) < _N, "fhl::BoolVec: Cannot initialize more then `Dimensions` bits");
 
-			set(_N - sizeof...(Rest) - 1, _first);
+			set(_N - sizeof...(Rest)-1, _first);
 			initBits(bool(_rest)...);
 		}
-		template<>
 		void initBits(bool _val)
 		{
 			set(_N - 1, _val);
