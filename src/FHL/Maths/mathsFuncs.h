@@ -8,8 +8,10 @@
 
 namespace fhl
 {
-	FHL_API constexpr double toRadians(double _deg) { return _deg * Constants<double>::Pi() / 180.; }
-	FHL_API constexpr double toDegrees(double _rad) { return _rad * 180. / Constants<double>::Pi(); }
+	template<typename T = double>
+	constexpr T toRadians(T _deg) { return _deg * Constants<T>::Pi() / 180.; }
+	template<typename T = double>
+	constexpr T toDegrees(T _rad) { return _rad * 180. / Constants<T>::Pi(); }
 
 	template<typename T>
 	constexpr T abs(T n) { return n < T{} ? -n : n; }
