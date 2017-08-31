@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <map>
 #include <string>
 #include <type_traits>
 #include <iterator>
@@ -21,17 +22,17 @@ struct UniformSetterForVec##_size; \
 template<> \
 struct UniformSetterForVec##_size<float> \
 { \
-	void operator()(GLint _loc, const Vec##_size<float> & _v) { glUniform##_size##fv(_loc, 1u, _v.data()); } \
+	static void set(GLint _loc, const Vec##_size<float> & _v) { glUniform##_size##fv(_loc, 1u, _v.data()); } \
 }; \
 template<> \
 struct UniformSetterForVec##_size<int> \
 { \
-	void operator()(GLint _loc, const Vec##_size<int> & _v) { glUniform##_size##iv(_loc, 1u, _v.data()); } \
+	static void set(GLint _loc, const Vec##_size<int> & _v) { glUniform##_size##iv(_loc, 1u, _v.data()); } \
 }; \
 template<> \
 struct UniformSetterForVec##_size<unsigned> \
 { \
-	void operator()(GLint _loc, const Vec##_size<unsigned> & _v) { glUniform##_size##uiv(_loc, 1u, _v.data()); } \
+	static void set(GLint _loc, const Vec##_size<unsigned> & _v) { glUniform##_size##uiv(_loc, 1u, _v.data()); } \
 };
 
 	namespace impl
@@ -73,17 +74,29 @@ struct UniformSetterForVec##_size<unsigned> \
 
 		GLuint getId() const { return m_id; }
 
+		Shader & setBoolean(const GLint _loc, const GLboolean _value);
 		Shader & setBoolean(const GLchar * _name, const GLboolean _value);
+		Shader & setFloat(const GLint _loc, const GLfloat _value);
 		Shader & setFloat(const GLchar * _name, const GLfloat _value);
+		Shader & setInt(const GLint _loc, const GLint _value);
 		Shader & setInt(const GLchar * _name, const GLint _value);
+		Shader & setUnsignedInt(const GLint _loc, const GLuint _value);
 		Shader & setUnsignedInt(const GLchar * _name, const GLuint _value);
+		Shader & setColor(const GLint _loc, const Color & _value);
 		Shader & setColor(const GLchar * _name, const Color & _value);
+		Shader & setMat4f(const GLint _loc, const Mat4f & _matrix);
 		Shader & setMat4f(const GLchar * _name, const Mat4f & _matrix);
 
 		template<typename _T>
+		Shader & setVec2(const GLint _loc, const Vec2<_T> & _v);
+		template<typename _T>
 		Shader & setVec2(const GLchar * _name, const Vec2<_T> & _v);
 		template<typename _T>
+		Shader & setVec3(const GLint _loc, const Vec3<_T> & _v);
+		template<typename _T>
 		Shader & setVec3(const GLchar * _name, const Vec3<_T> & _v);
+		template<typename _T>
+		Shader & setVec4(const GLint _loc, const Vec4<_T> & _v);
 		template<typename _T>
 		Shader & setVec4(const GLchar * _name, const Vec4<_T> & _v);
 
@@ -98,30 +111,49 @@ struct UniformSetterForVec##_size<unsigned> \
 		bool operator!=(const Shader &);
 
 	private:
-		void compileShaderFromString(const GLchar * _src, GLenum _type, GLuint &);
-		void compileShaderFromFile(const GLchar * _path, GLenum _type, GLuint &);
+		void compileShaderFromString(const GLchar * _src, GLenum _type, GLuint &) const;
+		void compileShaderFromFile(const GLchar * _path, GLenum _type, GLuint &) const;
+
+		GLint getUniformLoc(const GLchar * _name);
 
 	private:
 		GLuint m_id;
+		std::map<std::string, GLint> m_uniformLocs;
 	};
 
 	template<typename _T>
-	Shader & Shader::setVec2(const GLchar * _name, const Vec2<_T> & _v)
+	inline Shader & Shader::setVec2(const GLint _loc, const Vec2<_T>& _v)
 	{
-		impl::UniformSetterForVec2<_T>{}(glGetUniformLocation(getId(), _name), _v);
+		impl::UniformSetterForVec2<_T>::set(_loc, _v);
+		return *this;
+	}
+
+	template<typename _T>
+	inline Shader & Shader::setVec2(const GLchar * _name, const Vec2<_T> & _v)
+	{
+		return setVec2<_T>(getUniformLoc(_name), _v);
+	}
+	template<typename _T>
+	inline Shader & Shader::setVec3(const GLint _loc, const Vec3<_T>& _v)
+	{
+		impl::UniformSetterForVec3<_T>::set(_loc, _v);
 		return *this;
 	}
 	template<typename _T>
-	Shader & Shader::setVec3(const GLchar * _name, const Vec3<_T> & _v)
+	inline Shader & Shader::setVec3(const GLchar * _name, const Vec3<_T> & _v)
 	{
-		impl::UniformSetterForVec3<_T>{}(glGetUniformLocation(getId(), _name), _v);
+		return setVec3<_T>(getUniformLoc(_name), _v);
+	}
+	template<typename _T>
+	inline Shader & Shader::setVec4(const GLint _loc, const Vec4<_T>& _v)
+	{
+		impl::UniformSetterForVec4<_T>::set(_loc, _v);
 		return *this;
 	}
 	template<typename _T>
-	Shader & Shader::setVec4(const GLchar * _name, const Vec4<_T> & _v)
+	inline Shader & Shader::setVec4(const GLchar * _name, const Vec4<_T> & _v)
 	{
-		impl::UniformSetterForVec4<_T>{}(glGetUniformLocation(getId(), _name), _v);
-		return *this;
+		return setVec4<_T>(getUniformLoc(_name), _v);
 	}
 
 	template<typename _It>

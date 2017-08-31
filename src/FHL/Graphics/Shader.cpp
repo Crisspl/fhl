@@ -4,13 +4,15 @@
 #include <FHL/Maths/mathsFuncs.h>
 
 #include <algorithm>
+#include <utility>
 #include <cstdio>
 
 namespace fhl
 {
 
-	Shader::Shader(Shader && _other)
-		: m_id(_other.m_id)
+	Shader::Shader(Shader && _other) :
+		m_id(_other.m_id),
+		m_uniformLocs(std::move(_other.m_uniformLocs))
 	{
 		_other.m_id = 0;
 	}
@@ -18,6 +20,7 @@ namespace fhl
 	Shader & Shader::operator=(Shader && _other)
 	{
 		std::swap(m_id, _other.m_id);
+		std::swap(m_uniformLocs, _other.m_uniformLocs);
 
 		return *this;
 	}
@@ -59,45 +62,75 @@ namespace fhl
 		glDeleteProgram(m_id);
 	}
 
+	Shader & Shader::setBoolean(const GLint _loc, const GLboolean _value)
+	{
+		return setInt(_loc, _value);
+	}
+
 	Shader & Shader::setBoolean(const GLchar * _name, const GLboolean _value)
 	{
 		return setInt(_name, _value);
 	}
 
-	Shader& Shader::setFloat(const GLchar* _name, const GLfloat _value)
+	Shader & Shader::setFloat(const GLint _loc, const GLfloat _value)
 	{
 		use();
-		glUniform1f(glGetUniformLocation(getId(), _name), _value);
+		glUniform1f(_loc, _value);
 		return *this;
 	}
 
-	Shader& Shader::setInt(const GLchar* _name, const GLint _value)
+	Shader& Shader::setFloat(const GLchar* _name, const GLfloat _value)
+	{
+		return setFloat(getUniformLoc(_name), _value);
+	}
+
+	Shader & Shader::setInt(const GLint _loc, const GLint _value)
 	{
 		use();
-		glUniform1i(glGetUniformLocation(getId(), _name), _value);
+		glUniform1i(_loc, _value);
+		return *this;
+	}
+
+	Shader & Shader::setInt(const GLchar* _name, const GLint _value)
+	{
+		return setInt(getUniformLoc(_name), _value);
+	}
+
+	Shader & Shader::setUnsignedInt(const GLint _loc, const GLuint _value)
+	{
+		use();
+		glUniform1ui(_loc, _value);
 		return *this;
 	}
 
 	Shader & Shader::setUnsignedInt(const GLchar * _name, const GLuint _value)
 	{
+		return setUnsignedInt(getUniformLoc(_name), _value);
+	}
+
+	Shader & Shader::setColor(const GLint _loc, const Color & _value)
+	{
+		return setVec4(_loc, _value.asVec4());
+	}
+
+	Shader & Shader::setColor(const GLchar* _name, const Color & _value)
+	{
+		return setVec4(getUniformLoc(_name), _value.asVec4());
+	}
+
+	Shader & Shader::setMat4f(const GLint _loc, const Mat4f & _matrix)
+	{
 		use();
-		glUniform1ui(glGetUniformLocation(getId(), _name), _value);
+		glUniformMatrix4fv(_loc, 1, GL_FALSE, _matrix.data());
 		return *this;
 	}
 
-	Shader& Shader::setColor(const GLchar* _name, const Color & _value)
+	Shader & Shader::setMat4f(const GLchar* _name, const Mat4f & _matrix)
 	{
-		return setVec4(_name, _value.asVec4());
+		return setMat4f(getUniformLoc(_name), _matrix);
 	}
 
-	Shader& Shader::setMat4f(const GLchar* _name, const Mat4f & _matrix)
-	{
-		use();
-		glUniformMatrix4fv(glGetUniformLocation(getId(), _name), 1, GL_FALSE, _matrix.data());
-		return *this;
-	}
-
-	Shader& Shader::setLight(const GLchar* _name, const Light & _light)
+	Shader & Shader::setLight(const GLchar* _name, const Light & _light)
 	{
 		const std::string name(_name);
 		switch (_light.type)
@@ -131,7 +164,7 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 		return *this;
 	}
 
-	Shader& Shader::setLight(const GLchar * _name, const Light & _light, size_t _num)
+	Shader & Shader::setLight(const GLchar * _name, const Light & _light, size_t _num)
 	{
 		std::string name(_name);
 		name += '[' + std::to_string(_num) + ']';
@@ -152,7 +185,7 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 		return m_id != _other.getId();
 	}
 
-	void Shader::compileShaderFromString(const GLchar * _src, GLenum _type, GLuint & _idGetter)
+	void Shader::compileShaderFromString(const GLchar * _src, GLenum _type, GLuint & _idGetter) const
 	{
 		GLuint shader = _idGetter = glCreateShader(_type);
 		glShaderSource(shader, 1, &_src, nullptr);
@@ -169,7 +202,7 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 		glAttachShader(m_id, shader);
 	}
 
-	void Shader::compileShaderFromFile(const GLchar * _path, GLenum _type, GLuint & _idGetter)
+	void Shader::compileShaderFromFile(const GLchar * _path, GLenum _type, GLuint & _idGetter) const
 	{
 		std::FILE * f = std::fopen(_path, "rb");
 		std::fseek(f, 0, SEEK_END);
@@ -183,4 +216,17 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 		delete[] source;
 	}
 
-} // ns
+	GLint Shader::getUniformLoc(const GLchar * _name)
+	{
+		const auto it = m_uniformLocs.find(_name);
+		if (it != m_uniformLocs.cend())
+			return it->second;
+		else
+		{
+			const GLint loc = glGetUniformLocation(getId(), _name);
+			if (loc >= 0) m_uniformLocs.insert({ _name, loc });
+			return loc;
+		}
+	}
+
+}
