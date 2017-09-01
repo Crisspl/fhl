@@ -4,6 +4,8 @@
 #include <FHL/Maths/mathsFuncs.h>
 
 #include <algorithm>
+#include <string>
+#include <functional>
 #include <utility>
 #include <cstdio>
 
@@ -218,13 +220,17 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 
 	GLint Shader::getUniformLoc(const GLchar * _name)
 	{
-		const auto it = m_uniformLocs.find(_name);
+		const std::size_t hash = std::hash<std::string>{}(_name); /* @todo Use c++17 std::hash<std::string_view> instead */
+		const auto it = m_uniformLocs.find(hash);
+
 		if (it != m_uniformLocs.cend())
 			return it->second;
 		else
 		{
 			const GLint loc = glGetUniformLocation(getId(), _name);
-			if (loc >= 0) m_uniformLocs.insert({ _name, loc });
+			if (loc >= 0) 
+				if (!m_uniformLocs.insert({ hash, loc }).second)
+					Debug::Log() << "fhl::Shader: " << _name << " name hash collides with other one!";
 			return loc;
 		}
 	}

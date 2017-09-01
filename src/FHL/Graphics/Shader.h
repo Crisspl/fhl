@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <vector>
 #include <map>
-#include <string>
 #include <type_traits>
 #include <iterator>
 
@@ -118,7 +117,7 @@ struct UniformSetterForVec##_size<unsigned> \
 
 	private:
 		GLuint m_id;
-		std::map<std::string, GLint> m_uniformLocs;
+		std::map<std::size_t, GLint> m_uniformLocs;
 	};
 
 	template<typename _T>
