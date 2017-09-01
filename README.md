@@ -23,10 +23,9 @@ There's still a lot to do and the lib is still rather inefficient.
 * [SOIL](http://lonesock.net/soil.html)
 * [Assimp](https://github.com/assimp/assimp)
 ### Build
-* `git clone --recursive https://github.com/Crisspl/FHL.git`
+* `git clone https://github.com/Crisspl/FHL.git`
 * Generate project with CMake
-* Note that you will need Python 2.7 and Internet connection for generating [gl3w](https://github.com/skaslev/gl3w) files (happens automatically on build)
-* After first build `gen_gl3w_files` target can be safely removed from build pipeline
+* Note that you will need Python =<2.7 and Internet connection for generating [gl3w](https://github.com/skaslev/gl3w) files (actually a bit edited gl3w) (happens automatically on build)
 ### Note
-This is the second repository for FHL, which I created because of enormous size of previous repo (it was managed improperly and I wasn't able to filter the big files out from repo history).  
+This is the second repository for FHL, which I created because of enormous size of previous repo (it was managed improperly and I wasn't able to filter the big files out from the repo history).  
 Past development of the lib can be seen on [the previous repository](https://github.com/Crisspl/FHL_old).

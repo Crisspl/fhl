@@ -6,17 +6,18 @@ set_property(GLOBAL PROPERTY CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake-modules/")
-set(FHL_PYTHON27_EXEC_PATH CACHE FILEPATH "Path to Python 2.7 executable")
 
-add_custom_target(gen_gl3w_files
-	COMMAND ${CMAKE_COMMAND} -E make_directory tmp
-	COMMAND ${CMAKE_COMMAND} -E chdir tmp "${FHL_PYTHON27_EXEC_PATH}" "${CMAKE_SOURCE_DIR}/gl3w/gl3w_gen.py"
-	COMMAND ${CMAKE_COMMAND} -E copy tmp/src/gl3w.c "${CMAKE_SOURCE_DIR}/src/FHL/GL/"
-	COMMAND ${CMAKE_COMMAND} -E copy_directory tmp/include/GL/ "${CMAKE_SOURCE_DIR}/src/FHL/GL/GL"
-	COMMAND ${CMAKE_COMMAND} -E remove_directory tmp
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+find_package(PythonInterp REQUIRED)
+
+set(FHL_GL_DIR "${CMAKE_SOURCE_DIR}/src/FHL/GL")
+
+add_custom_command(OUTPUT "${FHL_GL_DIR}/glcorearb.h" "${FHL_GL_DIR}/gl3w.h" "${FHL_GL_DIR}/gl3w.c"
+	COMMAND "${PYTHON_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/gl3w/gl3w_gen.py"
+	DEPENDS "{CMAKE_SOURCE_DIR}/gl3w/gl3w_gen.py"
+	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/FHL/GL"
 	COMMENT "Generating gl3w files..."
 )
+unset(FHL_GL_DIR)
 
 set(FHL_SRCS_GRAPHICS
 	src/FHL/Graphics/Buffer.cpp
@@ -113,14 +114,17 @@ set(FHL_SRCS_GL
 	src/FHL/GL/gl3w.c
 )
 set(FHL_HEADERS_GL
-	src/FHL/GL/GL/gl3w.h
-	src/FHL/GL/GL/glcorearb.h
+	src/FHL/GL/gl3w.h
+	src/FHL/GL/glcorearb.h
 	src/FHL/GL/OpenGL.h
+)
+set(FHL_HEADERS_COMMON
+	src/FHL/common.h
 )
 
 add_library(fhl SHARED 
 	${FHL_SRCS_GRAPHICS} ${FHL_SRCS_MATHS} ${FHL_SRCS_UTILITY} ${FHL_SRCS_GL}
-	${FHL_HEADERS_GRAPHICS} ${FHL_HEADERS_MATHS} ${FHL_HEADERS_UTILITY} ${FHL_HEADERS_GL}
+	${FHL_HEADERS_GRAPHICS} ${FHL_HEADERS_MATHS} ${FHL_HEADERS_UTILITY} ${FHL_HEADERS_GL} ${FHL_HEADERS_COMMON}
 )
 
 source_group("Header Files\\Graphics" FILES ${FHL_HEADERS_GRAPHICS})
@@ -131,12 +135,13 @@ source_group("Header Files\\Utility" FILES ${FHL_HEADERS_UTILITY})
 source_group("Source Files\\Utility" FILES ${FHL_SRCS_UTILITY})
 source_group("Header Files\\GL" FILES ${FHL_HEADERS_GL})
 source_group("Source Files\\GL" FILES ${FHL_SRCS_GL})
+source_group("Header Files" FILES ${FHL_HEADERS_COMMON})
 	
 find_package(assimp REQUIRED)
 find_package(SOIL REQUIRED)
 find_package(OpenGL REQUIRED)
 
-target_include_directories(fhl PUBLIC ${ASSIMP_INCLUDE_DIR} ${SOIL_INCLUDE_PATH} src/ src/FHL/GL/)
+target_include_directories(fhl PUBLIC ${ASSIMP_INCLUDE_DIR} ${SOIL_INCLUDE_PATH} src/)
 target_link_libraries(fhl ${ASSIMP_LIBRARY} ${SOIL_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 set_target_properties(fhl PROPERTIES DEBUG_POSTFIX -d)
@@ -147,5 +152,6 @@ if(MSVC)
 endif()
 
 add_definitions(-DFHL_SHARED -DNOMINMAX)
-
-add_dependencies(fhl gen_gl3w_files)
+if(WIN32)
+	add_definitions(-DFHL_PLATFORM_WINDOWS)
+endif()

@@ -15,8 +15,3 @@ DebugLog.txt
 Debug/
 Release/
 build/
-
-#files which contents are meant to be generated on build:
-src/FHL/GL/GL/gl3w.h
-src/FHL/GL/GL/glcorearb.h
-src/FHL/GL/gl3w.c

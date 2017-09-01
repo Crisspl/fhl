@@ -3,10 +3,14 @@
 
 #pragma warning (disable:4251)
 
-#ifdef FHL_SHARED
-	#define FHL_API __declspec(dllexport)
+#ifdef FHL_PLATFORM_WINDOWS
+	#ifdef FHL_SHARED
+		#define FHL_API __declspec(dllexport)
+	#else
+		#define FHL_API __declspec(dllimport)
+	#endif
 #else
-	#define FHL_API __declspec(dllimport)
+	#define FHL_SHARED
 #endif
 
 #endif
