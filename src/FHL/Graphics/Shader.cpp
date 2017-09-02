@@ -1,6 +1,5 @@
 #include <FHL/Graphics/Shader.h>
 
-#include <FHL/Utility/Debug.h>
 #include <FHL/Maths/mathsFuncs.h>
 
 #include <algorithm>
@@ -228,9 +227,7 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 		else
 		{
 			const GLint loc = glGetUniformLocation(getId(), _name);
-			if (loc >= 0) 
-				if (!m_uniformLocs.insert({ hash, loc }).second)
-					Debug::Log() << "fhl::Shader: " << _name << " name hash collides with other one!";
+			if (loc >= 0) m_uniformLocs.insert({ hash, loc });
 			return loc;
 		}
 	}
