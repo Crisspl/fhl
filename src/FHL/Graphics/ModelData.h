@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <tuple>
 
 #include <FHL/Graphics/Mesh.h>
 
@@ -31,12 +32,13 @@ namespace fhl
 		void load(const std::string & _path);
 		void processNode(aiNode * _nodePtr, const aiScene * _scenePtr);
 		internal::Mesh processMesh(aiMesh * _meshPtr, const aiScene * _scenePtr);
-		void calcSize();
+		std::tuple<Vec3f, Vec3f> calcExtents() const;
 		GLuint loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType);
 
 	public:
 		const std::vector<internal::Mesh> & getMeshes() const { return m_meshes; }
-		Vec3f getSize() const { return m_size; }
+		const Vec3f & getSize() const { return m_size; }
+		const Vec3f & getLeftBottomRear() const { return m_leftBottomRearCorner; }
 
 	private:
 		std::vector<internal::Mesh> m_meshes;
@@ -44,6 +46,7 @@ namespace fhl
 		std::string m_directory;
 		std::size_t m_meshCount;
 		Vec3f m_size;
+		Vec3f m_leftBottomRearCorner; // a point {X_min, Y_min, Z_min}
 
 		static std::size_t s_createdCount;
 	};

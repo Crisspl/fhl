@@ -8,6 +8,7 @@
 #include <FHL/Graphics/UsingShader.h>
 #include <FHL/Graphics/ModelData.h>
 #include <FHL/Graphics/Color.h>
+#include <FHL/Utility/Cube.h>
 
 namespace fhl
 {
@@ -43,6 +44,8 @@ namespace fhl
 		const ModelData * getModelData() const { return m_modelData; }
 		bool getUseColorOnly() const { return m_useColorOnly; }
 		const Color & getColor() const { return m_color; }
+
+		fhl::Cube getAABB() const;
 
 	private:
 		void setUp();

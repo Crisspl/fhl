@@ -29,7 +29,7 @@ namespace fhl
 		m_meshCount{0u}
 	{
 		load(_path);
-		calcSize();
+		std::tie(m_size, m_leftBottomRearCorner) = calcExtents();
 		++s_createdCount;
 	}
 
@@ -106,7 +106,7 @@ namespace fhl
 		return internal::Mesh(vertices, indices, textures);
 	}
 
-	void ModelData::calcSize()
+	std::tuple<Vec3f, Vec3f> ModelData::calcExtents() const
 	{
 		std::vector<float> xVec, yVec, zVec;
 
@@ -129,11 +129,10 @@ namespace fhl
 		auto y = std::minmax_element(yVec.begin(), yVec.end());
 		auto z = std::minmax_element(zVec.begin(), zVec.end());
 
-		m_size = {
-			*x.second - *x.first,
-			*y.second - *y.first,
-			*z.second - *z.first
-		};
+		return std::make_tuple<Vec3f, Vec3f>(
+			{ *x.second - *x.first, *y.second - *y.first, *z.second - *z.first },
+			{ *x.first, *y.first, *z.first }
+		);
 	}
 
 	GLuint ModelData::loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType)

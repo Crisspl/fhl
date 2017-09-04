@@ -59,6 +59,11 @@ namespace fhl
 		setUp();
 	}
 
+	fhl::Cube Model::getAABB() const
+	{
+		return fhl::Cube(getPosition() - getOrigin() + m_modelData->getLeftBottomRear(), getSize());
+	}
+
 	void Model::setUp()
 	{
 #define offsetOfVertexMember(m) (GLvoid*)offsetof(internal::Mesh::Vertex, m)
