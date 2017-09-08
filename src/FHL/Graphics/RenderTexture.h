@@ -78,7 +78,7 @@ struct Name \
 		RenderTexture & operator=(RenderTexture &&) = default;
 
 		void clearColor(const Color & _color) const;
-		void renderToTex(Renderable & _renderable, const RenderConf & _conf = RenderConf::Default) const;
+		void renderToTex(Renderable & _renderable, const RenderConf & _conf = RenderConf::default()) const;
 		Texture & getTexture() { return m_tex; }
 
 	private:

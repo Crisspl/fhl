@@ -23,11 +23,11 @@ namespace fhl
 		  bool operator==(const RenderConf & _other) const;
 		  bool operator!=(const RenderConf & _other) const;
 
+		  static const RenderConf & default();
+
 		  RenderMatrices matrices;
 		  const Texture * texture;
 		  std::list<Light> lights;
-
-		  static RenderConf Default;
 	};
 
 } // ns

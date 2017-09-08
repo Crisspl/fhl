@@ -12,8 +12,8 @@ namespace fhl
 		Renderer() = delete;
 
 	public:
-		static void render(const Renderable & _drawable, const RenderConf & _conf = RenderConf::Default);
-		static void clearColor(Color _color = Color::Black);
+		static void render(const Renderable & _drawable, const RenderConf & _conf = RenderConf::default());
+		static void clearColor(Color _color = Color::Black());
 	};
 
 } // ns

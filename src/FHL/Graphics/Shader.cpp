@@ -219,7 +219,7 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 
 	GLint Shader::getUniformLoc(const GLchar * _name)
 	{
-		const std::size_t hash = std::hash<std::string>{}(_name); /* @todo Use c++17 std::hash<std::string_view> instead */
+		const std::size_t hash = std::hash<std::string>{}(_name); /** @todo Use c++17 std::hash<std::string_view> instead */
 		const auto it = m_uniformLocs.find(hash);
 
 		if (it != m_uniformLocs.cend())

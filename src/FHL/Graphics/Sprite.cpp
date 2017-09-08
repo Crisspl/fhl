@@ -13,7 +13,7 @@ namespace fhl
 		  TexturedSizeable(nullptr),
 		  UsingShader(&ResMgr::loadShader(simpleShaderName, shaderSrcs::sprite_Vertex, shaderSrcs::sprite_Fragment, Shader::FromString),
 					&ResMgr::loadShader(lightShaderName, shaderSrcs::sprite_LightVertex, shaderSrcs::sprite_LightFragment, Shader::FromString)),
-		  m_color(Color::White)
+		  m_color(Color::White())
 	 {
 		  setUp();
 	 }
@@ -22,7 +22,7 @@ namespace fhl
 		  TexturedSizeable(&_tex, _tex.getSize()),
 		  UsingShader(&ResMgr::loadShader(simpleShaderName, shaderSrcs::sprite_Vertex, shaderSrcs::sprite_Fragment, Shader::FromString),
 						  &ResMgr::loadShader(lightShaderName, shaderSrcs::sprite_LightVertex, shaderSrcs::sprite_LightFragment, Shader::FromString)),
-		  m_color(Color::White)
+		  m_color(Color::White())
 	 {
 		  setUp();
 	 }
@@ -39,7 +39,7 @@ namespace fhl
 		  shader.setInt("texSampler", 0);
 		  shader.setColor("color", m_color);
 
-		  bool useCustomConf = _conf != RenderConf::Default;
+		  bool useCustomConf = _conf != RenderConf::default();
 
 		  if (useCustomConf && _conf.texture)
 				glBindTexture(GL_TEXTURE_2D, _conf.texture->getId());

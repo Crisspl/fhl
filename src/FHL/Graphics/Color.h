@@ -33,19 +33,15 @@ namespace fhl
 
 		float r, g, b, a;
 
-		/*
-		static members declared below should be constexpr, but it's not possible since constexpr static members must be in-class initilized
-		which is not possible since Color would be incomplete while initializing the statics
-		 */
-		static const Color White;
-		static const Color Black;
-		static const Color Red;
-		static const Color Green;
-		static const Color Blue;
-		static const Color Yellow;
-		static const Color Magenta;
-		static const Color Cyan;
-		static const Color Transparent;
+		static constexpr Color White() { return Vec4f::one(); }
+		static constexpr Color Black() { return Color(); }
+		static constexpr Color Red() { return Color(1.f, 0.f, 0.f); }
+		static constexpr Color Green() { return Color(0.f, 1.f, 0.f); }
+		static constexpr Color Blue() { return Color(0.f, 0.f, 1.f); }
+		static constexpr Color Yellow() { return Color(1.f, 1.f, 0.f); }
+		static constexpr Color Magenta() { return Color(1.f, 0.f, 1.f); }
+		static constexpr Color Cyan() { return Color(0.f, 1.f, 1.f); }
+		static constexpr Color Transparent() { return Vec4f::zero(); }
 	};
 
 	constexpr Color::Color(float _r, float _g, float _b, float _a)
@@ -63,6 +59,6 @@ namespace fhl
 	{
 	}
 
-} // ns
+}
 
-#endif // FHL_COLOR_H
+#endif

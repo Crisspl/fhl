@@ -8,7 +8,7 @@ namespace fhl
 {
 
 	class Rect;
-	class Projection;
+	struct Projection;
 
 	class FHL_API Circle
 	{

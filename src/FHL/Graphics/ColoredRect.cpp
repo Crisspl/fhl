@@ -24,7 +24,7 @@ namespace fhl
 		  Shader & shader = *getShader();
 		  shader.use();
 	 
-		  bool useCustomConf = _conf != RenderConf::Default;
+		  bool useCustomConf = _conf != RenderConf::default();
 
 		  const auto & lights = useCustomConf ? _conf.lights : getLights();
 		  const auto & matrices = useCustomConf ? _conf.matrices : getMatrices();

@@ -13,7 +13,7 @@ namespace fhl
 		UsingShader(&ResMgr::loadShader(simpleShaderName, shaderSrcs::model_Vertex, shaderSrcs::model_Fragment, Shader::FromString), &ResMgr::loadShader(lightShaderName, shaderSrcs::model_LightVertex, shaderSrcs::model_LightFragment, Shader::FromString)),
 		m_modelData(&_data),
 		m_vaos(_data.getMeshes().size()),
-		m_color(Color::Black),
+		m_color(Color::Black()),
 		m_useColorOnly(false)
 	{
 		setUp();
@@ -30,7 +30,7 @@ namespace fhl
 		Shader & shader = *getShader();
 		shader.use();
 
-		bool useCustomConf = _conf != RenderConf::Default;
+		bool useCustomConf = _conf != RenderConf::default();
 
 		const auto & lights = useCustomConf ? _conf.lights : getLights();
 		const auto & matrices = useCustomConf ? _conf.matrices : getMatrices();

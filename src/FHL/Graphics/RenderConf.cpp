@@ -3,8 +3,6 @@
 namespace fhl
 {
 
-	 RenderConf RenderConf::Default;
-
 	 RenderConf::RenderConf(const RenderMatrices & _tm, const Texture * _texture, const std::list<Light> & _lights)
 		 : matrices(_tm),
 		   texture(_texture),
@@ -53,6 +51,12 @@ namespace fhl
 	 bool RenderConf::operator!=(const RenderConf & _other) const
 	 {
 		 return !(*this == _other);
+	 }
+
+	 const RenderConf & RenderConf::default()
+	 {
+		 static const RenderConf def{};
+		 return def;
 	 }
 
 

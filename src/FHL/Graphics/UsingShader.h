@@ -26,8 +26,8 @@ namespace fhl
 		  Shader * getShader() const { return m_shader; }
 
 	 public:
-		  static SimpleShader_t Simple;
-		  static LightShader_t Light;
+		 static constexpr SimpleShader_t Simple{};
+		 static constexpr LightShader_t Light{};
 
 	 private:
 		  Shader * m_simpleShader, * m_lightShader;
