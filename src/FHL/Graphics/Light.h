@@ -15,14 +15,12 @@ namespace fhl
 				Spot
 		  };
 
-		  Light(Type _t = Infinite);
-
 		  bool operator==(const Light & _other) const;
 		  bool operator!=(const Light & _other) const;
 
-		  static Light infinite(Vec3f _dir, Color _color = Color::White, float _illu = 1.f);
-		  static Light point(Vec3f _pos, Color _color = Color::White, float _illu = 1.f, float _linear = 0.045f, float _quadratic = 0.0075f);
-		  static Light spot(Vec3f _pos, Vec3f _dir = Vec3f::forward(), Color _color = Color::White, float _cutOff = 30.f, float _illu = 1.f, float _linear = 0.045f, float _quadratic = 0.0075f);
+		  static constexpr Light infinite(Vec3f _dir, Color _color = Color::White(), float _illu = 1.f);
+		  static constexpr Light point(Vec3f _pos, Color _color = Color::White(), float _illu = 1.f, float _linear = 0.045f, float _quadratic = 0.0075f);
+		  static constexpr Light spot(Vec3f _pos, Vec3f _dir = Vec3f::forward(), Color _color = Color::White(), float _cutOff = 30.f, float _illu = 1.f, float _linear = 0.045f, float _quadratic = 0.0075f);
 
 		  Vec3f position, direction;
 		  Color color;
@@ -32,6 +30,51 @@ namespace fhl
 		  Type type;
 	 };
 
-} // ns
+	 constexpr Light Light::infinite(Vec3f _dir, Color _color, float _illu)
+	 {
+		 return
+		 {
+			 Vec3f{},	// position
+			 _dir,		// direction
+			 _color,	// color
+			 float{},	// linear
+			 float{},	// quadratic
+			 float{},	// cutOffAngle
+			 _illu,		// illuminance
+			 Infinite	// type
+		 };
+	 }
 
-#endif // FHL_LIGHT_H
+	 constexpr Light Light::point(Vec3f _pos, Color _color, float _illu, float _linear, float _quadratic)
+	 {
+		 return
+		 {
+			 _pos,		// position
+			 Vec3f{},	// direction
+			 _color,	// color
+			 _linear,	// linear
+			 _quadratic,// quadratic
+			 float{},	// cutOffAngle
+			 _illu,		// illuminance
+			 Point		// type
+		 };
+	 }
+
+	 constexpr Light Light::spot(Vec3f _pos, Vec3f _dir, Color _color, float _cutOff, float _illu, float _linear, float _quadratic)
+	 {
+		 return
+		 {
+			 _pos,		// position
+			 _dir,		// direction
+			 _color,	// color
+			 _linear,	// linear
+			 _quadratic,// quadratic
+			 _cutOff,	// cutOffAngle
+			 _illu,		// illuminance
+			 Spot		// type
+		 };
+	 }
+
+}
+
+#endif

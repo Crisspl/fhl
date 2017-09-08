@@ -3,14 +3,6 @@
 namespace fhl
 {
 
-	Light::Light(Type _t)
-		: direction(Vec3f::forward()),
-		color(Color::White),
-		cutOffAngle(30.f),
-		illuminance(1.f),
-		type(_t)
-	{ }
-
 	bool Light::operator==(const Light & _other) const
 	{
 		auto common = [this, &_other]() {
@@ -47,40 +39,4 @@ namespace fhl
 		return !(*this == _other);
 	}
 
-	Light Light::infinite(Vec3f _dir, Color _color, float _illu)
-	{
-		Light light(Infinite);
-		light.direction = _dir;
-		light.color = _color;
-		light.illuminance = _illu;
-
-		return light;
-	}
-
-	Light Light::point(Vec3f _pos, Color _color, float _illu, float _linear, float _quadratic)
-	{
-		Light light(Point);
-		light.position = _pos;
-		light.linear = _linear;
-		light.quadratic = _quadratic;
-		light.color = _color;
-		light.illuminance = _illu;
-
-		return light;
-	}
-
-	Light Light::spot(Vec3f _pos, Vec3f _dir, Color _color, float _cutOff, float _illu, float _linear, float _quadratic)
-	{
-		Light light(Spot);
-		light.position = _pos;
-		light.direction = _dir;
-		light.cutOffAngle = _cutOff;
-		light.color = _color;
-		light.illuminance = _illu;
-		light.linear = _linear;
-		light.quadratic = _quadratic;
-
-		return light;
-	}
-
-} // ns
+}
