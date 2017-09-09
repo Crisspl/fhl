@@ -50,14 +50,12 @@ namespace fhl
 
 	 void VertexArray::setUp()
 	 {
-		 using internal::Buffer;
-		 Buffer * buffer = new Buffer(Buffer::Target::ArrayBuffer, Buffer::Usage::DynamicDraw);
-
 		 m_vao.bind();
 
-		 m_vao.addBuffer("vertexBuffer", buffer);
+		 internal::Buffer buffer(internal::Buffer::Usage::DynamicDraw);
+		 buffer.bind(internal::Buffer::Target::ArrayBuffer);
 
-		 buffer->bind();
+		 m_vao.addBuffer("vertexBuffer", std::move(buffer));
 
 		 glVertexAttribPointer((GLuint)AttLoc::Position, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
 		 glEnableVertexAttribArray((GLuint)AttLoc::Position);
@@ -71,9 +69,9 @@ namespace fhl
 	 void VertexArray::updateArray()
 	 {
 		  auto buffer = m_vao.getBuffer("vertexBuffer");
-		  buffer->bind();
+		  buffer->bind(internal::Buffer::Target::ArrayBuffer);
 		  buffer->setData(sizeof(Vertex) * m_vertices.size(), m_vertices.data());
-		  buffer->unbind();
+		  buffer->unbind(internal::Buffer::Target::ArrayBuffer);
 	 }
 
-} // ns
+}

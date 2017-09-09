@@ -74,8 +74,8 @@ namespace fhl
 		{
 			m_vaos[i].bind();
 
-			meshes[i].vbo.bind();
-			meshes[i].ebo.bind();
+			meshes[i].vbo.bind(internal::Buffer::Target::ArrayBuffer);
+			meshes[i].ebo.bind(internal::Buffer::Target::ElementArrayBuffer);
 
 			glVertexAttribPointer(AttrLoc::Position, 3, GL_FLOAT, GL_FALSE, stride, offsetOfVertexMember(position));
 			glEnableVertexAttribArray(AttrLoc::Position);

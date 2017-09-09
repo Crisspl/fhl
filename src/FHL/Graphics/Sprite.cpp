@@ -76,7 +76,7 @@ namespace fhl
 	 {
 		  getVao().bind();
 
-		  Configurator::getRectShapeEbo().bind();
+		  Configurator::getRectShapeEbo().forcedBind(internal::Buffer::Target::ElementArrayBuffer);
 
 		  getVao().unbind();
 	 }

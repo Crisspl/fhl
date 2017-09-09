@@ -4,6 +4,7 @@
 
 #include <map>
 #include <string>
+#include <memory>
 #include <utility>
 
 #include <FHL/GL/OpenGL.h>
@@ -27,14 +28,14 @@ namespace fhl { namespace internal
 
 		  GLuint getId() const { return m_id; }
 
-		  Buffer* getBuffer(std::string _key);
-		  void addBuffer(std::string _key, Buffer* _buffer);
+		  Buffer * getBuffer(const std::string & _key);
+		  void addBuffer(const std::string & _key, Buffer && _buffer);
 
 	 private:
 		  GLuint m_id;
-		  std::map<std::string, Buffer *> m_buffers;
+		  std::map<std::string, std::unique_ptr<Buffer>> m_buffers;
 	 };
 
 }}
 
-#endif // FHL_VAO_H
+#endif

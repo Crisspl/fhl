@@ -9,22 +9,22 @@ namespace fhl { namespace internal
 	Mesh::Mesh(const std::vector<Mesh::Vertex> & _vertices, const std::vector<GLuint> & _indices, TexturesPair _textures) :
 		textures(_textures),
 		indicesCount(_indices.size()),
-		vbo(Buffer::Target::ArrayBuffer, Buffer::Usage::StaticDraw),
-		ebo(Buffer::Target::ElementArrayBuffer, Buffer::Usage::StaticDraw)
+		vbo(Buffer::Usage::StaticDraw),
+		ebo(Buffer::Usage::StaticDraw)
 	{
 		setUp(_vertices, _indices);
 	}
 
 	void Mesh::setUp(const std::vector<Mesh::Vertex> & _vertices, const std::vector<GLuint> & _indices)
 	{
-		vbo.bind();
+		vbo.bind(Buffer::Target::ArrayBuffer);
 		vbo.setData(_vertices.size() * sizeof(Vertex), _vertices.data());
 
-		ebo.bind();
+		ebo.bind(Buffer::Target::ElementArrayBuffer);
 		ebo.setData(_indices.size() * sizeof(GLuint), _indices.data());
 
-		vbo.unbind();
-		ebo.unbind();
+		vbo.unbind(Buffer::Target::ArrayBuffer);
+		ebo.unbind(Buffer::Target::ElementArrayBuffer);
 
 #define comp(dim) [](const Vertex & a, const Vertex & b) { return a.position.dim() < b.position.dim(); }
 

@@ -29,8 +29,6 @@ namespace fhl { namespace internal
 
 	 Vao::~Vao()
 	 {
-		  for (auto & el : m_buffers)
-				delete el.second;
 		  glDeleteVertexArrays(1, &m_id);
 	 }
 
@@ -44,14 +42,14 @@ namespace fhl { namespace internal
 		  glBindVertexArray(0);
 	 }
 
-	 Buffer* Vao::getBuffer(std::string _key)
+	 Buffer * Vao::getBuffer(const std::string & _key)
 	 {
-		  return m_buffers[_key];
+		  return m_buffers[_key].get();
 	 }
 
-	 void Vao::addBuffer(std::string _key, Buffer* _buffer)
+	 void Vao::addBuffer(const std::string & _key, Buffer && _buffer)
 	 {
-		  m_buffers[_key] = _buffer;
+		  m_buffers.insert({ _key, std::make_unique<Buffer>(std::move(_buffer)) });
 	 }
 
-}} // ns
+}}

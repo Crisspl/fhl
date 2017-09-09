@@ -33,10 +33,10 @@ namespace fhl
 		m_vpSize = { static_cast<int>(_width), static_cast<int>(_height) };
 		m_projection = Mat4f::perspective(-45.f, static_cast<float>(-m_vpSize.x()) / m_vpSize.y(), 1e-1f, 1e4f);
 
-		m_rectShapeEbo = std::make_unique<internal::Buffer>(Buffer::Target::ElementArrayBuffer, Buffer::Usage::StaticDraw);
-		m_rectShapeEbo->bind();
+		m_rectShapeEbo = std::make_unique<internal::Buffer>(Buffer::Usage::StaticDraw);
+		m_rectShapeEbo->bind(internal::Buffer::Target::ElementArrayBuffer);
 		m_rectShapeEbo->setData(6 * sizeof(GLuint), m_rectShapeIndices);
-		m_rectShapeEbo->unbind();
+		m_rectShapeEbo->unbind(internal::Buffer::Target::ElementArrayBuffer);
 
 		setDefaultViewDistance(726.f);
 		m_currentGlobal3DView = &m_views[m_defViewName];
