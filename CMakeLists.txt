@@ -7,18 +7,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake-modules/")
 
-find_package(PythonInterp REQUIRED)
-
-set(FHL_GL_DIR "${CMAKE_SOURCE_DIR}/src/FHL/GL")
-
-add_custom_command(OUTPUT "${FHL_GL_DIR}/glcorearb.h" "${FHL_GL_DIR}/gl3w.h" "${FHL_GL_DIR}/gl3w.c"
-	COMMAND "${PYTHON_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/gl3w/gl3w_gen.py"
-	DEPENDS "{CMAKE_SOURCE_DIR}/gl3w/gl3w_gen.py"
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src/FHL/GL"
-	COMMENT "Generating gl3w files..."
-)
-unset(FHL_GL_DIR)
-
 set(FHL_SRCS_GRAPHICS
 	src/FHL/Graphics/Buffer.cpp
 	src/FHL/Graphics/Color.cpp             
@@ -39,7 +27,6 @@ set(FHL_SRCS_GRAPHICS
 	src/FHL/Graphics/TexturedSizeable.cpp
 	src/FHL/Graphics/Transformable.cpp
 	src/FHL/Graphics/Transformable3D.cpp
-	src/FHL/Graphics/UsingShader.cpp
 	src/FHL/Graphics/Vao.cpp
 	src/FHL/Graphics/VertexArray.cpp
 )
@@ -111,12 +98,14 @@ set(FHL_HEADERS_UTILITY
 )
 
 set(FHL_SRCS_GL
-	src/FHL/GL/gl3w.c
+	src/FHL/GL/flextGL.cpp
+	src/FHL/GL/flextGLInit.cpp
+	src/FHL/GL/OpenGlLoader.cpp
 )
 set(FHL_HEADERS_GL
-	src/FHL/GL/gl3w.h
-	src/FHL/GL/glcorearb.h
+	src/FHL/GL/flextGL.h
 	src/FHL/GL/OpenGL.h
+	src/FHL/GL/OpenGlLoader.h
 )
 set(FHL_HEADERS_COMMON
 	src/FHL/common.h
@@ -154,4 +143,6 @@ endif()
 add_definitions(-DFHL_SHARED -DNOMINMAX)
 if(WIN32)
 	add_definitions(-DFHL_PLATFORM_WINDOWS)
+elseif(APPLE)
+	add_definitions(-DFHL_PLATFORM_APPLE)
 endif()

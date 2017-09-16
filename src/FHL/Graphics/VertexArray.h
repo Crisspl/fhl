@@ -38,7 +38,6 @@ namespace fhl
 				Triangles = GL_TRIANGLES,
 				TriangleStripAdjacency = GL_TRIANGLE_STRIP_ADJACENCY,
 				TrianglesAdjacency = GL_TRIANGLES_ADJACENCY,
-				Patches = GL_PATCHES
 		 };
 
 	 private:
