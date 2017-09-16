@@ -1,28 +1,39 @@
 #ifndef FHL_DEBUG_H
 #define FHL_DEBUG_H
 
-#include <iostream>
+#include <ostream>
 
 #include <FHL/common.h>
 
 namespace fhl
 {
 
-	class Debug
+	class FHL_API Debug
 	{
 		Debug() = default;
+		Debug(const Debug &) = delete;
+		Debug & operator=(const Debug &) = delete;
 
 	public:
-		std::ostream & operator()() { return *m_out; }
-		void setOutStream(std::ostream * _out) { m_out = _out; }
+		template<typename T>
+		Debug & operator<<(const T & o);
+
+		void setOutStream(std::ostream & _out);
 
 	private:
-		std::ostream * m_out = &std::cout;
+		std::ostream * m_out = nullptr;
 
 	public:
-		static Debug Log;
+		static Debug & Log();
 	};
+
+	template<typename T>
+	inline Debug & Debug::operator<<(const T & o)
+	{
+		if (m_out) *m_out << o;
+		return *this;
+	}
 
 }
 
-#endif // FHL_DEBUG_H
+#endif

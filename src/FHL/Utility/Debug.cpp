@@ -3,6 +3,15 @@
 namespace fhl
 {
 
-	Debug Debug::Log;
+	void Debug::setOutStream(std::ostream & _out)
+	{
+		m_out = &_out;
+	}
+
+	Debug & Debug::Log()
+	{
+		static Debug d;
+		return d;
+	}
 
 }
