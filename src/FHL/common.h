@@ -1,7 +1,7 @@
 #ifndef FHL_COMMON_H
 #define FHL_COMMON_H
 
-#if !defined(_WIN32) && !defined(FHL_PLATFORM_WINDOWS) // needed for user-compilation to properly define FHL_IMPORT on Windows
+#if defined(_WIN32) && !defined(FHL_PLATFORM_WINDOWS) // needed for user-compilation to properly define FHL_IMPORT on Windows
 	#define FHL_PLATFORM_WINDOWS
 #endif
 
