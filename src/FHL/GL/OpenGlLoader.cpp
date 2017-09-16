@@ -1,6 +1,7 @@
 #include <FHL/GL/OpenGlLoader.h>
 
 #include <stdexcept>
+#include <cstddef>
 
 #if defined(FHL_PLATFORM_WINDOWS)
 	// windows.h included in header
@@ -33,7 +34,7 @@ namespace fhl { namespace internal {
 	auto OpenGlLoader::load(const char * _name) -> fptr
 	{
 		const fptr address = wglGetProcAddress(reinterpret_cast<LPCSTR>(_name));
-		const auto integerAddress = reinterpret_cast<int>(address);
+		const auto integerAddress = reinterpret_cast<std::ptrdiff_t>(address);
 
 		if (address && integerAddress != 1 && integerAddress != 2 && integerAddress != 3 && integerAddress != -1)
 			return address;
