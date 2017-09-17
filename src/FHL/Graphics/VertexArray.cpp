@@ -14,7 +14,7 @@ namespace fhl
 		 setUp();
 	 }
 
-	 VertexArray & VertexArray::addVertex(Vertex _vert)
+	 VertexArray & VertexArray::addVertex(const Vertex & _vert)
 	 {
 		 m_vertices.push_back(_vert);
 		 updateArray();
@@ -22,7 +22,7 @@ namespace fhl
 		 return *this;
 	 }
 
-	 VertexArray & VertexArray::addVertices(std::initializer_list<Vertex> _v)
+	 VertexArray & VertexArray::addVertices(const std::initializer_list<Vertex> & _v)
 	 {
 		  m_vertices.insert(m_vertices.begin(), _v.begin(), _v.end());
 		  updateArray();
