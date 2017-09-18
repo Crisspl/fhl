@@ -140,7 +140,7 @@ if(MSVC)
 	# msvc bug, for some reason it works fine with this option
 endif()
 
-add_definitions(-DFHL_SHARED -DNOMINMAX)
+add_definitions(-DFHL_TARGET_SHARED -DNOMINMAX)
 if(WIN32)
 	add_definitions(-DFHL_PLATFORM_WINDOWS)
 elseif(APPLE)

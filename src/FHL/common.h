@@ -16,7 +16,7 @@
 	#define FHL_IMPORT
 #endif
 
-#ifdef FHL_SHARED
+#ifdef FHL_TARGET_SHARED
 	#define FHL_API FHL_EXPORT
 #else
 	#define FHL_API FHL_IMPORT
