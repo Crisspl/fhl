@@ -2,7 +2,6 @@
 #define FHL_MODEL_H
 
 #include <FHL/Graphics/Vao.h>
-#include <FHL/Graphics/Renderable.h>
 #include <FHL/Graphics/Transformable3D.h>
 #include <FHL/Graphics/Litable.h>
 #include <FHL/Graphics/UsingShader.h>
@@ -13,14 +12,15 @@
 namespace fhl
 {
 	class ResMgr;
+	class Renderer;
 
 	class FHL_API Model :
-		public Renderable,
 		public Transformable3D,
 		public Litable,
 		public UsingShader
 	{
 		friend class ResMgr;
+		friend class Renderer;
 
 		enum AttrLoc : GLuint
 		{
@@ -34,13 +34,12 @@ namespace fhl
 		Model(const Model &) = delete;
 		Model & operator=(const Model &) = delete;
 
-		void render(const RenderConf & _conf) const override;
-
 		void setModelData(ModelData & _data);
 		void setUseColorOnly(bool _val) { m_useColorOnly = _val; } // render textures or only single color
 		void setColor(const Color & _color) { m_color = _color; }
 
 		Vec3f getSize() const { return m_modelData->getSize(); }
+		const std::vector<internal::Vao> & getVaos() const { return m_vaos; }
 		const ModelData * getModelData() const { return m_modelData; }
 		bool getUseColorOnly() const { return m_useColorOnly; }
 		const Color & getColor() const { return m_color; }
@@ -49,7 +48,6 @@ namespace fhl
 
 	private:
 		void setUp();
-		void renderMeshes() const;
 
 	private:
 		ModelData * m_modelData;

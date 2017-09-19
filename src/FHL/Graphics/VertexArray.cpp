@@ -14,38 +14,25 @@ namespace fhl
 		 setUp();
 	 }
 
-	 VertexArray & VertexArray::addVertex(const Vertex & _vert)
+	 VertexArray & VertexArray::updateBuffer()
 	 {
-		 m_vertices.push_back(_vert);
-		 updateArray();
-
+		 auto buffer = m_vao.getBuffer(s_bufferName);
+		 buffer->bind(internal::Buffer::Target::CopyWriteBuffer);
+		 buffer->setData(sizeof(Vertex) * m_vertices.size(), m_vertices.data());
+		 buffer->unbind(internal::Buffer::Target::CopyWriteBuffer);
 		 return *this;
 	 }
 
-	 VertexArray & VertexArray::addVertices(const std::initializer_list<Vertex> & _v)
+	 VertexArray & VertexArray::addVertex(const Vertex & _vert)
 	 {
-		  m_vertices.insert(m_vertices.begin(), _v.begin(), _v.end());
-		  updateArray();
-
-		  return *this;
+		 m_vertices.push_back(_vert);
+		 return *this;
 	 }
 
-	 void VertexArray::render(const RenderConf &) const
+	 VertexArray & VertexArray::addVertices(const std::vector<Vertex> & _v)
 	 {
-		  if (!getShader())
-				return;
-
-		 Shader & shader = *getShader();
-		 shader.use();
-
-		 shader.setMat4f("projection", Configurator::projection())
-				.setMat4f("view", Configurator::view());
-
-		 m_vao.bind();
-		 glDrawArrays(m_mode, 0, m_vertices.size());
-		 m_vao.unbind();
-
-		 Shader::unuse();
+		  m_vertices.insert(m_vertices.begin(), _v.begin(), _v.end());
+		  return *this;
 	 }
 
 	 void VertexArray::setUp()
@@ -55,7 +42,7 @@ namespace fhl
 		 internal::Buffer buffer(internal::Buffer::Usage::DynamicDraw);
 		 buffer.bind(internal::Buffer::Target::ArrayBuffer);
 
-		 m_vao.addBuffer("vertexBuffer", std::move(buffer));
+		 m_vao.addBuffer(s_bufferName, std::move(buffer));
 
 		 glVertexAttribPointer((GLuint)AttLoc::Position, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
 		 glEnableVertexAttribArray((GLuint)AttLoc::Position);
@@ -64,14 +51,6 @@ namespace fhl
 		 glEnableVertexAttribArray((GLuint)AttLoc::Color);
 
 		 m_vao.unbind();
-	 }
-
-	 void VertexArray::updateArray()
-	 {
-		  auto buffer = m_vao.getBuffer("vertexBuffer");
-		  buffer->bind(internal::Buffer::Target::ArrayBuffer);
-		  buffer->setData(sizeof(Vertex) * m_vertices.size(), m_vertices.data());
-		  buffer->unbind(internal::Buffer::Target::ArrayBuffer);
 	 }
 
 }

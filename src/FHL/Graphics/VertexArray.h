@@ -7,7 +7,6 @@
 #include <initializer_list>
 
 #include <FHL/GL/OpenGL.h>
-#include <FHL/Graphics/Renderable.h>
 #include <FHL/Graphics/Vertex.h>
 #include <FHL/Graphics/Shader.h>
 #include <FHL/Graphics/Vao.h>
@@ -17,12 +16,12 @@ namespace fhl
 {
 
 	class ResMgr;
+	class Renderer;
 
-	class FHL_API VertexArray
-		: public Renderable,
-		public UsingShader
+	class FHL_API VertexArray : public UsingShader
 	{
 		friend class ResMgr;
+		friend class Renderer;
 
 	public:
 		enum Mode : GLenum
@@ -50,25 +49,28 @@ namespace fhl
 	public:
 		explicit VertexArray(Mode _mode);
 
-		void render(const RenderConf &) const override;
-
 		Vertex operator[](unsigned _i) const { return m_vertices[_i]; }
 		Vertex & operator[](unsigned _i) { return m_vertices[_i]; }
+		VertexArray & updateBuffer();
 
 		VertexArray & setMode(Mode _mode) { m_mode = _mode; return *this; }
+		Mode getMode() const { return m_mode; }
 
 		VertexArray & addVertex(const Vertex & _vert);
-		VertexArray & addVertices(const std::initializer_list<Vertex> & _v);
+		VertexArray & addVertices(const std::vector<Vertex> & _v);
+		std::size_t getVerticesCount() const { return m_vertices.size(); }
+
+		const internal::Vao & getVao() const { return m_vao; }
 
 	private:
 		void setUp();
-		void updateArray();
 
 	private:
 		Mode m_mode;
 		std::vector<Vertex> m_vertices;
 		internal::Vao m_vao;
 
+		constexpr static const char * s_bufferName = "vb";
 		constexpr static const char * simpleShaderName = "_FHL_vertexArraySimpleShader";
 	};
 

@@ -9,7 +9,6 @@
 #include <FHL/Graphics/Configurator.h>
 #include <FHL/Graphics/Transformable.h>
 #include <FHL/Graphics/TexturedSizeable.h>
-#include <FHL/Graphics/Renderable.h>
 #include <FHL/Graphics/UsingShader.h>
 #include <FHL/Graphics/Litable.h>
 #include <FHL/Utility/OrientedRect.h>
@@ -18,15 +17,16 @@ namespace fhl
 {
 	class OrientedRect;
 	class ResMgr;
+	class Renderer;
 
 	class FHL_API Sprite :
 		public Transformable,
 		public internal::TexturedSizeable,
 		public UsingShader,
-		public Renderable,
 		public Litable
 	{
 		friend class ResMgr;
+		friend class Renderer;
 
 	public:
 		Sprite();
@@ -36,7 +36,6 @@ namespace fhl
 		void setColor(const Color & _color) { m_color = _color; }
 		const Color & getColor() const { return m_color; }
 
-		void render(const RenderConf & _conf) const override;
 		Rect getAABB() const;
 		OrientedRect getOBB() const;
 
@@ -50,6 +49,6 @@ namespace fhl
 		constexpr static const char * lightShaderName = "_FHL_spriteLightShader";
 	};
 
-} // ns
+}
 
-#endif // FHL_SPRITE_H
+#endif

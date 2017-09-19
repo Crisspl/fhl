@@ -39,6 +39,10 @@ namespace internal
 	public:
 		Mesh(const std::vector<Mesh::Vertex> & _vertices, const std::vector<GLuint> & _indices, TexturesPair _textures);
 
+		GLuint getDiffuseTextureId() const { return textures.diffuse; }
+		GLuint getSpecularTextureId() const { return textures.specular; }
+		std::size_t getIndicesCount() const { return indicesCount; }
+
 	private:
 		void setUp(const std::vector<Mesh::Vertex> & _vertices, const std::vector<GLuint> & _indices);
 

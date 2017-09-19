@@ -35,6 +35,6 @@ namespace fhl { namespace internal
 		  Vec2f m_posArray[4];
 	 };
 
-}} // ns
+}}
 
-#endif // FHL_SIZEABLE_H
+#endif
