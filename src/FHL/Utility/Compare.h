@@ -8,20 +8,6 @@
 namespace fhl
 {
 
-	namespace impl
-	{
-		/* works like trinary operator */
-		template<bool Condition, typename IfTrue, typename IfFalse>
-		struct Conditional;
-
-		template<typename IfTrue, typename IfFalse>
-		struct Conditional<true, IfTrue, IfFalse> { using Type = IfTrue; };
-
-		template<typename IfTrue, typename IfFalse>
-		struct Conditional<false, IfTrue, IfFalse> { using Type = IfFalse; };
-	}
-
-
 	namespace detail
 	{
 		template<typename _T>
@@ -49,15 +35,20 @@ namespace fhl
 	}
 
 
-#define _FHL_COMPARE_PARENT impl::Conditional<std::is_floating_point<_T>::value, detail::FloatingPointCompare<_T>, detail::IntegerCompare<_T>>::Type
+	namespace
+	{
+		template<typename T>
+		using Parent = typename std::conditional<std::is_floating_point<T>::value, detail::FloatingPointCompare<T>, detail::IntegerCompare<T>>::type;
+	}
+
 	template<typename _T>
-	struct Compare : _FHL_COMPARE_PARENT
+	struct Compare : Parent<_T>
 	{
 		static bool equal(const _T & a, const _T & b)
 		{
-			return _FHL_COMPARE_PARENT::equal(a, b);
+			return Parent<_T>::equal(a, b);
 		}
-#undef _FHL_COMPARE_PARENT
+
 		static bool notEqual(const _T & a, const _T & b)
 		{
 			return !equal(a, b);
