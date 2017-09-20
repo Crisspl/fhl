@@ -11,7 +11,7 @@ namespace fhl { namespace internal
 		setUp();
 	}
 
-	void TexturedSizeable::setSize(Vec2f _size)
+	void TexturedSizeable::setSize(const Vec2f & _size)
 	{
 		if (!m_texture)
 			return;

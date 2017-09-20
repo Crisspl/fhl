@@ -5,53 +5,45 @@
 namespace fhl { namespace internal
 {
 
-	Sizeable::Sizeable(Vec2f _size) :
-		m_size(_size)
+	Sizeable::Sizeable(const Vec2f & _size) : m_size(_size)
 	{
 		setUp();
 	}
 
-	void Sizeable::setSize(Vec2f _size)
+	void Sizeable::setSize(const Vec2f & _size)
 	{
 		m_size = _size;
-
-		updatePosArray();
 		uploadPosArray();
-	}
-
-	void Sizeable::updatePosArray()
-	{
-		m_posArray[0] = { 0.f, 0.f };
-		m_posArray[1] = { m_size.x(), 0.f };
-		m_posArray[2] = m_size;
-		m_posArray[3] = { 0.f, m_size.y() };
 	}
 
 	void Sizeable::uploadPosArray()
 	{
-		Buffer * posBuffer = m_vao.getBuffer("posBuffer");
-		posBuffer->bind(Buffer::Target::ArrayBuffer);
-		posBuffer->updateData(0, sizeof(m_posArray), m_posArray);
-		posBuffer->unbind(Buffer::Target::ArrayBuffer);
+		Buffer * posBuffer = m_vao.getBuffer(s_posBufferName);
+		posBuffer->bind(Buffer::Target::CopyWriteBuffer);
+		posBuffer->updateData(0, 4 * sizeof(Vec2f), genPosArray(m_size).data());
+		posBuffer->unbind(Buffer::Target::CopyWriteBuffer);
+	}
+
+	std::array<Vec2f, 4> Sizeable::genPosArray(const Vec2f & _size) const
+	{
+		return{ { Vec2f::zero(), Vec2f::right(_size.x()), _size, Vec2f::up(_size.y()) } };
 	}
 
 	void Sizeable::setUp()
 	{
-		updatePosArray();
-
-		Buffer posBuffer(Buffer::Usage::StaticDraw);
+		Buffer posBuffer(Buffer::Usage::DynamicDraw);
 
 		m_vao.bind();
 
 		posBuffer.bind(Buffer::Target::ArrayBuffer);
-		posBuffer.setData(sizeof(m_posArray), m_posArray);
+		posBuffer.setData(4 * sizeof(Vec2f), genPosArray(m_size).data());
 
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vec2f), (GLvoid*)0);
 		glEnableVertexAttribArray(0);
 
 		m_vao.unbind();
 
-		m_vao.addBuffer("posBuffer", std::move(posBuffer));
+		m_vao.addBuffer(s_posBufferName, std::move(posBuffer));
 	}
 
 }}

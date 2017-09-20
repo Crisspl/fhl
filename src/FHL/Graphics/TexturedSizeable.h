@@ -1,7 +1,6 @@
 #ifndef FHL_TEXTUREDSIZEABLE_H
 #define FHL_TEXTUREDSIZEABLE_H
 
-#include <array>
 #include <utility>
 
 #include <FHL/Graphics/Sizeable.h>
@@ -23,7 +22,7 @@ namespace fhl { namespace internal
 		const Texture * getTexture() const { return m_texture; }
 		const Rect & getTextureRect() const { return m_texRect; }
 
-		void setSize(Vec2f _size) override;
+		void setSize(const Vec2f & _size) override;
 		void uploadTexCoordsArray();
 
 		void setTexture(Texture & _tex, bool _changeSize = true);
