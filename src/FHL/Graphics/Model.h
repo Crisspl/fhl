@@ -11,7 +11,6 @@
 
 namespace fhl
 {
-	class ResMgr;
 	class Renderer;
 
 	class FHL_API Model :
@@ -19,7 +18,6 @@ namespace fhl
 		public Litable,
 		public UsingShader
 	{
-		friend class ResMgr;
 		friend class Renderer;
 
 		enum AttrLoc : GLuint
@@ -46,6 +44,9 @@ namespace fhl
 
 		fhl::Cube getAABB() const;
 
+		static constexpr const char * simpleShaderName() { return s_simpleShaderName; }
+		static constexpr const char * lightShaderName() { return s_lightShaderName; }
+
 	private:
 		void setUp();
 
@@ -55,8 +56,8 @@ namespace fhl
 		Color m_color;
 		bool m_useColorOnly;
 
-		constexpr static const char * simpleShaderName = "_FHL_modelSimpleShader";
-		constexpr static const char * lightShaderName = "_FHL_modelLightShader";
+		constexpr static const char * s_simpleShaderName = "_FHL_modelSimpleShader";
+		constexpr static const char * s_lightShaderName = "_FHL_modelLightShader";
 	};
 
 }

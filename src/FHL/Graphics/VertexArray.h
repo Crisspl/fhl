@@ -1,7 +1,6 @@
 #ifndef FHL_VERTEXARRAY_H
 #define FHL_VERTEXARRAY_H
 
-
 #include <vector>
 #include <memory>
 #include <initializer_list>
@@ -15,12 +14,10 @@
 namespace fhl
 {
 
-	class ResMgr;
 	class Renderer;
 
 	class FHL_API VertexArray : public UsingShader
 	{
-		friend class ResMgr;
 		friend class Renderer;
 
 	public:
@@ -62,6 +59,8 @@ namespace fhl
 
 		const internal::Vao & getVao() const { return m_vao; }
 
+		static constexpr const char * simpleShaderName() { return s_simpleShaderName; }
+
 	private:
 		void setUp();
 
@@ -71,7 +70,7 @@ namespace fhl
 		internal::Vao m_vao;
 
 		constexpr static const char * s_bufferName = "vb";
-		constexpr static const char * simpleShaderName = "_FHL_vertexArraySimpleShader";
+		constexpr static const char * s_simpleShaderName = "_FHL_vertexArraySimpleShader";
 	};
 
 }

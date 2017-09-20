@@ -49,6 +49,6 @@ namespace fhl
 		static std::map<std::string, ModelData> m_models;
 	};
 
-} // ns
+}
 
-#endif // FHL_RESMGR_H
+#endif

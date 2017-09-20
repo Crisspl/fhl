@@ -58,23 +58,23 @@ namespace fhl
 	template<typename _T>
 	Shader * ResMgr::getDefaultSimpleShader()
 	{
-		return isShaderLoaded(_T::simpleShaderName) ? getShader(_T::simpleShaderName) : nullptr;
+		return isShaderLoaded(_T::simpleShaderName()) ? getShader(_T::simpleShaderName()) : nullptr;
 	}
 
-	template Shader * ResMgr::getDefaultSimpleShader<ColoredRect>();
-	template Shader * ResMgr::getDefaultSimpleShader<Model>();
-	template Shader * ResMgr::getDefaultSimpleShader<Sprite>();
-	template Shader * ResMgr::getDefaultSimpleShader<VertexArray>();
+	template FHL_API Shader * ResMgr::getDefaultSimpleShader<ColoredRect>();
+	template FHL_API Shader * ResMgr::getDefaultSimpleShader<Model>();
+	template FHL_API Shader * ResMgr::getDefaultSimpleShader<Sprite>();
+	template FHL_API Shader * ResMgr::getDefaultSimpleShader<VertexArray>();
 
 	template<typename _T>
 	Shader * ResMgr::getDefaultLightShader()
 	{
-		return isShaderLoaded(_T::lightShaderName) ? getShader(_T::lightShaderName) : nullptr;
+		return isShaderLoaded(_T::lightShaderName()) ? getShader(_T::lightShaderName()) : nullptr;
 	}
 
-	template Shader * ResMgr::getDefaultLightShader<ColoredRect>();
-	template Shader * ResMgr::getDefaultLightShader<Model>();
-	template Shader * ResMgr::getDefaultLightShader<Sprite>();
+	template FHL_API Shader * ResMgr::getDefaultLightShader<ColoredRect>();
+	template FHL_API Shader * ResMgr::getDefaultLightShader<Model>();
+	template FHL_API Shader * ResMgr::getDefaultLightShader<Sprite>();
 
 	bool ResMgr::isShaderLoaded(const std::string & _name)
 	{
@@ -128,4 +128,4 @@ namespace fhl
 		removeAllModelData();
 	}
 
-} // ns
+}

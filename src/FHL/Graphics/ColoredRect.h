@@ -12,7 +12,6 @@
 
 namespace fhl
 {
-	class ResMgr;
 	class Renderer;
 
 	class FHL_API ColoredRect :
@@ -21,7 +20,6 @@ namespace fhl
 		public UsingShader,
 		public Litable
 	{
-		friend class ResMgr;
 		friend class Renderer;
 
 	public:
@@ -34,14 +32,17 @@ namespace fhl
 		Rect getAABB() const;
 		OrientedRect getOBB() const;
 
+		static constexpr const char * simpleShaderName() { return s_simpleShaderName; }
+		static constexpr const char * lightShaderName() { return s_lightShaderName; }
+
 	private:
 		void setUp();
 
 	private:
 		Color m_color;
 
-		constexpr static const char * simpleShaderName = "_FHL_rectSimpleShader";
-		constexpr static const char * lightShaderName = "_FHL_rectLightShader";
+		constexpr static const char * s_simpleShaderName = "_FHL_rectSimpleShader";
+		constexpr static const char * s_lightShaderName = "_FHL_rectLightShader";
 	};
 
 }
