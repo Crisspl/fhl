@@ -1,6 +1,6 @@
 #include <FHL/Graphics/TexturedSizeable.h>
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	TexturedSizeable::TexturedSizeable(Texture * _tex, const Vec2f & _size) :

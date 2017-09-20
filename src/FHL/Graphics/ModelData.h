@@ -31,17 +31,17 @@ namespace fhl
 	private:
 		void load(const std::string & _path);
 		void processNode(aiNode * _nodePtr, const aiScene * _scenePtr);
-		internal::Mesh processMesh(aiMesh * _meshPtr, const aiScene * _scenePtr);
+		detail::Mesh processMesh(aiMesh * _meshPtr, const aiScene * _scenePtr);
 		std::tuple<Vec3f, Vec3f> calcExtents() const;
 		GLuint loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType);
 
 	public:
-		const std::vector<internal::Mesh> & getMeshes() const { return m_meshes; }
+		const std::vector<detail::Mesh> & getMeshes() const { return m_meshes; }
 		const Vec3f & getSize() const { return m_size; }
 		const Vec3f & getLeftBottomRear() const { return m_leftBottomRearCorner; }
 
 	private:
-		std::vector<internal::Mesh> m_meshes;
+		std::vector<detail::Mesh> m_meshes;
 		std::vector<std::string> m_texNames;
 		std::string m_directory;
 		std::size_t m_meshCount;

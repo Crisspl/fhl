@@ -16,7 +16,7 @@ namespace fhl
 
 	class FHL_API ColoredRect :
 		public Transformable,
-		public internal::Sizeable,
+		public detail::Sizeable,
 		public UsingShader,
 		public Litable
 	{

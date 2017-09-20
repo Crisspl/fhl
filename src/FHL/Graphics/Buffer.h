@@ -7,7 +7,7 @@
 #include <FHL/GL/OpenGL.h>
 #include <FHL/common.h>
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	struct FHL_API Buffer

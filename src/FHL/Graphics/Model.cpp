@@ -33,16 +33,16 @@ namespace fhl
 
 	void Model::setUp()
 	{
-#define offsetOfVertexMember(m) (GLvoid*)offsetof(internal::Mesh::Vertex, m)
-		constexpr GLsizei stride = sizeof(internal::Mesh::Vertex);
+#define offsetOfVertexMember(m) (GLvoid*)offsetof(detail::Mesh::Vertex, m)
+		constexpr GLsizei stride = sizeof(detail::Mesh::Vertex);
 
 		const auto & meshes = m_modelData->getMeshes();
 		for (int i = 0; i < meshes.size(); i++)
 		{
 			m_vaos[i].bind();
 
-			meshes[i].vbo.bind(internal::Buffer::Target::ArrayBuffer);
-			meshes[i].ebo.bind(internal::Buffer::Target::ElementArrayBuffer);
+			meshes[i].vbo.bind(detail::Buffer::Target::ArrayBuffer);
+			meshes[i].ebo.bind(detail::Buffer::Target::ElementArrayBuffer);
 
 			glVertexAttribPointer(AttrLoc::Position, 3, GL_FLOAT, GL_FALSE, stride, offsetOfVertexMember(position));
 			glEnableVertexAttribArray(AttrLoc::Position);

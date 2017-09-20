@@ -10,7 +10,7 @@
 #include <FHL/GL/OpenGL.h>
 #include <FHL/Graphics/Buffer.h>
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	 class FHL_API Vao

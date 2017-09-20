@@ -64,16 +64,16 @@ namespace fhl
 			processNode(_nodePtr->mChildren[i], _scenePtr);
 	}
 
-	internal::Mesh ModelData::processMesh(aiMesh * _meshPtr, const aiScene * _scenePtr)
+	detail::Mesh ModelData::processMesh(aiMesh * _meshPtr, const aiScene * _scenePtr)
 	{
-		std::vector<internal::Mesh::Vertex> vertices;
+		std::vector<detail::Mesh::Vertex> vertices;
 		std::vector<GLuint> indices;
-		internal::Mesh::TexturesPair textures;
+		detail::Mesh::TexturesPair textures;
 
 		vertices.reserve(_meshPtr->mNumVertices);
 		for (GLuint i = 0; i < _meshPtr->mNumVertices; i++)
 		{
-			internal::Mesh::Vertex vertex;
+			detail::Mesh::Vertex vertex;
 			vertex.position = { _meshPtr->mVertices[i].x, _meshPtr->mVertices[i].y, _meshPtr->mVertices[i].z };
 			vertex.normal = { _meshPtr->mNormals[i].x, _meshPtr->mNormals[i].y, _meshPtr->mNormals[i].z };
 
@@ -103,7 +103,7 @@ namespace fhl
 			if (!textures.specular) textures.specular = textures.diffuse;
 		}
 
-		return internal::Mesh(vertices, indices, textures);
+		return detail::Mesh(vertices, indices, textures);
 	}
 
 	std::tuple<Vec3f, Vec3f> ModelData::calcExtents() const

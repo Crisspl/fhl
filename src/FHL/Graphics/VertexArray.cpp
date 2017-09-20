@@ -17,9 +17,9 @@ namespace fhl
 	 VertexArray & VertexArray::updateBuffer()
 	 {
 		 auto buffer = m_vao.getBuffer(s_bufferName);
-		 buffer->bind(internal::Buffer::Target::CopyWriteBuffer);
+		 buffer->bind(detail::Buffer::Target::CopyWriteBuffer);
 		 buffer->setData(sizeof(Vertex) * m_vertices.size(), m_vertices.data());
-		 buffer->unbind(internal::Buffer::Target::CopyWriteBuffer);
+		 buffer->unbind(detail::Buffer::Target::CopyWriteBuffer);
 		 return *this;
 	 }
 
@@ -39,8 +39,8 @@ namespace fhl
 	 {
 		 m_vao.bind();
 
-		 internal::Buffer buffer(internal::Buffer::Usage::DynamicDraw);
-		 buffer.bind(internal::Buffer::Target::ArrayBuffer);
+		 detail::Buffer buffer(detail::Buffer::Usage::DynamicDraw);
+		 buffer.bind(detail::Buffer::Target::ArrayBuffer);
 
 		 m_vao.addBuffer(s_bufferName, std::move(buffer));
 

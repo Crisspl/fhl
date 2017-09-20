@@ -3,12 +3,12 @@
 #include <FHL/Utility/Debug.h>
 #include <FHL/Maths/mathsFuncs.h>
 
-using namespace fhl::internal;
+using namespace fhl::detail;
 
 namespace fhl
 {
 	bool Configurator::m_initialized{ false };
-	std::unique_ptr<internal::Buffer> Configurator::m_rectShapeEbo(nullptr);
+	std::unique_ptr<detail::Buffer> Configurator::m_rectShapeEbo(nullptr);
 	Mat4f Configurator::m_projection;
 	View * Configurator::m_currentGlobal3DView{ nullptr };
 
@@ -32,10 +32,10 @@ namespace fhl
 		m_vpSize = { static_cast<int>(_width), static_cast<int>(_height) };
 		m_projection = Mat4f::perspective(-45.f, static_cast<float>(-m_vpSize.x()) / m_vpSize.y(), 1e-1f, 1e4f);
 
-		m_rectShapeEbo = std::make_unique<internal::Buffer>(Buffer::Usage::StaticDraw);
-		m_rectShapeEbo->bind(internal::Buffer::Target::ElementArrayBuffer);
+		m_rectShapeEbo = std::make_unique<detail::Buffer>(Buffer::Usage::StaticDraw);
+		m_rectShapeEbo->bind(detail::Buffer::Target::ElementArrayBuffer);
 		m_rectShapeEbo->setData(6 * sizeof(GLuint), m_rectShapeIndices);
-		m_rectShapeEbo->unbind(internal::Buffer::Target::ElementArrayBuffer);
+		m_rectShapeEbo->unbind(detail::Buffer::Target::ElementArrayBuffer);
 
 		setDefaultViewDistance(726.f);
 		m_currentGlobal3DView = &m_views[m_defViewName];

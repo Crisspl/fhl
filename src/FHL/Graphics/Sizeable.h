@@ -7,7 +7,7 @@
 #include <FHL/Graphics/Vao.h>
 #include <FHL/Maths/vectors.h>
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	class FHL_API Sizeable

@@ -36,11 +36,11 @@ namespace fhl
 		static void setEnableDepthTest(bool _enable);
 		static bool isDepthTestEnabled() { return m_depthTestEnabled; }
 
-		static const internal::Buffer & getRectShapeEbo() { return *m_rectShapeEbo; }
+		static const detail::Buffer & getRectShapeEbo() { return *m_rectShapeEbo; }
 
 	private:
 		static bool m_initialized;
-		static std::unique_ptr<internal::Buffer> m_rectShapeEbo;
+		static std::unique_ptr<detail::Buffer> m_rectShapeEbo;
 		static Mat4f m_projection;
 		static View * m_currentGlobal3DView;
 		static const GLuint m_rectShapeIndices[6];

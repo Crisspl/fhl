@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	 Vao::Vao()

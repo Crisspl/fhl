@@ -7,20 +7,20 @@ namespace fhl
 {
 
 	template<typename _T>
-	class Vec2 : public internal::VecBase<2, _T>
+	class Vec2 : public detail::VecBase<2, _T>
 	{
 	public:
 		using valueType = _T;
 		enum { Dimensions = 2 };
 
-		constexpr explicit Vec2(_T _value = _T(0)) : internal::VecBase<2, _T>(_value) {}
-		constexpr Vec2(_T _x, _T _y) : internal::VecBase<2, _T>(_x, _y) {}
+		constexpr explicit Vec2(_T _value = _T(0)) : detail::VecBase<2, _T>(_value) {}
+		constexpr Vec2(_T _x, _T _y) : detail::VecBase<2, _T>(_x, _y) {}
 		template<typename _U>
-		Vec2(const Vec2<_U> & _other) : internal::VecBase<2, _T>(static_cast<const internal::VecBase<2, _U> &>(_other)) {}
-		Vec2(const internal::VecBase<2, _T> & _other) : internal::VecBase<2, _T>(_other) {}
+		Vec2(const Vec2<_U> & _other) : detail::VecBase<2, _T>(static_cast<const detail::VecBase<2, _U> &>(_other)) {}
+		Vec2(const detail::VecBase<2, _T> & _other) : detail::VecBase<2, _T>(_other) {}
 
 		template<typename _U>
-		Vec2<_T> & operator=(const Vec2<_U> & _other) { internal::VecBase<2, _T>::operator=(_other); return *this; }
+		Vec2<_T> & operator=(const Vec2<_U> & _other) { detail::VecBase<2, _T>::operator=(_other); return *this; }
 
 		static constexpr Vec2<_T> up(_T n = _T(1)) { return{ 0, n }; }
 		static constexpr Vec2<_T> down(_T n = _T(1)) { return{ 0, -n }; }

@@ -6,7 +6,7 @@
 	#include <windows.h>
 #endif
 
-namespace fhl { namespace internal {
+namespace fhl { namespace detail {
 
 	class OpenGlLoader
 	{

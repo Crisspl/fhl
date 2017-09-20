@@ -20,7 +20,7 @@ namespace fhl
 
 	class FHL_API Sprite :
 		public Transformable,
-		public internal::TexturedSizeable,
+		public detail::TexturedSizeable,
 		public UsingShader,
 		public Litable
 	{

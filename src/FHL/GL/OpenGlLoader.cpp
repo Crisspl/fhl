@@ -16,7 +16,7 @@
 	#include <GL/glx.h>
 #endif
 
-namespace fhl { namespace internal {
+namespace fhl { namespace detail {
 
 #if defined(FHL_PLATFORM_WINDOWS)
 	OpenGlLoader::OpenGlLoader()

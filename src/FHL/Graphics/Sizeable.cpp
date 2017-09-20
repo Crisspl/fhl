@@ -2,7 +2,7 @@
 #include <FHL/Graphics/Sizeable.h>
 
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	Sizeable::Sizeable(const Vec2f & _size) : m_size(_size)

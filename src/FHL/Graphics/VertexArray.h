@@ -57,7 +57,7 @@ namespace fhl
 		VertexArray & addVertices(const std::vector<Vertex> & _v);
 		std::size_t getVerticesCount() const { return m_vertices.size(); }
 
-		const internal::Vao & getVao() const { return m_vao; }
+		const detail::Vao & getVao() const { return m_vao; }
 
 		static constexpr const char * simpleShaderName() { return s_simpleShaderName; }
 
@@ -67,7 +67,7 @@ namespace fhl
 	private:
 		Mode m_mode;
 		std::vector<Vertex> m_vertices;
-		internal::Vao m_vao;
+		detail::Vao m_vao;
 
 		constexpr static const char * s_bufferName = "vb";
 		constexpr static const char * s_simpleShaderName = "_FHL_vertexArraySimpleShader";

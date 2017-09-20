@@ -30,7 +30,7 @@ namespace fhl
 	 {
 		  getVao().bind();
 
-		  Configurator::getRectShapeEbo().forcedBind(internal::Buffer::Target::ElementArrayBuffer);
+		  Configurator::getRectShapeEbo().forcedBind(detail::Buffer::Target::ElementArrayBuffer);
 
 		  getVao().unbind();
 	 }

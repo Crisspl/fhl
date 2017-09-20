@@ -22,7 +22,7 @@ namespace fhl
 	}
 
 
-	namespace internal
+	namespace detail
 	{
 		template<typename _T>
 		struct FloatingPointCompare
@@ -49,7 +49,7 @@ namespace fhl
 	}
 
 
-#define _FHL_COMPARE_PARENT impl::Conditional<std::is_floating_point<_T>::value, internal::FloatingPointCompare<_T>, internal::IntegerCompare<_T>>::Type
+#define _FHL_COMPARE_PARENT impl::Conditional<std::is_floating_point<_T>::value, detail::FloatingPointCompare<_T>, detail::IntegerCompare<_T>>::Type
 	template<typename _T>
 	struct Compare : _FHL_COMPARE_PARENT
 	{

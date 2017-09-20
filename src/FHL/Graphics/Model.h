@@ -37,7 +37,7 @@ namespace fhl
 		void setColor(const Color & _color) { m_color = _color; }
 
 		Vec3f getSize() const { return m_modelData->getSize(); }
-		const std::vector<internal::Vao> & getVaos() const { return m_vaos; }
+		const std::vector<detail::Vao> & getVaos() const { return m_vaos; }
 		const ModelData * getModelData() const { return m_modelData; }
 		bool getUseColorOnly() const { return m_useColorOnly; }
 		const Color & getColor() const { return m_color; }
@@ -52,7 +52,7 @@ namespace fhl
 
 	private:
 		ModelData * m_modelData;
-		std::vector<internal::Vao> m_vaos;
+		std::vector<detail::Vao> m_vaos;
 		Color m_color;
 		bool m_useColorOnly;
 

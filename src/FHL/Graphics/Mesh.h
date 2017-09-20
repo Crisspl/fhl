@@ -15,7 +15,7 @@ namespace fhl
 	 class Model;
 	 class ModelData;
 
-namespace internal
+namespace detail
 {
 
 	class FHL_API Mesh

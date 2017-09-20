@@ -7,7 +7,7 @@
 #include <FHL/Graphics/Texture.h>
 #include <FHL/Utility/Rect.h>
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	class FHL_API TexturedSizeable
@@ -44,7 +44,7 @@ namespace fhl { namespace internal
 }
 
 template<std::size_t ...Is>
-inline std::array<Vec2f, 4> internal::TexturedSizeable::genTexCoordsArray_impl(std::index_sequence<Is...>, const Rect & _rect) const
+inline std::array<Vec2f, 4> detail::TexturedSizeable::genTexCoordsArray_impl(std::index_sequence<Is...>, const Rect & _rect) const
 {
 	Vec2f div = m_texture ? m_texture->getSize() : Vec2f::one();
 	return { { (_rect[Is] / div)... } };

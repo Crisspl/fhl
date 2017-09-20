@@ -3,7 +3,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-namespace fhl { namespace internal
+namespace fhl { namespace detail
 {
 
 	Mesh::Mesh(const std::vector<Mesh::Vertex> & _vertices, const std::vector<GLuint> & _indices, TexturesPair _textures) :
