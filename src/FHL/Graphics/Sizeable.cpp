@@ -12,6 +12,8 @@ namespace fhl { namespace detail
 
 	void Sizeable::setSize(const Vec2f & _size)
 	{
+		if (m_size == _size)
+			return;
 		m_size = _size;
 		uploadPosArray();
 	}

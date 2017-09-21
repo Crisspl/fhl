@@ -6,18 +6,16 @@ namespace fhl { namespace detail
 	TexturedSizeable::TexturedSizeable(Texture * _tex, const Vec2f & _size) :
 		Sizeable(_size),
 		m_texture(_tex),
-		m_texRect(Vec2f::zero(), Vec2f::one())
+		m_texRect(Vec2f::zero(), _tex ? _tex->getSize() : Vec2f::one())
 	{
 		setUp();
 	}
 
 	void TexturedSizeable::setSize(const Vec2f & _size)
 	{
-		if (!m_texture)
-			return;
 		Sizeable::setSize(_size);
-		m_texRect = Rect(Vec2f::zero(), getSize() / (Vec2f)m_texture->getSize());
-		uploadTexCoordsArray();
+		if (m_texture)
+			uploadTexCoordsArray();
 	}
 
 	void TexturedSizeable::uploadTexCoordsArray()

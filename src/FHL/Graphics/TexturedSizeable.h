@@ -52,5 +52,4 @@ inline std::array<Vec2f, 4> detail::TexturedSizeable::genTexCoordsArray_impl(std
 
 }
 
-
 #endif
