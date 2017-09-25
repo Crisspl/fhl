@@ -3,7 +3,7 @@
 FHL is (going to be) an OpenGL and C++11/14 graphics library making easy to combine 2D and 3D elements.  
 The main target is 2.5D (hence the name) games and you shouldn't expect FHL as a library for 3D apps.  
   
-As for now FHL offers:
+### As for now FHL offers:
 * wrapped, into few classes representing 2D or 3D object, OpenGL calls
 * easy texture loading thanks to [SOIL](http://lonesock.net/soil.html)
 * easy model loading thanks to [Assimp](https://github.com/assimp/assimp) (`fhl::Model` class)
