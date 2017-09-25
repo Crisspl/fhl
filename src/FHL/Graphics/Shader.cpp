@@ -2,18 +2,15 @@
 
 #include <FHL/Maths/mathsFuncs.h>
 
-#include <algorithm>
 #include <string>
-#include <functional>
 #include <utility>
-#include <cstdio>
 
 namespace fhl
 {
 
 	Shader::Shader(Shader && _other) :
 		m_id(_other.m_id),
-		m_uniformLocs(std::move(_other.m_uniformLocs))
+		m_uniformLocMgr(std::move(_other.m_uniformLocMgr))
 	{
 		_other.m_id = 0;
 	}
@@ -21,7 +18,7 @@ namespace fhl
 	Shader & Shader::operator=(Shader && _other)
 	{
 		std::swap(m_id, _other.m_id);
-		std::swap(m_uniformLocs, _other.m_uniformLocs);
+		std::swap(m_uniformLocMgr, _other.m_uniformLocMgr);
 
 		return *this;
 	}
@@ -219,17 +216,7 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 
 	GLint Shader::getUniformLoc(const GLchar * _name)
 	{
-		const std::size_t hash = std::hash<std::string>{}(_name); /** @todo Use c++17 std::hash<std::string_view> instead */
-		const auto it = m_uniformLocs.find(hash);
-
-		if (it != m_uniformLocs.cend())
-			return it->second;
-		else
-		{
-			const GLint loc = glGetUniformLocation(getId(), _name);
-			if (loc >= 0) m_uniformLocs.insert({ hash, loc });
-			return loc;
-		}
+		return m_uniformLocMgr.getUniformLoc(getId(), _name);
 	}
 
 }

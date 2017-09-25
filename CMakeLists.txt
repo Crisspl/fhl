@@ -60,6 +60,12 @@ set(FHL_HEADERS_GRAPHICS
 	src/FHL/Graphics/VertexArray.h
 	src/FHL/Graphics/View.h
 )
+set(FHL_SRCS_GRAPHICS_IMPL
+	src/FHL/Graphics/impl/UniformLocMgr.cpp
+)
+set(FHL_HEADERS_GRAPHICS_IMPL
+	src/FHL/Graphics/impl/UniformLocMgr.h
+)
 
 set(FHL_SRCS_MATHS
 	src/FHL/Maths/Quaternion.cpp
@@ -112,12 +118,14 @@ set(FHL_HEADERS_COMMON
 )
 
 add_library(fhl SHARED 
-	${FHL_SRCS_GRAPHICS} ${FHL_SRCS_MATHS} ${FHL_SRCS_UTILITY} ${FHL_SRCS_GL}
-	${FHL_HEADERS_GRAPHICS} ${FHL_HEADERS_MATHS} ${FHL_HEADERS_UTILITY} ${FHL_HEADERS_GL} ${FHL_HEADERS_COMMON}
+	${FHL_SRCS_GRAPHICS} ${FHL_SRCS_GRAPHICS_IMPL} ${FHL_SRCS_MATHS} ${FHL_SRCS_UTILITY} ${FHL_SRCS_GL}
+	${FHL_HEADERS_GRAPHICS} ${FHL_HEADERS_GRAPHICS_IMPL} ${FHL_HEADERS_MATHS} ${FHL_HEADERS_UTILITY} ${FHL_HEADERS_GL} ${FHL_HEADERS_COMMON}
 )
 
 source_group("Header Files\\Graphics" FILES ${FHL_HEADERS_GRAPHICS})
 source_group("Source Files\\Graphics" FILES ${FHL_SRCS_GRAPHICS})
+source_group("Header Files\\Graphics\\impl" FILES ${FHL_HEADERS_GRAPHICS_IMPL})
+source_group("Source Files\\Graphics\\impl" FILES ${FHL_SRCS_GRAPHICS_IMPL})
 source_group("Header Files\\Maths" FILES ${FHL_HEADERS_MATHS})
 source_group("Source Files\\Maths" FILES ${FHL_SRCS_MATHS})
 source_group("Header Files\\Utility" FILES ${FHL_HEADERS_UTILITY})

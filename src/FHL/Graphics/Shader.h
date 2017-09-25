@@ -1,15 +1,14 @@
 #ifndef FHL_SHADER_H
 #define FHL_SHADER_H
 
-#include <algorithm>
-#include <vector>
-#include <map>
 #include <type_traits>
+#include <vector>
 #include <iterator>
 
 #include <FHL/GL/OpenGL.h>
 #include <FHL/Graphics/Color.h>
 #include <FHL/Graphics/Light.h>
+#include <FHL/Graphics/impl/UniformLocMgr.h>
 #include <FHL/Maths/Mat4.h>
 
 namespace fhl
@@ -117,7 +116,7 @@ struct UniformSetterForVec##_size<unsigned> \
 
 	private:
 		GLuint m_id;
-		std::map<std::size_t, GLint> m_uniformLocs;
+		impl::UniformLocMgr m_uniformLocMgr;
 	};
 
 	template<typename _T>
