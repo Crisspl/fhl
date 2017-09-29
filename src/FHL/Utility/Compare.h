@@ -1,5 +1,5 @@
-#ifndef FHL_COMPARE_H
-#define FHL_COMPARE_H
+#ifndef FHL_UTILITY_COMPARE_H
+#define FHL_UTILITY_COMPARE_H
 
 #include <limits>
 #include <type_traits>

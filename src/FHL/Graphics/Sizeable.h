@@ -1,5 +1,5 @@
-#ifndef FHL_SIZEABLE_H
-#define FHL_SIZEABLE_H
+#ifndef FHL_GRAPHICS_SIZEABLE_H
+#define FHL_GRAPHICS_SIZEABLE_H
 
 #include <array>
 

@@ -1,5 +1,5 @@
-#ifndef FHL_RESMGR_H
-#define FHL_RESMGR_H
+#ifndef FHL_GRAPHICS_RES_MGR_H
+#define FHL_GRAPHICS_RES_MGR_H
 
 #include <map>
 

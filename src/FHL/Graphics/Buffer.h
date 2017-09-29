@@ -1,5 +1,5 @@
-#ifndef FHL_BUFFER_H
-#define FHL_BUFFER_H
+#ifndef FHL_GRAPHICS_BUFFER_H
+#define FHL_GRAPHICS_BUFFER_H
 
 #include <set>
 #include <map>

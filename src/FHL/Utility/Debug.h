@@ -1,5 +1,5 @@
-#ifndef FHL_DEBUG_H
-#define FHL_DEBUG_H
+#ifndef FHL_UTILITY_DEBUG_H
+#define FHL_UTILITY_DEBUG_H
 
 #include <ostream>
 

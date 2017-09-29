@@ -1,5 +1,5 @@
-#ifndef FHL_CONSTANTS_H
-#define FHL_COSNTANTS_H
+#ifndef FHL_MATHS_CONSTANTS_H
+#define FHL_MATHS_COSNTANTS_H
 
 namespace fhl
 {
@@ -20,4 +20,4 @@ namespace fhl
 
 }
 
-#endif // FHL_CONSTANTS_H
+#endif

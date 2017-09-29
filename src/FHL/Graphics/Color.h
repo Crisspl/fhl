@@ -1,5 +1,5 @@
-#ifndef FHL_COLOR_H
-#define FHL_COLOR_H
+#ifndef FHL_GRAPHICS_COLOR_H
+#define FHL_GRAPHICS_COLOR_H
 
 #include <algorithm>
 

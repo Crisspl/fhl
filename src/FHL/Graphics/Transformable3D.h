@@ -1,5 +1,5 @@
-#ifndef FHL_TRANSFORMABLE3D_H
-#define FHL_TRANSFORMABLE3D_H
+#ifndef FHL_GRAPHICS_TRANSFORMABLE3D_H
+#define FHL_GRAPHICS_TRANSFORMABLE3D_H
 
 #include <FHL/Graphics/RenderMatrices.h>
 #include <FHL/Maths/Quaternion.h>

@@ -1,5 +1,5 @@
-#ifndef FHL_CUBE_H
-#define FHL_CUBE_H
+#ifndef FHL_UTILITY_CUBE_H
+#define FHL_UTILITY_CUBE_H
 
 #include <array>
 

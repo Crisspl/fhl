@@ -1,5 +1,5 @@
-#ifndef FHL_RECT_H
-#define FHL_RECT_H
+#ifndef FHL_UTILITY_RECT_H
+#define FHL_UTILITY_RECT_H
 
 #include <array>
 

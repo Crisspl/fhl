@@ -1,5 +1,5 @@
-#ifndef FHL_USINGSHADER_H
-#define FHL_USINGSHADER_H
+#ifndef FHL_GRAPHICS_USING_SHADER_H
+#define FHL_GRAPHICS_USING_SHADER_H
 
 namespace fhl
 {

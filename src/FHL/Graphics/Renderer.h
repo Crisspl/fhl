@@ -1,5 +1,5 @@
-#ifndef FHL_RENDERER_H
-#define FHL_RENDERER_H
+#ifndef FHL_GRAPHICS_RENDERER_H
+#define FHL_GRAPHICS_RENDERER_H
 
 #include <FHL/Graphics/RenderConf.h>
 #include <FHL/Graphics/Color.h>

@@ -1,5 +1,5 @@
-#ifndef FHL_CIRCLE_H
-#define FHL_CIRCLE_H
+#ifndef FHL_UTILITY_CIRCLE_H
+#define FHL_UTILITY_CIRCLE_H
 
 #include <FHL/Maths/Vec2.h>
 #include <FHL/common.h>
@@ -13,7 +13,7 @@ namespace fhl
 	class FHL_API Circle
 	{
 	public:
-		constexpr Circle(Vec2f _center, float _radius) : m_center{_center}, m_radius{_radius} {}
+		constexpr Circle(const Vec2f & _center, float _radius) : m_center{_center}, m_radius{_radius} {}
 		constexpr explicit Circle(float _radius) : Circle(Vec2f::zero(), _radius) {}
 
 		constexpr const Vec2f & getCenter() const { return m_center; }

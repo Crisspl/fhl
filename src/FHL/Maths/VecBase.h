@@ -1,5 +1,5 @@
-#ifndef FHL_VEC_BASE_H
-#define FHL_VEC_BASE_H
+#ifndef FHL_MATHS_VEC_BASE_H
+#define FHL_MATHS_VEC_BASE_H
 
 #include <type_traits>
 #include <algorithm>

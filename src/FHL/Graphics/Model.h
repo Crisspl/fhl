@@ -1,5 +1,5 @@
-#ifndef FHL_MODEL_H
-#define FHL_MODEL_H
+#ifndef FHL_GRAPHICS_MODEL_H
+#define FHL_GRAPHICS_MODEL_H
 
 #include <FHL/Graphics/Vao.h>
 #include <FHL/Graphics/Transformable3D.h>

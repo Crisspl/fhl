@@ -1,5 +1,5 @@
-#ifndef FHL_BOOL_VEC_H
-#define FHL_BOOL_VEC_H
+#ifndef FHL_MATHS_BOOL_VEC_H
+#define FHL_MATHS_BOOL_VEC_H
 
 #include <type_traits>
 #include <utility>

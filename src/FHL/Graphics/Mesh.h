@@ -1,5 +1,5 @@
-#ifndef FHL_MESH_H
-#define FHL_MESH_H
+#ifndef FHL_GRAPHICS_MESH_H
+#define FHL_GRAPHICS_MESH_H
 
 #include <string>
 #include <vector>

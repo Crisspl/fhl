@@ -1,5 +1,5 @@
-#ifndef FHL_SHADER_H
-#define FHL_SHADER_H
+#ifndef FHL_GRAPHICS_SHADER_H
+#define FHL_GRAPHICS_SHADER_H
 
 #include <type_traits>
 #include <vector>

@@ -1,5 +1,5 @@
-#ifndef FHL_RENDERCONF_H
-#define FHL_RENDERCONF_H
+#ifndef FHL_GRAPHICS_RENDERCONF_H
+#define FHL_GRAPHICS_RENDERCONF_H
 
 #include <list>
 
@@ -30,6 +30,6 @@ namespace fhl
 		  std::list<Light> lights;
 	};
 
-} // ns
+}
 
-#endif // FHL_RENDERCONF_H
+#endif

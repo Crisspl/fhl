@@ -1,5 +1,5 @@
-#ifndef FHL_RENDERABLE_H
-#define FHL_RENDERABLE_H
+#ifndef FHL_GRAPHICS_RENDERABLE_H
+#define FHL_GRAPHICS_RENDERABLE_H
 
 #include <FHL/Graphics/RenderConf.h>
 
@@ -18,6 +18,6 @@ namespace fhl
 		virtual void render(const RenderConf &) const = 0;
 	};
 
-} // ns
+}
 
-#endif // FHL_RENDERABLE_H
+#endif

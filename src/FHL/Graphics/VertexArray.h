@@ -1,5 +1,5 @@
-#ifndef FHL_VERTEXARRAY_H
-#define FHL_VERTEXARRAY_H
+#ifndef FHL_GRAPHICS_VERTEXARRAY_H
+#define FHL_GRAPHICS_VERTEXARRAY_H
 
 #include <vector>
 #include <memory>

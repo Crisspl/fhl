@@ -1,5 +1,5 @@
-#ifndef FHL_MODELDATA_H
-#define FHL_MODELDATA_H
+#ifndef FHL_GRAPHICS_MODEL_DATA_H
+#define FHL_GRAPHICS_MODEL_DATA_H
 
 #include <string>
 #include <vector>

@@ -1,5 +1,5 @@
-#ifndef FHL_LITABLE_H
-#define FHL_LITABLE_H
+#ifndef FHL_GRAPHICS_LITABLE_H
+#define FHL_GRAPHICS_LITABLE_H
 
 #include <list>
 #include <vector>
@@ -72,4 +72,4 @@ namespace fhl
 
 }
 
-#endif // FHL_LITABLE_H
+#endif

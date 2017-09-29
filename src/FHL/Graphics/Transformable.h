@@ -1,5 +1,5 @@
-#ifndef FHL_TRANSFORMABLE_H
-#define FHL_TRANSFORMABLE_H
+#ifndef FHL_GRAPHICS_TRANSFORMABLE_H
+#define FHL_GRAPHICS_TRANSFORMABLE_H
 
 #include <FHL/GL/OpenGL.h>
 #include <FHL/Graphics/RenderMatrices.h>
@@ -54,6 +54,6 @@ namespace fhl
 		mutable bool m_transformChanged, m_mvpChanged;
 	};
 
-} // ns
+}
 
-#endif // FHL_TRANSFORMABLE_H
+#endif

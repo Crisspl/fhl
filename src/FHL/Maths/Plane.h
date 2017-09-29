@@ -1,5 +1,5 @@
-#ifndef FHL_PLANE_H
-#define FHL_PLANE_H
+#ifndef FHL_MATHS_PLANE_H
+#define FHL_MATHS_PLANE_H
 
 #include <FHL/Maths/vectors.h>
 #include <FHL/Maths/swizzle.h>

@@ -1,5 +1,5 @@
-#ifndef FHL_SPRITE_H
-#define FHL_SPRITE_H
+#ifndef FHL_GRAPHICS_SPRITE_H
+#define FHL_GRAPHICS_SPRITE_H
 
 
 #include <FHL/GL/OpenGL.h>

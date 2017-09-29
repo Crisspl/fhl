@@ -1,5 +1,5 @@
-#ifndef FHL_MAT4_H
-#define FHL_MAT4_H
+#ifndef FHL_MATHS_MAT4_H
+#define FHL_MATHS_MAT4_H
 
 #include <cstring>
 

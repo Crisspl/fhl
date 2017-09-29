@@ -1,5 +1,5 @@
-#ifndef FHL_VERTEX_H
-#define FHL_VERTEX_H
+#ifndef FHL_GRAPHICS_VERTEX_H
+#define FHL_GRAPHICS_VERTEX_H
 
 #include <FHL/Graphics/Color.h>
 
@@ -8,7 +8,7 @@ namespace fhl
 
 	struct FHL_API Vertex
 	{
-		Vertex(Vec2f _pos, Color _col = Color::Transparent()) :
+		Vertex(const Vec2f & _pos, const Color & _col = Color::Transparent()) :
 			position(_pos),
 			color(_col)
 		{}
@@ -17,6 +17,6 @@ namespace fhl
 		Color color;
 	};
 
-} // ns
+}
 
-#endif // FHL_VERTEX_H
+#endif

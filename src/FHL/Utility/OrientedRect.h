@@ -1,5 +1,5 @@
-#ifndef FHL_ORIENTEDRECT_H
-#define FHL_ORIENTEDRECT_H
+#ifndef FHL_UTILITY_ORIENTED_RECT_H
+#define FHL_UTILITY_ORIENTED_RECT_H
 
 #include <vector>
 

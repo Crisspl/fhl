@@ -1,6 +1,5 @@
-#ifndef FHL_CONFIGURATOR_H
-#define FHL_CONFIGURATOR_H
-
+#ifndef FHL_GRAPHICS_CONFIGURATOR_H
+#define FHL_GRAPHICS_CONFIGURATOR_H
 
 #include <memory>
 #include <map>
@@ -51,6 +50,6 @@ namespace fhl
 		static constexpr const char * m_defViewName = "_FHL_default";
 	};
 
-} // ns
+}
 
-#endif // FHL_CONFIGURATOR_H
+#endif

@@ -1,5 +1,5 @@
-#ifndef FHL_MATHS_FUNCS
-#define FHL_MATHS_FUNCS
+#ifndef FHL_MATHS_MATHS_FUNCS
+#define FHL_MATHS_MATHS_FUNCS
 
 #include <algorithm>
 

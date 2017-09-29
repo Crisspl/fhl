@@ -1,5 +1,5 @@
-#ifndef FHL_VIEW_H
-#define FHL_VIEW_H
+#ifndef FHL_GRAPHICS_VIEW_H
+#define FHL_GRAPHICS_VIEW_H
 
 #include <FHL/Maths/Mat4.h>
 
@@ -14,4 +14,4 @@ namespace fhl
 
 }
 
-#endif // FHL_VIEW_H
+#endif

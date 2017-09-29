@@ -1,5 +1,5 @@
-#ifndef FHL_RENDERTEXTURE_H
-#define FHL_RENDERTEXTURE_H
+#ifndef FHL_GRAPHICS_RENDERTEXTURE_H
+#define FHL_GRAPHICS_RENDERTEXTURE_H
 
 #include <algorithm>
 #include <functional>

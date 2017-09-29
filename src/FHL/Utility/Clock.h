@@ -1,5 +1,5 @@
-#ifndef FHL_CLOCK_H
-#define FHL_CLOCK_H
+#ifndef FHL_UTILITY_CLOCK_H
+#define FHL_UTILITY_CLOCK_H
 
 #include <chrono>
 #include <ratio>
@@ -31,6 +31,6 @@ namespace fhl
 		  TimePoint m_start;
 	 };
 
-} // ns
+}
 
-#endif // FHL_CLOCK_H
+#endif

@@ -1,5 +1,5 @@
-#ifndef FHL_TEXTURE_H
-#define FHL_TEXTURE_H
+#ifndef FHL_GRAPHICS_TEXTURE_H
+#define FHL_GRAPHICS_TEXTURE_H
 
 #include <string>
 

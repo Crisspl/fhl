@@ -1,5 +1,5 @@
-#ifndef FHL_FLEXTGL_H
-#define FHL_FLEXTGL_H
+#ifndef FHL_GL_FLEXTGL_H
+#define FHL_GL_FLEXTGL_H
 
 #include <FHL/common.h>
 

@@ -1,5 +1,5 @@
-#ifndef FHL_QUATERNION_H
-#define FHL_QUATERNION_H
+#ifndef FHL_MATHS_QUATERNION_H
+#define FHL_MATHS_QUATERNION_H
 
 #include <FHL/Maths/vectors.h>
 #include <FHL/Maths/Mat4.h>

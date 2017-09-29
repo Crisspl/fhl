@@ -1,5 +1,5 @@
-#ifndef FHL_COLOREDRECT_H
-#define FHL_COLOREDRECT_H
+#ifndef FHL_GRAPHICS_COLORED_RECT_H
+#define FHL_GRAPHICS_COLORED_RECT_H
 
 #include <FHL/GL/OpenGL.h>
 #include <FHL/Graphics/Vao.h>
@@ -23,7 +23,7 @@ namespace fhl
 		friend class Renderer;
 
 	public:
-		explicit ColoredRect(Vec2f _size, Color _color = Color::Transparent());
+		explicit ColoredRect(const Vec2f & _size, const Color & _color = Color::Transparent());
 
 	public:
 		void setColor(const Color & _color) { m_color = _color; }

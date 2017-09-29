@@ -1,5 +1,5 @@
-#ifndef FHL_VAO_H
-#define FHL_VAO_H
+#ifndef FHL_GRAPHICS_VAO_H
+#define FHL_GRAPHICS_VAO_H
 
 
 #include <map>

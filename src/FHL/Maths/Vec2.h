@@ -1,5 +1,5 @@
-#ifndef FHL_VEC2
-#define FHL_VEC2
+#ifndef FHL_MATHS_VEC2
+#define FHL_MATHS_VEC2
 
 #include <FHL/Maths/VecBase.h>
 

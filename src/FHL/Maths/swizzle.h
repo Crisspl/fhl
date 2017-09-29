@@ -1,5 +1,5 @@
-#ifndef FHL_SWIZZLE_H
-#define FHL_SWIZZLE_H
+#ifndef FHL_MATHS_SWIZZLE_H
+#define FHL_MATHS_SWIZZLE_H
 
 #include <type_traits>
 
@@ -43,4 +43,4 @@ namespace fhl { namespace swizzle
 
 }}
 
-#endif // FHL_SWIZZLE_H
+#endif

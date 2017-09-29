@@ -1,5 +1,5 @@
-#ifndef FHL_VECTORS_H
-#define FHL_VECTORS_H
+#ifndef FHL_MATHS_VECTORS_H
+#define FHL_MATHS_VECTORS_H
 
 #include <FHL/Maths/Vec2.h>
 #include <FHL/Maths/Vec3.h>
