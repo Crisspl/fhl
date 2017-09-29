@@ -21,6 +21,7 @@ set(FHL_SRCS_GRAPHICS
 	src/FHL/Graphics/RenderTexture.cpp
 	src/FHL/Graphics/ResMgr.cpp
 	src/FHL/Graphics/Shader.cpp
+	src/FHL/Graphics/shaderSrcs.cpp
 	src/FHL/Graphics/Sizeable.cpp
 	src/FHL/Graphics/Sprite.cpp
 	src/FHL/Graphics/Texture.cpp
@@ -47,7 +48,7 @@ set(FHL_HEADERS_GRAPHICS
 	src/FHL/Graphics/RenderTexture.h
 	src/FHL/Graphics/ResMgr.h
 	src/FHL/Graphics/Shader.h
-	src/FHL/Graphics/ShaderSrcs.h
+	src/FHL/Graphics/shaderSrcs.h
 	src/FHL/Graphics/Sizeable.h
 	src/FHL/Graphics/Sprite.h
 	src/FHL/Graphics/Texture.h
