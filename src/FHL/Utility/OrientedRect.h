@@ -1,8 +1,6 @@
 #ifndef FHL_UTILITY_ORIENTED_RECT_H
 #define FHL_UTILITY_ORIENTED_RECT_H
 
-#include <vector>
-
 #include <FHL/Utility/Rect.h>
 #include <FHL/Graphics/Transformable.h>
 
@@ -20,14 +18,14 @@ namespace fhl
 
 		Rect & adjustX(float _width) override;
 		Rect & adjustY(float _height) override;
-		Rect & translate(const Vec2f & _offset) override;
+		void rotate(const Vec2f & _ori, float _angle);
 
 		const std::array<Vec2f, 2> & getAxes() const override { return m_axes; }
+		float getRotation() const;
 
 	private:
 		void applyTransformData(const TransformData & _data);
-		void rotate(const Vec2f & _ori, float _angle);
-		void calcAxes();
+		void recalcAxes();
 
 	private:
 		std::array<Vec2f, 2> m_axes;

@@ -1,12 +1,15 @@
 #include <FHL/Utility/OrientedRect.h>
 
+#include <vector>
+#include <cmath>
+
 #include <FHL/Graphics/Transformable.h>
 #include <FHL/Maths/mathsFuncs.h>
 
 namespace fhl
 {
 
-	OrientedRect::OrientedRect(const Vec2f & _size, const TransformData & _data) : Rect(_size), m_radAngle(0)
+	OrientedRect::OrientedRect(const Vec2f & _size, const TransformData & _data) : Rect(_size), m_radAngle{0.f}
 	{
 		applyTransformData(_data);
 	}
@@ -58,47 +61,30 @@ namespace fhl
 		return *this;
 	}
 
-	Rect & OrientedRect::translate(const Vec2f & _offset)
+	void OrientedRect::rotate(const Vec2f & _origin, float _angle)
 	{
-		const Vec2f x = { _offset.x() * std::cos(m_radAngle), _offset.x() * std::sin(m_radAngle) };
-		const float angle = m_radAngle + toRadians(90.f);
-		const Vec2f y = { _offset.y() * std::cos(angle), _offset.y() * std::sin(angle) };
+		m_radAngle += toRadians(_angle);
+		m_radAngle = std::fmod(m_radAngle, 2 * Constants<float>::Pi());
 
-		const Vec2f offset = x + y;
+		const Mat4f mat = Mat4f::translate(Vec3f{_origin + getPosition(), 0.f}) * Mat4f::rotate(_angle, Vec3f::back()) * Mat4f::translate(Vec3f{-(_origin + getPosition()), 0.f});
+		for (auto & v : m_verts)
+			v = Mat4f::transform(mat, v);
 
-		return Rect::translate(offset);
+		recalcAxes();
+	}
+
+	float OrientedRect::getRotation() const
+	{
+		return toDegrees(m_radAngle);
 	}
 
 	void OrientedRect::applyTransformData(const TransformData & _data)
 	{
+		translate(_data.botLeft);
 		rotate(_data.origin, _data.rotation);
-		Rect::translate(_data.botLeft);
-
-		m_radAngle = toRadians(_data.rotation);
-
-		calcAxes();
 	}
 
-	void OrientedRect::rotate(const Vec2f & _origin, float _angle)
-	{
-		const float angle = toRadians(_angle);
-		const float s = std::sin(angle);
-		const float c = std::cos(angle);
-
-		translate(-_origin);
-
-		for (Vec2f & vert : m_verts)
-		{
-			Vec2f nu;
-			nu.x() = vert.x() * c - vert.y() * s;
-			nu.y() = vert.x() * s + vert.y() * c;
-			vert = nu;
-		}
-
-		translate(_origin);
-	}
-
-	void OrientedRect::calcAxes()
+	void OrientedRect::recalcAxes()
 	{
 		for (int i = 0; i < 2; i++)
 		{

@@ -54,7 +54,7 @@ namespace fhl {
 
 		 virtual Rect & adjustX(float _width);
 		 virtual Rect & adjustY(float _height);
-		 virtual Rect & translate(const Vec2f & _offset);
+		 Rect & translate(const Vec2f & _offset);
 
 		 virtual const std::array<Vec2f, 2> & getAxes() const { return s_axes; }
 
