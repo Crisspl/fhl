@@ -44,7 +44,6 @@ namespace fhl
 
 	Rect & OrientedRect::adjustX(float _width)
 	{
-		m_size.x() += _width;
 		const Vec2f offset = { _width * cos(m_radAngle), _width * std::sin(m_radAngle) };
 		m_verts[BR] += offset;
 		m_verts[UR] += offset;
@@ -53,7 +52,6 @@ namespace fhl
 
 	Rect & OrientedRect::adjustY(float _height)
 	{
-		m_size.y() += _height;
 		const float angle = m_radAngle + toRadians(90.f);
 		const Vec2f offset = { _height * std::cos(angle), _height * std::sin(angle) };
 		m_verts[UL] += offset;

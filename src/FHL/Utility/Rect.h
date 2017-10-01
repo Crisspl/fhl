@@ -34,14 +34,15 @@ namespace fhl {
 
 	 public:
 		 Rect(const Vec2f & _botLeft, const Vec2f & _size) :
-			 m_size{ _size },
 			 m_verts{ { _botLeft, _botLeft + Vec2f(_size.x(), 0), _botLeft + _size, _botLeft + Vec2f(0, _size.y()) } } {}
 		 explicit Rect(const Vec2f & _size) : Rect(Vec2f::zero(), _size) {}
 		 virtual ~Rect() = default;
 
 	 public:
-		 virtual bool contains(const Vec2f & _p) const;
+		 bool operator==(const Rect & _other) const;
+		 bool operator!=(const Rect & _other) const;
 
+		 virtual bool contains(const Vec2f & _p) const;
 		 virtual bool overlaps(const Rect & _rect) const;
 		 bool overlaps(const Circle & _circle) const;
 
@@ -49,7 +50,7 @@ namespace fhl {
 		 const Verts_t & getVerts() const { return m_verts; }
 
 		 const Vec2f & getPosition() const { return m_verts[BL]; }
-		 const Vec2f & getSize() const { return m_size; }
+		 const Vec2f & getSize() const { return m_verts[UR] - m_verts[BL]; }
 		 Projection project(const Vec2f & _axis) const;
 
 		 virtual Rect & adjustX(float _width);
@@ -59,7 +60,6 @@ namespace fhl {
 		 virtual const std::array<Vec2f, 2> & getAxes() const { return s_axes; }
 
 	 protected:
-		 Vec2f m_size;
 		 Verts_t m_verts;
 
 	 private:

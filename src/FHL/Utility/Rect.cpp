@@ -7,6 +7,18 @@ namespace fhl
 {
 	constexpr std::array<Vec2f, 2> Rect::s_axes;
 
+	bool Rect::operator==(const Rect & _other) const
+	{
+		for (int i = 0; i < 4; ++i)
+			if ((*this)[i] != _other[i]) return false;
+		return true;
+	}
+
+	bool Rect::operator!=(const Rect & _other) const
+	{
+		return !(*this == _other);
+	}
+
 	bool Rect::contains(const Vec2f & _p) const
 	{
 		return (_p.x() < m_verts[BR].x() && _p.x() > getPosition().x()) && (_p.y() < m_verts[UR].y() && _p.y() > getPosition().y());
@@ -46,7 +58,6 @@ namespace fhl
 
 	Rect & Rect::adjustX(float _width)
 	{
-		m_size.x() += _width;
 		m_verts[BR].x() += _width;
 		m_verts[UR].x() += _width;
 		return *this;
@@ -54,7 +65,6 @@ namespace fhl
 
 	Rect & Rect::adjustY(float _height)
 	{
-		m_size.y() += _height;
 		m_verts[UL].y() += _height;
 		m_verts[UR].y() += _height;
 		return *this;
