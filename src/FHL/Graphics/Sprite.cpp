@@ -29,12 +29,12 @@ namespace fhl
 
 	 Rect Sprite::getAABB() const
 	 {
-		  return Rect(getPosition() - getOrigin(), getSize());
+		  return Rect(getPosition() - getOrigin(), getSize() * getScale());
 	 }
 
 	 OrientedRect Sprite::getOBB() const
 	 {
-		  return OrientedRect(getSize(), *this);
+		  return OrientedRect(getSize() * getScale(), *this);
 	 }
 
 	 void Sprite::setUp()

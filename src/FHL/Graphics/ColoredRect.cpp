@@ -18,12 +18,12 @@ namespace fhl
 
 	 Rect ColoredRect::getAABB() const
 	 {
-		 return Rect(getPosition() - getOrigin(), getSize());
+		 return Rect(getPosition() - getOrigin(), getSize() * getScale());
 	 }
 
 	 OrientedRect ColoredRect::getOBB() const
 	 {
-		 return OrientedRect(getSize(), *this);
+		 return OrientedRect(getSize() * getScale(), *this);
 	 }
 
 	 void ColoredRect::setUp()
