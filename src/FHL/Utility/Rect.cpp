@@ -5,7 +5,14 @@
 
 namespace fhl
 {
+
 	constexpr std::array<Vec2f, 2> Rect::s_axes;
+
+	Rect::Rect(const Vec2f & _botLeft, const Vec2f & _size) :
+		m_verts{ { _botLeft, _botLeft + Vec2f(_size.x(), 0), _botLeft + _size, _botLeft + Vec2f(0, _size.y()) } }
+	{}
+
+	Rect::Rect(const Vec2f & _size) : Rect(Vec2f::zero(), _size) {}
 
 	bool Rect::operator==(const Rect & _other) const
 	{

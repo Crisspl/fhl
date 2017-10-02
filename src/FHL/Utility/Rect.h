@@ -33,9 +33,8 @@ namespace fhl {
 		 };
 
 	 public:
-		 Rect(const Vec2f & _botLeft, const Vec2f & _size) :
-			 m_verts{ { _botLeft, _botLeft + Vec2f(_size.x(), 0), _botLeft + _size, _botLeft + Vec2f(0, _size.y()) } } {}
-		 explicit Rect(const Vec2f & _size) : Rect(Vec2f::zero(), _size) {}
+		 Rect(const Vec2f & _botLeft, const Vec2f & _size);
+		 explicit Rect(const Vec2f & _size);
 		 virtual ~Rect() = default;
 
 	 public:

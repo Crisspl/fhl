@@ -9,13 +9,13 @@
 namespace fhl
 {
 
-	OrientedRect::OrientedRect(const Vec2f & _size, const Transformable & _data) : Rect(_size), m_radAngle{0.f}
+	OrientedRect::OrientedRect(const Transformable & _data, const Vec2f & _size) : Rect(_size), m_radAngle{0.f}
 	{
 		applyTransformData(_data);
 	}
 
 	OrientedRect::OrientedRect(const Vec2f & _botLeft, const Vec2f & _size, const Vec2f & _origin, float _rot) :
-		OrientedRect(_size, Transformable{}.setPosition(_botLeft + _origin).setOrigin(_origin).setRotation(_rot))
+		OrientedRect( Transformable{}.setPosition(_botLeft + _origin).setOrigin(_origin).setRotation(_rot), _size)
 	{}
 
 	bool OrientedRect::contains(const Vec2f & _p) const

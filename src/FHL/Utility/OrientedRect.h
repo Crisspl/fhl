@@ -12,7 +12,7 @@ namespace fhl
 	{
 	public:
 		/* Gets position, origin and rotation angle from Transformable object */
-		OrientedRect(const Vec2f & _size, const Transformable & _data);
+		OrientedRect(const Transformable & _data, const Vec2f & _size);
 		OrientedRect(const Vec2f & _botLeft, const Vec2f & _size, const Vec2f & _origin, float _rot);
 
 		bool contains(const Vec2f & _p) const override;
