@@ -11,6 +11,7 @@ namespace fhl
 		m_rotation(0.f),
 		m_position(0.f, 0.f),
 		m_scale(1.f, 1.f),
+		m_origin(0.f, 0.f),
 		m_transformChanged(true),
 		m_mvpChanged(true)
 	{
@@ -57,16 +58,6 @@ namespace fhl
 		m_transformChanged = m_mvpChanged = true;
 		m_origin = _origin;
 		return *this;
-	}
-
-	TransformData Transformable::getTransformData() const
-	{
-		return{
-					m_position - m_origin,
-					m_scale,
-					m_origin,
-					m_rotation
-		};
 	}
 
 	Mat4f Transformable::getTransform() const

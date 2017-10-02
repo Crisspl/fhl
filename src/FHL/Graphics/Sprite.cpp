@@ -34,7 +34,7 @@ namespace fhl
 
 	 OrientedRect Sprite::getOBB() const
 	 {
-		  return OrientedRect(getSize(), getTransformData());
+		  return OrientedRect(getSize(), *this);
 	 }
 
 	 void Sprite::setUp()

@@ -7,16 +7,6 @@
 namespace fhl
 {
 
-	struct FHL_API TransformData
-	{
-		Vec2f botLeft;
-		Vec2f scale;
-		Vec2f origin;
-		float rotation;
-
-		Vec2f position() { return botLeft + origin; }
-	};
-
 	class FHL_API Transformable
 	{
 	public:
@@ -35,7 +25,6 @@ namespace fhl
 		Vec2f getPosition() const { return m_position; }
 		Vec2f getScale() const { return m_scale; }
 		Vec2f getOrigin() const { return m_origin; }
-		TransformData getTransformData() const;
 
 		Mat4f getTransform() const;
 		Mat4f getMVP() const;

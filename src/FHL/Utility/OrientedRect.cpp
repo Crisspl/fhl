@@ -9,12 +9,14 @@
 namespace fhl
 {
 
-	OrientedRect::OrientedRect(const Vec2f & _size, const TransformData & _data) : Rect(_size), m_radAngle{0.f}
+	OrientedRect::OrientedRect(const Vec2f & _size, const Transformable & _data) : Rect(_size), m_radAngle{0.f}
 	{
 		applyTransformData(_data);
 	}
 
-	OrientedRect::OrientedRect(const Vec2f & _botLeft, const Vec2f & _size, const Vec2f & _origin, float _rot) : OrientedRect(_size, { _botLeft, Vec2f::one(), _origin, _rot }) {}
+	OrientedRect::OrientedRect(const Vec2f & _botLeft, const Vec2f & _size, const Vec2f & _origin, float _rot) :
+		OrientedRect(_size, Transformable{}.setPosition(_botLeft + _origin).setOrigin(_origin).setRotation(_rot))
+	{}
 
 	bool OrientedRect::contains(const Vec2f & _p) const
 	{
@@ -44,7 +46,7 @@ namespace fhl
 
 	Rect & OrientedRect::adjustX(float _width)
 	{
-		const Vec2f offset = { _width * cos(m_radAngle), _width * std::sin(m_radAngle) };
+		const Vec2f offset = { _width * std::cos(m_radAngle), _width * std::sin(m_radAngle) };
 		m_verts[BR] += offset;
 		m_verts[UR] += offset;
 		return *this;
@@ -65,16 +67,16 @@ namespace fhl
 		m_radAngle = std::fmod(m_radAngle, 2 * Constants<float>::Pi());
 
 		const Mat4f mat = Mat4f::translate(Vec3f{_origin + getPosition(), 0.f}) * Mat4f::rotate(_angle, Vec3f::back()) * Mat4f::translate(Vec3f{-(_origin + getPosition()), 0.f});
-		for (auto & v : m_verts)
+		for (Vec2f & v : m_verts)
 			v = Mat4f::transform(mat, v);
 
 		recalcAxes();
 	}
 
-	void OrientedRect::applyTransformData(const TransformData & _data)
+	void OrientedRect::applyTransformData(const Transformable & _data)
 	{
-		translate(_data.botLeft);
-		rotate(_data.origin, _data.rotation);
+		translate(_data.getPosition() - _data.getOrigin());
+		rotate(_data.getOrigin(), _data.getRotation());
 	}
 
 	void OrientedRect::recalcAxes()

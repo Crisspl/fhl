@@ -2,15 +2,17 @@
 #define FHL_UTILITY_ORIENTED_RECT_H
 
 #include <FHL/Utility/Rect.h>
-#include <FHL/Graphics/Transformable.h>
 
 namespace fhl
 {
 
+	class Transformable;
+
 	class FHL_API OrientedRect : public Rect
 	{
 	public:
-		OrientedRect(const Vec2f & _size, const TransformData & _data);
+		/* Gets position, origin and rotation angle from Transformable object */
+		OrientedRect(const Vec2f & _size, const Transformable & _data);
 		OrientedRect(const Vec2f & _botLeft, const Vec2f & _size, const Vec2f & _origin, float _rot);
 
 		bool contains(const Vec2f & _p) const override;
@@ -23,7 +25,7 @@ namespace fhl
 
 	private:
 		void rotate(const Vec2f & _ori, float _angle);
-		void applyTransformData(const TransformData & _data);
+		void applyTransformData(const Transformable & _data);
 		void recalcAxes();
 
 	private:

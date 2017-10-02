@@ -23,7 +23,7 @@ namespace fhl
 
 	 OrientedRect ColoredRect::getOBB() const
 	 {
-		 return OrientedRect(getSize(), getTransformData());
+		 return OrientedRect(getSize(), *this);
 	 }
 
 	 void ColoredRect::setUp()
