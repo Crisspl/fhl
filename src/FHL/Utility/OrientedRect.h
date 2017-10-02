@@ -18,12 +18,11 @@ namespace fhl
 
 		Rect & adjustX(float _width) override;
 		Rect & adjustY(float _height) override;
-		void rotate(const Vec2f & _ori, float _angle);
 
 		const std::array<Vec2f, 2> & getAxes() const override { return m_axes; }
-		float getRotation() const;
 
 	private:
+		void rotate(const Vec2f & _ori, float _angle);
 		void applyTransformData(const TransformData & _data);
 		void recalcAxes();
 

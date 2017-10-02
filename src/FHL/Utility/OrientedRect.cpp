@@ -71,11 +71,6 @@ namespace fhl
 		recalcAxes();
 	}
 
-	float OrientedRect::getRotation() const
-	{
-		return toDegrees(m_radAngle);
-	}
-
 	void OrientedRect::applyTransformData(const TransformData & _data)
 	{
 		translate(_data.botLeft);
