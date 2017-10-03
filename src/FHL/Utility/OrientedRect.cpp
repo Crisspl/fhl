@@ -44,21 +44,24 @@ namespace fhl
 		return true;
 	}
 
-	Rect & OrientedRect::adjustX(float _width)
+	Rect & OrientedRect::adjustRight(float _x)
 	{
-		const Vec2f offset = { _width * std::cos(m_radAngle), _width * std::sin(m_radAngle) };
-		m_verts[BR] += offset;
-		m_verts[UR] += offset;
-		return *this;
+		return translateSide(BR, UR, calcOffsetVector(_x, m_radAngle));
 	}
 
-	Rect & OrientedRect::adjustY(float _height)
+	Rect & OrientedRect::adjustLeft(float _x)
 	{
-		const float angle = m_radAngle + toRadians(90.f);
-		const Vec2f offset = { _height * std::cos(angle), _height * std::sin(angle) };
-		m_verts[UL] += offset;
-		m_verts[UR] += offset;
-		return *this;
+		return translateSide(BL, UL, calcOffsetVector(_x, m_radAngle));
+	}
+
+	Rect & OrientedRect::adjustTop(float _y)
+	{
+		return translateSide(UL, UR, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
+	}
+
+	Rect & OrientedRect::adjustBottom(float _y)
+	{
+		return translateSide(BL, BR, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
 	}
 
 	void OrientedRect::rotate(const Vec2f & _origin, float _angle)
@@ -86,6 +89,11 @@ namespace fhl
 			const Vec2f edge = m_verts[i] - m_verts[i + 1];
 			m_axes[i] = edge.perpendicular().normalized();
 		}
+	}
+
+	Vec2f OrientedRect::calcOffsetVector(float _distance, float _angle)
+	{
+		return Vec2f{ _distance * std::cos(_angle), _distance * std::sin(_angle) };
 	}
 
 }

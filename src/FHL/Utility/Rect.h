@@ -24,7 +24,7 @@ namespace fhl {
 		 using Verts_t = std::array<Vec2f, 4>;
 
 	 public:
-		 enum VerticlePos : std::size_t /* Note that Y axis can be inverted! */
+		 enum VertexPos : std::size_t /* Note that Y axis can be inverted! */
 		 {
 			 BL = 0, // Bottom-left
 			 BR, // Bottom-right
@@ -52,11 +52,16 @@ namespace fhl {
 		 Vec2f getSize() const { return m_verts[UR] - m_verts[BL]; }
 		 Projection project(const Vec2f & _axis) const;
 
-		 virtual Rect & adjustX(float _width);
-		 virtual Rect & adjustY(float _height);
+		 virtual Rect & adjustRight(float _x);
+		 virtual Rect & adjustLeft(float _x);
+		 virtual Rect & adjustTop(float _y);
+		 virtual Rect & adjustBottom(float _y);
 		 Rect & translate(const Vec2f & _offset);
 
 		 virtual const std::array<Vec2f, 2> & getAxes() const { return s_axes; }
+
+	 protected:
+		 Rect & translateSide(VertexPos _a, VertexPos _b, const Vec2f & _offset);
 
 	 protected:
 		 Verts_t m_verts;

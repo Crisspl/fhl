@@ -63,24 +63,37 @@ namespace fhl
 		return{ min, max };
 	}
 
-	Rect & Rect::adjustX(float _width)
+	Rect & Rect::adjustRight(float _x)
 	{
-		m_verts[BR].x() += _width;
-		m_verts[UR].x() += _width;
-		return *this;
+		return translateSide(BR, UR, Vec2f::right(_x));
 	}
 
-	Rect & Rect::adjustY(float _height)
+	Rect & Rect::adjustLeft(float _x)
 	{
-		m_verts[UL].y() += _height;
-		m_verts[UR].y() += _height;
-		return *this;
+		return translateSide(BL, UL, Vec2f::right(_x));
+	}
+
+	Rect & Rect::adjustTop(float _y)
+	{
+		return translateSide(UL, UR, Vec2f::up(_y));
+	}
+
+	Rect & Rect::adjustBottom(float _y)
+	{
+		return translateSide(BL, BR, Vec2f::up(_y));
 	}
 
 	Rect & Rect::translate(const Vec2f & _offset)
 	{
 		for (Vec2f & vert : m_verts)
 			vert += _offset;
+		return *this;
+	}
+
+	Rect & Rect::translateSide(VertexPos _a, VertexPos _b, const Vec2f & _offset)
+	{
+		m_verts[_a] += _offset;
+		m_verts[_b] += _offset;
 		return *this;
 	}
 

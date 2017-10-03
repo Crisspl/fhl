@@ -18,8 +18,10 @@ namespace fhl
 		bool contains(const Vec2f & _p) const override;
 		bool overlaps(const Rect & _rect) const override;
 
-		Rect & adjustX(float _width) override;
-		Rect & adjustY(float _height) override;
+		Rect & adjustRight(float _x) override;
+		Rect & adjustLeft(float _x) override;
+		Rect & adjustTop(float _y) override;
+		Rect & adjustBottom(float _y) override;
 
 		const std::array<Vec2f, 2> & getAxes() const override { return m_axes; }
 
@@ -27,6 +29,7 @@ namespace fhl
 		void rotate(const Vec2f & _ori, float _angle);
 		void applyTransformData(const Transformable & _data);
 		void recalcAxes();
+		static Vec2f calcOffsetVector(float _distance, float _angle);
 
 	private:
 		std::array<Vec2f, 2> m_axes;
