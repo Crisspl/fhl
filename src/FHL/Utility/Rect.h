@@ -26,10 +26,10 @@ namespace fhl {
 	 public:
 		 enum VertexPos : std::size_t /* Note that Y axis can be inverted! */
 		 {
-			 BL = 0, // Bottom-left
-			 BR, // Bottom-right
-			 UR, // Upper-right
-			 UL  // Upper-left
+			 LB = 0, // left-bottom
+			 RB, // right-bottom
+			 RT, // right-upper
+			 LT  // left-upper
 		 };
 
 	 public:
@@ -48,8 +48,8 @@ namespace fhl {
 		 const Vec2f & operator[](std::size_t _i) const { return m_verts[_i]; }
 		 const Verts_t & getVerts() const { return m_verts; }
 
-		 const Vec2f & getPosition() const { return m_verts[BL]; }
-		 Vec2f getSize() const { return m_verts[UR] - m_verts[BL]; }
+		 const Vec2f & getPosition() const { return m_verts[LB]; }
+		 Vec2f getSize() const { return m_verts[RT] - m_verts[LB]; }
 		 Projection project(const Vec2f & _axis) const;
 
 		 virtual Rect & adjustRight(float _x);

@@ -14,16 +14,16 @@ namespace fhl
 		using Verts_t = std::array<Vec3f, 8>;
 
 	public:
-		enum VerticlePos : std::size_t
+		enum VertexPos : std::size_t
 		{
-			BLR = 0, // bottom-left-rear
-			BRR, // bottom-right-rear
-			URR, // upper-right-rear
-			ULR, // upper-left-rear
-			BLF, // bottom-left-front
-			BRF, // bottom-right-front
-			URF, // upper-right-front
-			ULF // upper-left-front
+			LBB = 0, // left-bottom-back
+			RBB, // right-bottom-back
+			RTB, // right-top-back
+			LTB, // left-top-rear
+			LBF, // left-bottom-front
+			RBF, // right-bottom-front
+			RTF, // right-top-front
+			LTF  // left-top-front
 		};
 
 	public:
@@ -38,16 +38,21 @@ namespace fhl
 		const Vec3f & operator[](std::size_t _i) const { return m_verts[_i]; }
 		const Verts_t & getVerts() const { return m_verts; }
 
-		const Vec3f & getPosition() const { return m_verts[BLR]; }
-		const Vec3f & getSize() const { return m_size; }
+		const Vec3f & getPosition() const { return m_verts[LBB]; }
+		Vec3f getSize() const { return m_verts[RTF] - m_verts[LBB]; }
 
-		virtual Cube & adjustX(float _offset);
-		virtual Cube & adjustY(float _offset);
-		virtual Cube & adjustZ(float _offset);
+		virtual Cube & adjustRight(float _offset);
+		virtual Cube & adjustLeft(float _offset);
+		virtual Cube & adjustTop(float _offset);
+		virtual Cube & adjustBottom(float _offset);
+		virtual Cube & adjustFront(float _offset);
+		virtual Cube & adjustBack(float _offset);
 		virtual Cube & translate(const Vec3f & _offset);
 
+	protected:
+		Cube & translateSide(VertexPos _a, VertexPos _b, VertexPos _c, VertexPos _d, const Vec3f & _offset);
+
 	private:
-		Vec3f m_size;
 		Verts_t m_verts;
 	};
 

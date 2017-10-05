@@ -46,22 +46,22 @@ namespace fhl
 
 	Rect & OrientedRect::adjustRight(float _x)
 	{
-		return translateSide(BR, UR, calcOffsetVector(_x, m_radAngle));
+		return translateSide(RB, RT, calcOffsetVector(_x, m_radAngle));
 	}
 
 	Rect & OrientedRect::adjustLeft(float _x)
 	{
-		return translateSide(BL, UL, calcOffsetVector(_x, m_radAngle));
+		return translateSide(LB, LT, calcOffsetVector(_x, m_radAngle));
 	}
 
 	Rect & OrientedRect::adjustTop(float _y)
 	{
-		return translateSide(UL, UR, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
+		return translateSide(LT, RT, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
 	}
 
 	Rect & OrientedRect::adjustBottom(float _y)
 	{
-		return translateSide(BL, BR, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
+		return translateSide(LB, RB, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
 	}
 
 	void OrientedRect::rotate(const Vec2f & _origin, float _angle)

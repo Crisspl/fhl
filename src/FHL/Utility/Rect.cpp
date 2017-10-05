@@ -28,7 +28,7 @@ namespace fhl
 
 	bool Rect::contains(const Vec2f & _p) const
 	{
-		return (_p.x() < m_verts[BR].x() && _p.x() > getPosition().x()) && (_p.y() < m_verts[UR].y() && _p.y() > getPosition().y());
+		return (_p.x() < m_verts[RB].x() && _p.x() > getPosition().x()) && (_p.y() < m_verts[RT].y() && _p.y() > getPosition().y());
 	}
 
 	bool Rect::overlaps(const Rect & _rect) const
@@ -65,22 +65,22 @@ namespace fhl
 
 	Rect & Rect::adjustRight(float _x)
 	{
-		return translateSide(BR, UR, Vec2f::right(_x));
+		return translateSide(RB, RT, Vec2f::right(_x));
 	}
 
 	Rect & Rect::adjustLeft(float _x)
 	{
-		return translateSide(BL, UL, Vec2f::right(_x));
+		return translateSide(LB, LT, Vec2f::right(_x));
 	}
 
 	Rect & Rect::adjustTop(float _y)
 	{
-		return translateSide(UL, UR, Vec2f::up(_y));
+		return translateSide(LT, RT, Vec2f::up(_y));
 	}
 
 	Rect & Rect::adjustBottom(float _y)
 	{
-		return translateSide(BL, BR, Vec2f::up(_y));
+		return translateSide(LB, RB, Vec2f::up(_y));
 	}
 
 	Rect & Rect::translate(const Vec2f & _offset)
