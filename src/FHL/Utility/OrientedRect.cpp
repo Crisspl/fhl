@@ -69,7 +69,7 @@ namespace fhl
 		m_radAngle += toRadians(_angle);
 		m_radAngle = std::fmod(m_radAngle, 2 * Constants<float>::Pi());
 
-		const Mat4f mat = Mat4f::translate(Vec3f{_origin + getPosition(), 0.f}) * Mat4f::rotate(_angle, Vec3f::back()) * Mat4f::translate(Vec3f{-(_origin + getPosition()), 0.f});
+		const Mat4f mat = Mat4f::translate(Vec3f{_origin + getPosition(), 0.f}) * Mat4f::rotate(_angle, Vec3f::forward()) * Mat4f::translate(Vec3f{-(_origin + getPosition()), 0.f});
 		for (Vec2f & v : m_verts)
 			v = Mat4f::transform(mat, v);
 

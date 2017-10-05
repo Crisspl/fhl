@@ -6,7 +6,7 @@ namespace fhl
 		m_cols {
 			Vec4<_T>{ Vec3<_T>::right(_diagonal), _T(0) },
 			Vec4<_T>{ Vec3<_T>::up(_diagonal), _T(0) },
-			Vec4<_T>{ Vec3<_T>::back(_diagonal), _T(0) },
+			Vec4<_T>{ Vec3<_T>::forward(_diagonal), _T(0) },
 			Vec4<_T>::wAxis(_diagonal)
 		}
 	{}
@@ -208,7 +208,7 @@ namespace fhl
 		return Mat4<_T> {
 			Vec4<_T>{ Vec3<_T>::right(), _T(0) },
 			Vec4<_T>{ Vec3<_T>::up(), _T(0) },
-			Vec4<_T>{ Vec3<_T>::back(), _T(0) },
+			Vec4<_T>{ Vec3<_T>::forward(), _T(0) },
 			Vec4<_T>{ _t, _T(1) }
 		};
 	}
@@ -225,7 +225,7 @@ namespace fhl
 		return Mat4<_T> {
 			Vec4<_T>{ Vec3<_T>::right(_s.x()), _T(0) },
 			Vec4<_T>{ Vec3<_T>::up(_s.y()), _T(0) },
-			Vec4<_T>{ Vec3<_T>::back(_s.z()), _T(0) },
+			Vec4<_T>{ Vec3<_T>::forward(_s.z()), _T(0) },
 			Vec4<_T>::wAxis()
 		};
 	}

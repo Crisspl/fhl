@@ -112,7 +112,7 @@ namespace fhl
 		return
 			Mat4f::scale(Vec3f(_scale, 1)) *
 			Mat4f::translate(Vec3f(_origin, 0) + Vec3f(_pos - _origin, 0) / Vec3f(_scale, 1)) *
-			Mat4f::rotate(_angle, Vec3f::back()) *
+			Mat4f::rotate(_angle, Vec3f::forward()) *
 			Mat4f::translate(Vec3f(-_origin, 0));
 	}
 

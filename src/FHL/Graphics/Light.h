@@ -20,7 +20,7 @@ namespace fhl
 
 		  static constexpr Light infinite(const Vec3f & _dir, const Color & _color = Color::White(), float _illu = 1.f);
 		  static constexpr Light point(const Vec3f & _pos, const Color & _color = Color::White(), float _illu = 1.f, float _linear = 0.045f, float _quadratic = 0.0075f);
-		  static constexpr Light spot(const Vec3f & _pos, const Vec3f & _dir = Vec3f::forward(), const Color & _color = Color::White(), float _cutOff = 30.f, float _illu = 1.f, float _linear = 0.045f, float _quadratic = 0.0075f);
+		  static constexpr Light spot(const Vec3f & _pos, const Vec3f & _dir = Vec3f::back(), const Color & _color = Color::White(), float _cutOff = 30.f, float _illu = 1.f, float _linear = 0.045f, float _quadratic = 0.0075f);
 
 		  Vec3f position, direction;
 		  Color color;
