@@ -4,8 +4,10 @@ namespace fhl
 {
 
 	OrientedCube::OrientedCube(const Vec3f & _lbb, const Vec3f & _size, const Vec3f & _origin, const Quaternion & _rot) :
-		Cube(_lbb, _size), m_sides{recalcSidePlanes()}
-	{}
+		Cube(_lbb, _size), m_sides{{ Plane<float>::yz(_lbb.x()), Plane<float>::yz(_lbb.x() + _size.x()), Plane<float>::xz(_lbb.y() + _size.y()), Plane<float>::xz(_lbb.y()), Plane<float>::xy(_lbb.z()), Plane<float>::xy(_lbb.z() + _size.z()) }}
+	{
+		rotate(_origin, _rot);
+	}
 
 	bool OrientedCube::contains(const Vec3f & _point) const
 	{
@@ -26,32 +28,32 @@ namespace fhl
 
 	Cube & OrientedCube::adjustRight(float _offset)
 	{
-		return translateSide(RTF, RTB, RBB, RBF, calcOffsetVector(Vec3f::right(), m_rotation));
+		return translateSide(RTF, RTB, RBB, RBF, calcOffsetVector(Vec3f::right(_offset), m_rotation));
 	}
 
 	Cube & OrientedCube::adjustLeft(float _offset)
 	{
-		return translateSide(LTF, LTB, LBB, LBF, calcOffsetVector(Vec3f::right(), m_rotation));
+		return translateSide(LTF, LTB, LBB, LBF, calcOffsetVector(Vec3f::right(_offset), m_rotation));
 	}
 
 	Cube & OrientedCube::adjustTop(float _offset)
 	{
-		return translateSide(LTF, RTF, RTB, LTB, calcOffsetVector(Vec3f::up(), m_rotation));
+		return translateSide(LTF, RTF, RTB, LTB, calcOffsetVector(Vec3f::up(_offset), m_rotation));
 	}
 
 	Cube & OrientedCube::adjustBottom(float _offset)
 	{
-		return translateSide(LBF, RBF, RBB, LBB, calcOffsetVector(Vec3f::up(), m_rotation));
+		return translateSide(LBF, RBF, RBB, LBB, calcOffsetVector(Vec3f::up(_offset), m_rotation));
 	}
 
 	Cube & OrientedCube::adjustFront(float _offset)
 	{
-		return translateSide(LTF, LBF, RBF, RTF, calcOffsetVector(Vec3f::forward(), m_rotation));
+		return translateSide(LTF, LBF, RBF, RTF, calcOffsetVector(Vec3f::forward(_offset), m_rotation));
 	}
 
 	Cube & OrientedCube::adjustBack(float _offset)
 	{
-		return translateSide(LTB, LBB, RBB, RTB, calcOffsetVector(Vec3f::forward(), m_rotation));
+		return translateSide(LTB, LBB, RBB, RTB, calcOffsetVector(Vec3f::forward(_offset), m_rotation));
 	}
 
 	void OrientedCube::rotate(const Vec3f & _origin, const Quaternion & _rotation)
@@ -65,9 +67,9 @@ namespace fhl
 		recalcSidePlanes();
 	}
 
-	std::array<Plane<float>, 6> OrientedCube::recalcSidePlanes()
+	void OrientedCube::recalcSidePlanes()
 	{
-		return m_sides =
+		m_sides =
 		{ {
 			Plane<float>(m_verts[LTB], m_verts[LTF], m_verts[LBF]), // left
 			Plane<float>(m_verts[RTB], m_verts[RTF], m_verts[RBF]), // right

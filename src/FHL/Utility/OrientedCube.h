@@ -37,7 +37,7 @@ namespace fhl
 
 	private:
 		void rotate(const Vec3f & _origin, const Quaternion & _rotation);
-		std::array<Plane<float>, 6> recalcSidePlanes();
+		void recalcSidePlanes();
 		static Vec3f calcOffsetVector(const Vec3f & _v, const Quaternion & _rot);
 
 	private:

@@ -29,13 +29,13 @@ namespace fhl
 			m_abcd = Vec4<_T>{ normal, -normal.dot(_p0) } / normal.length();
 		}
 
-		constexpr Vec3<_T> getNormal() const
+		Vec3<_T> getNormal() const
 		{
 			using namespace swizzle;
 			return get<X, Y, Z>(m_abcd);
 		}
 
-		constexpr _T getD() const { return m_abcd.w(); }
+		_T getD() const { return m_abcd.w(); }
 
 		bool isLyingOn(const Vec3<_T> & _p) const
 		{
