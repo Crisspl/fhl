@@ -44,6 +44,11 @@ namespace fhl
 		return true;
 	}
 
+	Vec2f OrientedRect::getSize() const
+	{
+		return { (m_verts[RB] - m_verts[LB]).length(), (m_verts[RT] - m_verts[RB]).length() };
+	}
+
 	Rect & OrientedRect::adjustRight(float _x)
 	{
 		return translateSide(RB, RT, calcOffsetVector(_x, m_radAngle));

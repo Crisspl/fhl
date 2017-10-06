@@ -18,6 +18,8 @@ namespace fhl
 		bool contains(const Vec2f & _p) const override;
 		bool overlaps(const Rect & _rect) const override;
 
+		Vec2f getSize() const override;
+
 		Rect & adjustRight(float _x) override;
 		Rect & adjustLeft(float _x) override;
 		Rect & adjustTop(float _y) override;

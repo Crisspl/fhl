@@ -49,7 +49,7 @@ namespace fhl {
 		 const Verts_t & getVerts() const { return m_verts; }
 
 		 const Vec2f & getPosition() const { return m_verts[LB]; }
-		 Vec2f getSize() const { return m_verts[RT] - m_verts[LB]; }
+		 virtual Vec2f getSize() const { return m_verts[RT] - m_verts[LB]; }
 		 Projection project(const Vec2f & _axis) const;
 
 		 virtual Rect & adjustRight(float _x);
