@@ -42,7 +42,7 @@ namespace fhl {
 		 bool operator!=(const Rect & _other) const;
 
 		 virtual bool contains(const Vec2f & _p) const;
-		 virtual bool overlaps(const Rect & _rect) const;
+		 virtual bool overlaps(const Rect & _other) const;
 		 bool overlaps(const Circle & _circle) const;
 
 		 const Vec2f & operator[](std::size_t _i) const { return m_verts[_i]; }

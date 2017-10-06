@@ -31,11 +31,14 @@ namespace fhl
 		return (_p.x() < m_verts[RB].x() && _p.x() > getPosition().x()) && (_p.y() < m_verts[RT].y() && _p.y() > getPosition().y());
 	}
 
-	bool Rect::overlaps(const Rect & _rect) const
+	bool Rect::overlaps(const Rect & _other) const
 	{
+		if (_other.getSize() > getSize())
+			return _other.overlaps(*this);
+
 		for (int i = 0; i < 4; i++)
 		{
-			if (this->contains(_rect[i]))
+			if (this->contains(_other[i]))
 				return true;
 		}
 		return false;
