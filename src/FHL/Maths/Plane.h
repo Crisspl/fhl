@@ -14,7 +14,7 @@ namespace fhl
 	class Plane
 	{
 	public:
-		constexpr Plane(const Vec3<_T> & _normal, _T _d) : m_abcd{ Vec4<_T>{_normal, _d} / _normal.length() } {}
+		Plane(const Vec3<_T> & _normal, _T _d) : m_abcd{ Vec4<_T>{_normal, _d} / _normal.length() } {}
 
 		/* from a point and normal vector */
 		Plane(const Vec3<_T> & _point, const Vec3<_T> & _normal) : Plane(_normal, -_normal.dot(_point)) {}
@@ -45,6 +45,10 @@ namespace fhl
 		/* no need to divide by normal vector length since it's always normalized (see ctors) */
 		_T signedDistanceFromPoint(const Vec3<_T> & _point) const { return getNormal().dot(_point) + getD(); }
 		_T distanceFromPoint(const Vec3<_T> & _point) const { return std::abs(signedDistanceFromPoint(_point)); }
+
+		static Plane<_T> xy(_T _d = 0) { return { Vec3<_T>::forward(), _d }; }
+		static Plane<_T> xz(_T _d = 0) { return { Vec3<_T>::up(), _d }; }
+		static Plane<_T> yz(_T _d = 0) { return { Vec3<_T>::right(), _d }; }
 
 	private:
 		Vec4<_T> m_abcd;
