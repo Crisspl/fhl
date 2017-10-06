@@ -91,6 +91,7 @@ set(FHL_SRCS_UTILITY
 	src/FHL/Utility/Clock.cpp       
 	src/FHL/Utility/Cube.cpp
 	src/FHL/Utility/Debug.cpp
+	src/FHL/Utility/OrientedCube.cpp
 	src/FHL/Utility/OrientedRect.cpp
 	src/FHL/Utility/Rect.cpp
 )
@@ -100,6 +101,7 @@ set(FHL_HEADERS_UTILITY
 	src/FHL/Utility/Compare.h
 	src/FHL/Utility/Cube.h
 	src/FHL/Utility/Debug.h
+	src/FHL/Utility/OrientedCube.h
 	src/FHL/Utility/OrientedRect.h
 	src/FHL/Utility/Rect.h
 )

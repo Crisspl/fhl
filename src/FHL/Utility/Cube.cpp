@@ -19,6 +19,9 @@ namespace fhl
 
 	bool Cube::overlaps(const Cube & _other) const
 	{
+		if (_other.getSize() > getSize())
+			return _other.overlaps(*this);
+
 		for (const Vec3f & vert : _other.getVerts())
 			if (contains(vert)) return true;
 		return false;
