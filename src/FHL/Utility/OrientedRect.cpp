@@ -9,14 +9,16 @@
 namespace fhl
 {
 
-	OrientedRect::OrientedRect(const Transformable & _data, const Vec2f & _size) : Rect(_size), m_radAngle{0.f}
-	{
-		applyTransformData(_data);
-	}
+	OrientedRect::OrientedRect(const Transformable & _data, const Vec2f & _size) :
+		OrientedRect(_data.getPosition() - _data.getOrigin(), _size, _data.getOrigin(), _data.getRotation())
+	{}
 
 	OrientedRect::OrientedRect(const Vec2f & _botLeft, const Vec2f & _size, const Vec2f & _origin, float _rot) :
-		OrientedRect( Transformable{}.setPosition(_botLeft + _origin).setOrigin(_origin).setRotation(_rot), _size)
-	{}
+		Rect(_size), m_radAngle{0.f}, m_size{_size}
+	{
+		translate(_botLeft);
+		rotate(_origin, _rot);
+	}
 
 	bool OrientedRect::contains(const Vec2f & _p) const
 	{
@@ -44,28 +46,27 @@ namespace fhl
 		return true;
 	}
 
-	Vec2f OrientedRect::getSize() const
-	{
-		return { (m_verts[RB] - m_verts[LB]).length(), (m_verts[RT] - m_verts[RB]).length() };
-	}
-
 	Rect & OrientedRect::adjustRight(float _x)
 	{
+		m_size.x() += _x;
 		return translateSide(RB, RT, calcOffsetVector(_x, m_radAngle));
 	}
 
 	Rect & OrientedRect::adjustLeft(float _x)
 	{
+		m_size.x() += _x;
 		return translateSide(LB, LT, calcOffsetVector(_x, m_radAngle));
 	}
 
 	Rect & OrientedRect::adjustTop(float _y)
 	{
+		m_size.y() += _y;
 		return translateSide(LT, RT, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
 	}
 
 	Rect & OrientedRect::adjustBottom(float _y)
 	{
+		m_size.y() += _y;
 		return translateSide(LB, RB, calcOffsetVector(_y, m_radAngle + toRadians(90.f)));
 	}
 
@@ -79,12 +80,6 @@ namespace fhl
 			v = Mat4f::transform(mat, v);
 
 		recalcAxes();
-	}
-
-	void OrientedRect::applyTransformData(const Transformable & _data)
-	{
-		translate(_data.getPosition() - _data.getOrigin());
-		rotate(_data.getOrigin(), _data.getRotation());
 	}
 
 	void OrientedRect::recalcAxes()

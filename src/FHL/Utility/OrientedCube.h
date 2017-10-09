@@ -26,7 +26,7 @@ namespace fhl
 
 		bool contains(const Vec3f & _point) const override;
 
-		Vec3f getSize() const override;
+		Vec3f getSize() const override { return m_size; }
 
 		Cube & adjustRight(float _offset) override;
 		Cube & adjustLeft(float _offset) override;
@@ -43,6 +43,7 @@ namespace fhl
 	private:
 		std::array<Plane<float>, 6> m_sides;
 		Quaternion m_rotation;
+		Vec3f m_size;
 	};
 
 }

@@ -18,7 +18,7 @@ namespace fhl
 		bool contains(const Vec2f & _p) const override;
 		bool overlaps(const Rect & _rect) const override;
 
-		Vec2f getSize() const override;
+		Vec2f getSize() const override { return m_size; }
 
 		Rect & adjustRight(float _x) override;
 		Rect & adjustLeft(float _x) override;
@@ -29,13 +29,13 @@ namespace fhl
 
 	private:
 		void rotate(const Vec2f & _ori, float _angle);
-		void applyTransformData(const Transformable & _data);
 		void recalcAxes();
 		static Vec2f calcOffsetVector(float _distance, float _angle);
 
 	private:
 		std::array<Vec2f, 2> m_axes;
 		float m_radAngle;
+		Vec2f m_size;
 	};
 
 
