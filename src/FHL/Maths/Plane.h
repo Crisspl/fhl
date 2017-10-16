@@ -13,9 +13,10 @@ namespace fhl
 	template<typename _T>
 	class Plane
 	{
-	public:
+	private:
 		Plane(const Vec3<_T> & _normal, _T _d) : m_abcd{ Vec4<_T>{_normal, _d} / _normal.length() } {}
 
+	public:
 		/* from a point and normal vector */
 		Plane(const Vec3<_T> & _point, const Vec3<_T> & _normal) : Plane(_normal, -_normal.dot(_point)) {}
 
