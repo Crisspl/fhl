@@ -24,12 +24,12 @@ namespace fhl
 		 return elapsedTime;
 	 }
 
-	 template float Clock::getElapsedTime<Seconds>();
-	 template float Clock::getElapsedTime<Milliseconds>();
-	 template float Clock::getElapsedTime<Microseconds>();
+	 template float FHL_API Clock::getElapsedTime<Seconds>();
+	 template float FHL_API Clock::getElapsedTime<Milliseconds>();
+	 template float FHL_API Clock::getElapsedTime<Microseconds>();
 
-	 template float Clock::restart<Seconds>();
-	 template float Clock::restart<Milliseconds>();
-	 template float Clock::restart<Microseconds>();
+	 template float FHL_API Clock::restart<Seconds>();
+	 template float FHL_API Clock::restart<Milliseconds>();
+	 template float FHL_API Clock::restart<Microseconds>();
 
-} // ns
+}
