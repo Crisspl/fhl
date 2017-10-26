@@ -8,7 +8,7 @@ namespace fhl
 
 	struct FHL_API Vertex
 	{
-		Vertex(const Vec2f & _pos, const Color & _col = Color::Transparent()) :
+		Vertex(const Vec2f & _pos = Vec2f::zero(), const Color & _col = Color::Transparent()) :
 			position(_pos),
 			color(_col)
 		{}
