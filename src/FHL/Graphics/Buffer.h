@@ -67,7 +67,7 @@ namespace fhl { namespace detail
 		GLsizei m_size;
 		mutable std::set<Target> m_targets;
 
-		static std::map<Target, GLuint> s_binds;
+		static std::map<Target, GLuint> s_bonds;
 	};
 
 }}

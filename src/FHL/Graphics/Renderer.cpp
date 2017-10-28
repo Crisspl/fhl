@@ -56,18 +56,15 @@ namespace fhl
 			.setInt("texSampler", 0)
 			.setLights("light", lights.cbegin(), lights.cend());
 
-		glActiveTexture(GL_TEXTURE0);
-
 		if (usingCustomRc && _conf.texture)
-			glBindTexture(GL_TEXTURE_2D, _conf.texture->getId());
+			_conf.texture->bind(0);
 		else if (_renderable.getTexture())
-			glBindTexture(GL_TEXTURE_2D, _renderable.getTexture()->getId());
+			_renderable.getTexture()->bind(0);
 
 		_renderable.getVao().bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		_renderable.getVao().unbind();
 
-		glBindTexture(GL_TEXTURE_2D, 0);
 		Shader::unuse();
 	}
 
@@ -118,21 +115,14 @@ namespace fhl
 		const auto & vaos = _renderable.getVaos();
 		for (int i = 0; i < meshes.size(); i++)
 		{
-			glActiveTexture(GL_TEXTURE0);
+			meshes[i].getDiffuseTexture()->bind(0);
 			shader.setInt("material.texture_diffuse", 0);
-			glBindTexture(GL_TEXTURE_2D, meshes[i].getDiffuseTextureId());
-			glActiveTexture(GL_TEXTURE0 + 1);
+			meshes[i].getSpecularTexture()->bind(1);
 			shader.setInt("material.texture_specular", 1);
-			glBindTexture(GL_TEXTURE_2D, meshes[i].getSpecularTextureId());
 
 			vaos[i].bind();
 			glDrawElements(GL_TRIANGLES, meshes[i].getIndicesCount(), GL_UNSIGNED_INT, 0);
 			vaos[i].unbind();
-		}
-		for (int j = 1; j >= 0; j--)
-		{
-			glActiveTexture(GL_TEXTURE0 + j);
-			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 
 		Shader::unuse();
@@ -144,6 +134,16 @@ namespace fhl
 	void Renderer::render(const Renderable & _renderable, const RenderConf & _conf)
 	{
 		_renderable.render(_conf);
+	}
+
+	void Renderer::drawArrays(GLenum _mode, GLint _first, GLsizei _count)
+	{
+		glDrawArrays(_mode, _first, _count);
+	}
+
+	void Renderer::drawElements(GLenum _mode, GLsizei _count, GLenum _type, const GLvoid * _indices)
+	{
+		glDrawElements(_mode, _count, _type, _indices);
 	}
 
 	void Renderer::clearColor(const Color & _color)

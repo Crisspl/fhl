@@ -26,6 +26,9 @@ namespace fhl
 		static void render(const Model & _renderable, const RenderConf & _conf = RenderConf::default());
 		static void render(const Renderable & _renderable, const RenderConf & _conf = RenderConf::default());
 
+		static void drawArrays(GLenum _mode, GLint _first, GLsizei _count);
+		static void drawElements(GLenum _mode, GLsizei _count, GLenum _type, const GLvoid * _indices);
+
 		static void clearColor(const Color & _color = Color::Black());
 
 	private:

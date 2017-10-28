@@ -2,6 +2,8 @@
 #define FHL_GRAPHICS_TEXTURE_H
 
 #include <string>
+#include <map>
+#include <set>
 
 #include <FHL/GL/OpenGL.h>
 #include <FHL/Maths/vectors.h>
@@ -43,10 +45,21 @@ namespace fhl
 		Texture & setRepeated(bool _r);
 		bool isRepeated() const { return m_isRepeated; }
 
+		void bind(GLuint _texUnit) const;
+		/* binds texture to last texture unit */
+		void fastBind() const;
+		void unbind(GLuint _texUnit) const;
+		bool isBoundTo(GLuint _texUnit) const;
+
+		static GLint getMaxTextureUnits();
+
 	private:
 		GLuint m_id;
 		Vec2i m_size;
 		bool m_isRepeated;
+		mutable std::set<GLuint> m_texUnits;
+
+		static std::map<GLuint, GLuint> s_bonds;
 	};
 
 }

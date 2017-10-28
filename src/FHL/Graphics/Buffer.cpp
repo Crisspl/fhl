@@ -4,7 +4,7 @@
 
 namespace fhl { namespace detail
 {
-	std::map<Buffer::Target, GLuint> Buffer::s_binds;
+	std::map<Buffer::Target, GLuint> Buffer::s_bonds;
 
 	Buffer::Buffer(Usage _usage) :
 		m_usage(_usage),
@@ -35,20 +35,20 @@ namespace fhl { namespace detail
 	Buffer::~Buffer()
 	{
 		for (auto t : m_targets)
-			if (s_binds[t] == m_id) s_binds[t] = 0;
+			if (s_bonds[t] == m_id) s_bonds[t] = 0;
 		glDeleteBuffers(1, &m_id);
 	}
 
 	void Buffer::bind(Target _target) const
 	{
-		if (s_binds[_target] == m_id) return;
+		if (s_bonds[_target] == m_id) return;
 
 		forcedBind(_target);
 	}
 
 	void Buffer::forcedBind(Target _target) const
 	{
-		s_binds[_target] = m_id;
+		s_bonds[_target] = m_id;
 		m_targets.insert(_target);
 
 		glBindBuffer(static_cast<GLenum>(_target), m_id);
@@ -56,12 +56,16 @@ namespace fhl { namespace detail
 
 	void Buffer::unbind(Target _target) const
 	{
+		{
 		auto it = m_targets.find(_target);
 		if (it != m_targets.cend())
 			m_targets.erase(it);
-
-		if (s_binds[_target] == m_id)
-			s_binds[_target] = 0;
+		}
+		{
+		auto it = s_bonds.find(_target);
+		if (it != s_bonds.end() && it->second)
+			it->second = 0;
+		}
 
 		glBindBuffer(static_cast<GLenum>(_target), 0);
 	}
@@ -83,8 +87,8 @@ namespace fhl { namespace detail
 
 	bool Buffer::isBoundTo(Target _target) const
 	{
-		auto it = s_binds.find(_target);
-		if (it == s_binds.cend())
+		auto it = s_bonds.find(_target);
+		if (it == s_bonds.cend())
 			return false;
 		return it->second == m_id;
 	}
@@ -92,7 +96,7 @@ namespace fhl { namespace detail
 	auto Buffer::anyTarget() const -> Target
 	{
 		for (auto t : m_targets)
-			if (s_binds[t] == m_id)
+			if (s_bonds[t] == m_id)
 				return t;
 		throw std::runtime_error{"Buffer is not bound to any target"};
 	}

@@ -135,7 +135,7 @@ namespace fhl
 		);
 	}
 
-	GLuint ModelData::loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType)
+	Texture * ModelData::loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType)
 	{
 		if (_materialPtr->GetTextureCount(static_cast<aiTextureType>(_texType)) > 1)
 			Debug::Log() << "FHL only supports one texture per type (diffuse, specular) per mesh. Only the first one was loaded.\n";
@@ -148,10 +148,14 @@ namespace fhl
 		const std::string modelName = "_FHL_M" + std::to_string(s_createdCount);
 		const std::string texName = modelName + '_' + std::to_string(m_meshCount++) + '_' + impl::texTypeToString(static_cast<aiTextureType>(_texType));
 		
-		GLuint id = ResMgr::loadTexture(texName, filePath).setRepeated(true).getId();
-		if (!id) ResMgr::removeTexture(texName);
+		Texture & tex = ResMgr::loadTexture(texName, filePath).setRepeated(true); // TODO: what if loading fails? ResMgr::load*() should return a pointer?
+		if (!tex.getId())
+		{
+			ResMgr::removeTexture(texName);
+			return nullptr;
+		}
 		else m_texNames.push_back(std::move(texName));
-		return id;
+		return &tex;
 	}
 
 }

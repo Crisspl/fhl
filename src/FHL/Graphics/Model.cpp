@@ -26,9 +26,14 @@ namespace fhl
 		setUp();
 	}
 
-	fhl::Cube Model::getAABB() const
+	Cube Model::getAABB() const
 	{
-		return fhl::Cube(getPosition() - getOrigin() + m_modelData->getLeftBottomRear(), getSize());
+		return Cube(getPosition() - getOrigin() + m_modelData->getLeftBottomRear(), getSize());
+	}
+
+	OrientedCube Model::getOBB() const
+	{
+		return OrientedCube(getPosition() - getOrigin() + m_modelData->getLeftBottomRear(), getSize(), getOrigin(), getRotation());
 	}
 
 	void Model::setUp()

@@ -6,18 +6,17 @@
 
 namespace fhl
 {
+	std::map<GLuint, GLuint> Texture::s_bonds;
 
 	Texture::Texture(const Vec2i & _size) : m_size(_size), m_isRepeated(false)
 	{
 		glGenTextures(1, &m_id);
 
-		glBindTexture(GL_TEXTURE_2D, m_id);
+		fastBind();
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _size.x(), _size.y(), 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		setRepeated(false);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	Texture::Texture(const std::string & _filePath) : m_id(0u), m_size(Vec2i::zero()), m_isRepeated(false)
@@ -28,7 +27,7 @@ namespace fhl
 		{
 			glGenTextures(1, &m_id);
 
-			glBindTexture(GL_TEXTURE_2D, m_id);
+			fastBind();
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x(), m_size.y(), 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
 			glGenerateMipmap(GL_TEXTURE_2D);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -36,7 +35,6 @@ namespace fhl
 			setRepeated(false);
 
 			SOIL_free_image_data(img);
-			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	}
 
@@ -65,12 +63,10 @@ namespace fhl
 
 	const Texture & Texture::setWrapOption(WrapOption _option) const
 	{
-		glBindTexture(GL_TEXTURE_2D, m_id);
+		fastBind();
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _option);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _option);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		return *this;
 	}
@@ -83,6 +79,58 @@ namespace fhl
 		else setWrapOption(ClampToBorder);
 		m_isRepeated = _r;
 		return *this;
+	}
+
+	void Texture::bind(GLuint _texUnit) const
+	{
+		if (_texUnit >= (GLuint)getMaxTextureUnits() || isBoundTo(_texUnit))
+			return;
+
+		s_bonds[_texUnit] = m_id;
+		m_texUnits.insert(_texUnit);
+
+		glActiveTexture(GL_TEXTURE0 + _texUnit);
+		glBindTexture(GL_TEXTURE_2D, m_id);
+	}
+
+	void Texture::fastBind() const
+	{
+		bind(getMaxTextureUnits() - 1);
+	}
+
+	void Texture::unbind(GLuint _texUnit) const
+	{
+		if (_texUnit >= (GLuint)getMaxTextureUnits())
+			return;
+		{
+		auto it = m_texUnits.find(_texUnit);
+		if (it != m_texUnits.cend())
+			m_texUnits.erase(it);
+		}
+		{
+		auto it = s_bonds.find(_texUnit);
+		if (it != s_bonds.end() && it->second)
+			it->second = 0;
+		}
+
+		glActiveTexture(GL_TEXTURE0 + _texUnit);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	bool Texture::isBoundTo(GLuint _texUnit) const
+	{
+		auto it = s_bonds.find(_texUnit);
+		if (it == s_bonds.cend())
+			return false;
+		return it->second == m_id;
+	}
+
+	GLint Texture::getMaxTextureUnits()
+	{
+		static GLint r{};
+		if (!r)
+			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &r);
+		return r;
 	}
 
 }

@@ -7,7 +7,7 @@
 #include <FHL/Graphics/UsingShader.h>
 #include <FHL/Graphics/ModelData.h>
 #include <FHL/Graphics/Color.h>
-#include <FHL/Utility/Cube.h>
+#include <FHL/Utility/OrientedCube.h>
 
 namespace fhl
 {
@@ -42,7 +42,8 @@ namespace fhl
 		bool getUseColorOnly() const { return m_useColorOnly; }
 		const Color & getColor() const { return m_color; }
 
-		fhl::Cube getAABB() const;
+		Cube getAABB() const;
+		OrientedCube getOBB() const;
 
 		static constexpr const char * simpleShaderName() { return s_simpleShaderName; }
 		static constexpr const char * lightShaderName() { return s_lightShaderName; }

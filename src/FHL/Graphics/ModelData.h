@@ -15,6 +15,8 @@ struct aiNode;
 namespace fhl
 {
 
+	class Texture;
+
 	class FHL_API ModelData
 	{
 		friend class ResMgr;
@@ -33,7 +35,7 @@ namespace fhl
 		void processNode(aiNode * _nodePtr, const aiScene * _scenePtr);
 		detail::Mesh processMesh(aiMesh * _meshPtr, const aiScene * _scenePtr);
 		std::tuple<Vec3f, Vec3f> calcExtents() const;
-		GLuint loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType);
+		Texture * loadTexture(aiMesh * _mesh, aiMaterial * _materialPtr, int _texType);
 
 	public:
 		const std::vector<detail::Mesh> & getMeshes() const { return m_meshes; }

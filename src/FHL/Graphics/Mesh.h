@@ -14,6 +14,7 @@ namespace fhl
 {
 	 class Model;
 	 class ModelData;
+	 class Texture;
 
 namespace detail
 {
@@ -33,14 +34,14 @@ namespace detail
 
 		struct TexturesPair
 		{
-			GLuint diffuse, specular;
+			Texture * diffuse, * specular;
 		};
 
 	public:
 		Mesh(const std::vector<Mesh::Vertex> & _vertices, const std::vector<GLuint> & _indices, TexturesPair _textures);
 
-		GLuint getDiffuseTextureId() const { return textures.diffuse; }
-		GLuint getSpecularTextureId() const { return textures.specular; }
+		Texture * getDiffuseTexture() const { return textures.diffuse; }
+		Texture * getSpecularTexture() const { return textures.specular; }
 		std::size_t getIndicesCount() const { return indicesCount; }
 
 	private:
