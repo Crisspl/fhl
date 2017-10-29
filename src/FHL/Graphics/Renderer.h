@@ -22,7 +22,7 @@ namespace fhl
 	public:
 		static void render(const ColoredRect & _renderable, const RenderConf & _conf = RenderConf::default());
 		static void render(const Sprite & _renderable, const RenderConf & _conf = RenderConf::default());
-		static void render(const VertexArray & _renderable, const RenderConf & /* not used */);
+		static void render(const VertexArray & _renderable, const RenderConf & /* not used */ = RenderConf::default());
 		static void render(const Model & _renderable, const RenderConf & _conf = RenderConf::default());
 		static void render(const Renderable & _renderable, const RenderConf & _conf = RenderConf::default());
 

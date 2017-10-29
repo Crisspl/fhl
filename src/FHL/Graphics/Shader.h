@@ -67,9 +67,11 @@ struct UniformSetterForVec##_size<unsigned> \
 		~Shader();
 
 	public:
-		void use() const { glUseProgram(m_id); }
-		static void unuse() { glUseProgram(0); }
+		void install() const;
+		void uninstall() const;
+		static void uninstallAny();
 
+		bool isInstalled() const;
 		GLuint getId() const { return m_id; }
 
 		Shader & setBoolean(const GLint _loc, const GLboolean _value);
@@ -117,11 +119,15 @@ struct UniformSetterForVec##_size<unsigned> \
 	private:
 		GLuint m_id;
 		impl::UniformLocMgr m_uniformLocMgr;
+
+		static GLuint s_currentlyInstalledProgramId;
 	};
 
 	template<typename _T>
 	inline Shader & Shader::setVec2(const GLint _loc, const Vec2<_T>& _v)
 	{
+		if (!isInstalled())
+			return *this;
 		impl::UniformSetterForVec2<_T>::set(_loc, _v);
 		return *this;
 	}
@@ -134,6 +140,8 @@ struct UniformSetterForVec##_size<unsigned> \
 	template<typename _T>
 	inline Shader & Shader::setVec3(const GLint _loc, const Vec3<_T>& _v)
 	{
+		if (!isInstalled())
+			return *this;
 		impl::UniformSetterForVec3<_T>::set(_loc, _v);
 		return *this;
 	}
@@ -145,6 +153,8 @@ struct UniformSetterForVec##_size<unsigned> \
 	template<typename _T>
 	inline Shader & Shader::setVec4(const GLint _loc, const Vec4<_T>& _v)
 	{
+		if (!isInstalled())
+			return *this;
 		impl::UniformSetterForVec4<_T>::set(_loc, _v);
 		return *this;
 	}
@@ -159,6 +169,9 @@ struct UniformSetterForVec##_size<unsigned> \
 	{
 		static_assert(std::is_same<typename std::iterator_traits<_It>::value_type, Light>::value,
 			"_begin and _end must be iterators of containers of fhl::Light objects");
+
+		if (!isInstalled())
+			return *this;
 
 		std::size_t n = 0u;
 		while (_begin != _end)

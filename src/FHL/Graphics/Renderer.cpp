@@ -16,7 +16,7 @@ namespace fhl
 			return;
 
 		Shader & shader = *_renderable.getShader();
-		shader.use();
+		shader.install();
 
 		bool usingCustomRc = ! isDefaultRenderConfInstance(_conf);
 
@@ -32,8 +32,6 @@ namespace fhl
 		_renderable.getVao().bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		_renderable.getVao().unbind();
-
-		Shader::unuse();
 	}
 
 	void Renderer::render(const Sprite & _renderable, const RenderConf & _conf)
@@ -42,7 +40,7 @@ namespace fhl
 			return;
 
 		Shader & shader = *_renderable.getShader();
-		shader.use();
+		shader.install();
 
 		bool usingCustomRc = ! isDefaultRenderConfInstance(_conf);
 
@@ -64,8 +62,6 @@ namespace fhl
 		_renderable.getVao().bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		_renderable.getVao().unbind();
-
-		Shader::unuse();
 	}
 
 	void Renderer::render(const VertexArray & _renderable, const RenderConf &)
@@ -74,7 +70,7 @@ namespace fhl
 			return;
 
 		Shader & shader = *_renderable.getShader();
-		shader.use();
+		shader.install();
 
 		shader.setMat4f("projection", Configurator::projection())
 			.setMat4f("view", Configurator::view());
@@ -82,8 +78,6 @@ namespace fhl
 		_renderable.getVao().bind();
 		glDrawArrays(static_cast<GLenum>(_renderable.getMode()), 0, _renderable.getVerticesCount());
 		_renderable.getVao().unbind();
-
-		Shader::unuse();
 	}
 
 	void Renderer::render(const Model & _renderable, const RenderConf & _conf)
@@ -95,7 +89,7 @@ namespace fhl
 			glEnable(GL_DEPTH_TEST);
 
 		Shader & shader = *_renderable.getShader();
-		shader.use();
+		shader.install();
 
 		bool usingCustomRc = !isDefaultRenderConfInstance(_conf);
 
@@ -124,8 +118,6 @@ namespace fhl
 			glDrawElements(GL_TRIANGLES, meshes[i].getIndicesCount(), GL_UNSIGNED_INT, 0);
 			vaos[i].unbind();
 		}
-
-		Shader::unuse();
 
 		if (!Configurator::isDepthTestEnabled())
 			glDisable(GL_DEPTH_TEST);

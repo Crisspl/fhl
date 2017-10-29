@@ -8,6 +8,8 @@
 namespace fhl
 {
 
+	GLuint Shader::s_currentlyInstalledProgramId{};
+
 	Shader::Shader(Shader && _other) :
 		m_id(_other.m_id),
 		m_uniformLocMgr(std::move(_other.m_uniformLocMgr))
@@ -60,6 +62,28 @@ namespace fhl
 		glDeleteProgram(m_id);
 	}
 
+	void Shader::install() const
+	{
+		if (s_currentlyInstalledProgramId != m_id)
+			glUseProgram(s_currentlyInstalledProgramId = m_id);
+	}
+
+	void Shader::uninstall() const
+	{
+		if (s_currentlyInstalledProgramId == m_id)
+			glUseProgram(s_currentlyInstalledProgramId = 0);
+	}
+
+	void Shader::uninstallAny()
+	{
+		glUseProgram(s_currentlyInstalledProgramId = 0);
+	}
+
+	bool Shader::isInstalled() const
+	{
+		return s_currentlyInstalledProgramId == m_id;
+	}
+
 	Shader & Shader::setBoolean(const GLint _loc, const GLboolean _value)
 	{
 		return setInt(_loc, _value);
@@ -72,7 +96,8 @@ namespace fhl
 
 	Shader & Shader::setFloat(const GLint _loc, const GLfloat _value)
 	{
-		use();
+		if (!isInstalled())
+			return *this;
 		glUniform1f(_loc, _value);
 		return *this;
 	}
@@ -84,7 +109,8 @@ namespace fhl
 
 	Shader & Shader::setInt(const GLint _loc, const GLint _value)
 	{
-		use();
+		if (!isInstalled())
+			return *this;
 		glUniform1i(_loc, _value);
 		return *this;
 	}
@@ -96,7 +122,8 @@ namespace fhl
 
 	Shader & Shader::setUnsignedInt(const GLint _loc, const GLuint _value)
 	{
-		use();
+		if (!isInstalled())
+			return *this;
 		glUniform1ui(_loc, _value);
 		return *this;
 	}
@@ -118,7 +145,8 @@ namespace fhl
 
 	Shader & Shader::setMat4f(const GLint _loc, const Mat4f & _matrix)
 	{
-		use();
+		if (!isInstalled())
+			return *this;
 		glUniformMatrix4fv(_loc, 1, GL_FALSE, _matrix.data());
 		return *this;
 	}
@@ -130,6 +158,9 @@ namespace fhl
 
 	Shader & Shader::setLight(const GLchar* _name, const Light & _light)
 	{
+		if (!isInstalled())
+			return *this;
+
 		const std::string name(_name);
 		switch (_light.type)
 		{
@@ -143,16 +174,16 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 			break;
 		case Light::Point:
 			COMMON_CALLS_FOR_POINT_AND_SPOT
-				break;
+			break;
 		case Light::Spot:
 		{
 			const float cutOffAngle = clamp(_light.cutOffAngle, 0.f, 90.f);
 			const float outerCutOff = std::min(cutOffAngle + 20.f, 90.f);
 			COMMON_CALLS_FOR_POINT_AND_SPOT
-				setVec3((name + ".direction").c_str(), _light.direction);
+			setVec3((name + ".direction").c_str(), _light.direction);
 			setFloat((name + ".cutOff").c_str(), cos(toRadians(cutOffAngle)));
 			setFloat((name + ".outerCutOff").c_str(), cos(toRadians(outerCutOff)));
-		}break;
+		} break;
 		}
 #undef COMMON_CALLS_FOR_POINT_AND_SPOT
 
@@ -164,6 +195,9 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 
 	Shader & Shader::setLight(const GLchar * _name, const Light & _light, size_t _num)
 	{
+		if (!isInstalled())
+			return *this;
+
 		std::string name(_name);
 		name += '[' + std::to_string(_num) + ']';
 		return setLight(name.c_str(), _light);
@@ -171,6 +205,8 @@ setFloat((name + ".quadratic").c_str(), _light.quadratic);
 
 	Shader & Shader::setLights(const GLchar * _name, const std::vector<Light> & _lights)
 	{
+		if (!isInstalled())
+			return *this;
 		return setLights(_name, _lights.cbegin(), _lights.cend());
 	}
 
