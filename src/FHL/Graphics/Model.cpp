@@ -10,7 +10,7 @@ namespace fhl
 {
 
 	Model::Model(ModelData & _data) :
-		UsingShader(&ResMgr::loadShader(simpleShaderName(), shaderSrcs::model_Vertex, shaderSrcs::model_Fragment, Shader::FromString), &ResMgr::loadShader(lightShaderName(), shaderSrcs::model_LightVertex, shaderSrcs::model_LightFragment, Shader::FromString)),
+		UsingShader(ResMgr::loadShader(simpleShaderName(), shaderSrcs::model_Vertex, shaderSrcs::model_Fragment, Shader::FromString), ResMgr::loadShader(lightShaderName(), shaderSrcs::model_LightVertex, shaderSrcs::model_LightFragment, Shader::FromString)),
 		m_modelData(&_data),
 		m_vaos(_data.getMeshes().size()),
 		m_color(Color::Black()),

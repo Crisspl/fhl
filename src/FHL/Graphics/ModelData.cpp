@@ -148,14 +148,18 @@ namespace fhl
 		const std::string modelName = "_FHL_M" + std::to_string(s_createdCount);
 		const std::string texName = modelName + '_' + std::to_string(m_meshCount++) + '_' + impl::texTypeToString(static_cast<aiTextureType>(_texType));
 		
-		Texture & tex = ResMgr::loadTexture(texName, filePath).setRepeated(true); // TODO: what if loading fails? ResMgr::load*() should return a pointer?
-		if (!tex.getId())
+		Texture * tex = ResMgr::loadTexture(texName, filePath);
+		if (!tex || !tex->getId())
 		{
 			ResMgr::removeTexture(texName);
 			return nullptr;
 		}
-		else m_texNames.push_back(std::move(texName));
-		return &tex;
+		else
+		{
+			tex->setRepeated(true);
+			m_texNames.push_back(std::move(texName));
+		}
+		return tex;
 	}
 
 }
