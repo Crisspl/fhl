@@ -3,7 +3,7 @@
 #include <FHL/GL/OpenGlLoader.h>
 
 void flextGLInit() {
-    fhl::detail::OpenGlLoader loader;
+    fhl::impl::OpenGlLoader loader;
 
     /* GL_VERSION_1_2 */
     flextglCopyTexSubImage3D = reinterpret_cast<void(APIENTRY*)(GLenum, GLint, GLint, GLint, GLint, GLint, GLint, GLsizei, GLsizei)>(loader.load("glCopyTexSubImage3D"));

@@ -6,20 +6,20 @@
 	#include <windows.h>
 #endif
 
-namespace fhl { namespace detail {
+namespace fhl { namespace impl {
 
 	class OpenGlLoader
 	{
 	public:
 #if defined(FHL_PLATFORM_WINDOWS)
-		using fptr = PROC;
+		using fptr_t = PROC;
 #else 
 		using fptr = void(*)();
 #endif
 		OpenGlLoader();
 		~OpenGlLoader();
 
-		fptr load(const char * _name);
+		fptr_t load(const char * _name);
 
 	private:
 #if defined(FHL_PLATFORM_WINDOWS)

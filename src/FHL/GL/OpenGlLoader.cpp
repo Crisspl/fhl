@@ -16,7 +16,7 @@
 	#include <GL/glx.h>
 #endif
 
-namespace fhl { namespace detail {
+namespace fhl { namespace impl {
 
 #if defined(FHL_PLATFORM_WINDOWS)
 	OpenGlLoader::OpenGlLoader()
@@ -31,9 +31,9 @@ namespace fhl { namespace detail {
 		FreeLibrary(m_gllib);
 	}
 
-	auto OpenGlLoader::load(const char * _name) -> fptr
+	auto OpenGlLoader::load(const char * _name) -> fptr_t
 	{
-		const fptr address = wglGetProcAddress(reinterpret_cast<LPCSTR>(_name));
+		const fptr_t address = wglGetProcAddress(reinterpret_cast<LPCSTR>(_name));
 		const auto integerAddress = reinterpret_cast<std::ptrdiff_t>(address);
 
 		if (address && integerAddress != 1 && integerAddress != 2 && integerAddress != 3 && integerAddress != -1)
