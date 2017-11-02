@@ -2,6 +2,7 @@
 #define FHL_MATHS_MAT4_H
 
 #include <cstring>
+#include <ostream>
 
 #include <FHL/Maths/vectors.h>
 #include <FHL/Maths/mathsFuncs.h>
@@ -70,6 +71,14 @@ namespace fhl
 	private:
 		Vec4<_T> m_cols[4];
 	};
+
+	template<typename T>
+	std::ostream & operator<<(std::ostream & _out, const Mat4<T> & _mat)
+	{
+		for (std::size_t i = 0; i < 4; ++i)
+			_out << (!i ? '{' : ' ') <<  _mat.getRow(i) << (i < 3 ? '\n' : '}');
+		return _out;
+	}
 
 	using Mat4i = Mat4<int>;
 	using Mat4u = Mat4<unsigned>;
