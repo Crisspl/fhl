@@ -40,6 +40,9 @@ namespace fhl
 		_FHL_VECTOR_OPERATORS_IMPLEMENTATION(_T, Vec2)
 	};
 
+	template<typename T>
+	Vec2<T> operator*(T scalar, const Vec2<T> & vec) { return vec * scalar; }
+
 	using Vec2f = Vec2<float>;
 	using Vec2lf = Vec2<double>;
 	using Vec2i = Vec2<int>;

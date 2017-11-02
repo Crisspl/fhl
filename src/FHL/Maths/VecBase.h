@@ -2,10 +2,8 @@
 #define FHL_MATHS_VEC_BASE_H
 
 #include <type_traits>
-#include <algorithm>
 #include <cmath>
 #include <ostream>
-#include <iterator>
 
 #include <FHL/Maths/BoolVec.h>
 #include <FHL/Utility/Compare.h>
@@ -86,7 +84,6 @@ namespace fhl { namespace detail
 
 		VecBase<_N, _T> operator*(const VecBase<_N, _T> & _other) const { return VecBase<_N, _T>(*this) *= _other; }
 		VecBase<_N, _T> operator*(_T _scalar) const { return VecBase<_N, _T>(*this) *= _scalar; }
-		friend VecBase<_N, _T> operator*(_T _scalar, const VecBase<_N, _T> & _vec) { return _vec * _scalar; }
 
 		VecBase<_N, _T> operator/(const VecBase<_N, _T> & _other) const { return VecBase<_N, _T>(*this) /= _other; }
 		VecBase<_N, _T> operator/(_T _scalar) const { return VecBase<_N, _T>(*this) /= _scalar; }
@@ -143,9 +140,9 @@ namespace fhl { namespace detail
 				dot += m_data[i] * _other[i];
 			return dot;
 		}
-		_T length() const { return std::sqrt(squaredLength()); }
-		_T squaredLength() const { return dot(*this); }
-		VecBase<_N, _T> normalized() const { return *this / length(); }
+		double length() const { return std::sqrt(squaredLength()); }
+		double squaredLength() const { return dot(*this); }
+		VecBase<_N, _T> normalized() const { return *this / (_T)length(); }
 
 		_T & operator[](std::size_t _idx) { return m_data[_idx]; }
 		constexpr _T operator[](std::size_t _idx) const { return m_data[_idx]; }
@@ -162,17 +159,21 @@ namespace fhl { namespace detail
 			return BoolVec<_N>(idxCompare<Op>(_other, Is)...);
 		}
 
-	public:
-		friend std::ostream & operator<<(std::ostream & _out, const VecBase<_N, _T> & _v)
-		{
-			_out << "{ ";
-			std::copy(std::begin(_v.m_data), std::end(_v.m_data), std::ostream_iterator<_T>(_out, ", "));
-			return _out << '}';
-		}
-
 	private:
 		_T m_data[_N];
 	};
+
+	template<std::size_t N, typename T>
+	VecBase<N, T> operator*(T scalar, const VecBase<N, T> & vec) { return vec * scalar; }
+
+	template<std::size_t N, typename T>
+	std::ostream & operator<<(std::ostream & _out, const VecBase<N, T> & _v)
+	{
+		_out << "{ ";
+		for (int i = 0; i < N; ++i)
+			_out << _v[i] << (i < N - 1 ? ", " : " }");
+		return _out;
+	}
 
 }}
 

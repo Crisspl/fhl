@@ -47,6 +47,9 @@ namespace fhl
 		_FHL_VECTOR_OPERATORS_IMPLEMENTATION(_T, Vec4)
 	};
 
+	template<typename T>
+	Vec4<T> operator*(T scalar, const Vec4<T> & vec) { return vec * scalar; }
+
 	using Vec4f = Vec4<float>;
 	using Vec4lf = Vec4<double>;
 	using Vec4i = Vec4<int>;

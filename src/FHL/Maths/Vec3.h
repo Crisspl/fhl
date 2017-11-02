@@ -55,6 +55,9 @@ namespace fhl
 		_FHL_VECTOR_OPERATORS_IMPLEMENTATION(_T, Vec3)
 	};
 
+	template<typename T>
+	Vec3<T> operator*(T scalar, const Vec3<T> & vec) { return vec * scalar; }
+
 	using Vec3f = Vec3<float>;
 	using Vec3lf = Vec3<double>;
 	using Vec3i = Vec3<int>;
