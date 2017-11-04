@@ -302,7 +302,7 @@ namespace fhl
 	inline Mat4<_T> Mat4<_T>::invert(const Mat4<_T> & _mat)
 	{
 		Mat4<_T> inv;
-		_T * const e = inv.data();
+		_T * const e = const_cast<_T *>(inv.data());
 		const _T * const m = _mat.data();
 
 		e[0] = m[5] * m[10] * m[15] + m[9] * m[14] * m[7] + m[13] * m[6] * m[11] - (m[13] * m[10] * m[7] + m[9] * m[6] * m[15] + m[5] * m[14] * m[11]);
@@ -324,7 +324,7 @@ namespace fhl
 
 		_T det = m[0] * e[0] + m[1] * e[1] + m[2] * e[2] + m[3] * e[3];
 
-		return inv.transposed() / det;
+		return inv.transposed() * _T(1. / det);
 	}
 
 	template<typename _T>
