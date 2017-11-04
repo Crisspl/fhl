@@ -10,7 +10,7 @@ namespace fhl
 	 }
 
 	 template <typename T>
-	 float Clock::getElapsedTime()
+	 float Clock::getElapsedTime() const
 	 {
 		 T elapsedTime = InnerClock::now() - m_start;
 		 return elapsedTime.count();
@@ -24,9 +24,9 @@ namespace fhl
 		 return elapsedTime;
 	 }
 
-	 template float FHL_API Clock::getElapsedTime<Seconds>();
-	 template float FHL_API Clock::getElapsedTime<Milliseconds>();
-	 template float FHL_API Clock::getElapsedTime<Microseconds>();
+	 template float FHL_API Clock::getElapsedTime<Seconds>() const;
+	 template float FHL_API Clock::getElapsedTime<Milliseconds>() const;
+	 template float FHL_API Clock::getElapsedTime<Microseconds>() const;
 
 	 template float FHL_API Clock::restart<Seconds>();
 	 template float FHL_API Clock::restart<Milliseconds>();

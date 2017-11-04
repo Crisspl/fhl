@@ -22,7 +22,7 @@ namespace fhl
 		  Clock();
 
 		  template<typename T = Seconds>
-		  float getElapsedTime();
+		  float getElapsedTime() const;
 
 		  template<typename T = Seconds>
 		  float restart();
