@@ -10,17 +10,23 @@ namespace fhl
 	template<std::size_t _N>
 	class BoolVec
 	{
+		static_assert(_N > 0, "fhl::BoolVec cannot be of size 0");
+		enum
+		{
+			BytesCount = (_N - 1) / 8 + 1
+		};
+
 		using ubyte = unsigned char;
 		using byte = char;
 
 	public:
 		enum { Dimensions = _N };
 
-		BoolVec() : BoolVec(std::make_index_sequence<_N / 8 + 1>{}) {}
+		constexpr BoolVec() : BoolVec(std::make_index_sequence<BytesCount>{}) {}
 
 	private:
 		template<std::size_t ...Is> /* helper ctor to zero-init all bytes */
-		BoolVec(std::index_sequence<Is...>) : m_data{(Is && false)...} {}
+		constexpr BoolVec(std::index_sequence<Is...>) : m_data{(false && Is)...} {}
 
 	public:
 		template<typename ...Args>
@@ -85,7 +91,7 @@ namespace fhl
 		}
 
 	private:
-		ubyte m_data[_N / 8 + 1];
+		ubyte m_data[BytesCount];
 	};
 
 	template<std::size_t N>
