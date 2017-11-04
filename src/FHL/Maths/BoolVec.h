@@ -10,16 +10,19 @@ namespace fhl
 	template<std::size_t _N>
 	class BoolVec
 	{
-		static_assert(_N > 1 && _N < 5, "fhl::BoolVec dimensions must fit between 2 and 4");
-
 		using ubyte = unsigned char;
 		using byte = char;
 
 	public:
 		enum { Dimensions = _N };
 
-		BoolVec() : m_data(0u) {}
+		BoolVec() : BoolVec(std::make_index_sequence<_N / 8 + 1>{}) {}
 
+	private:
+		template<std::size_t ...Is> /* helper ctor to zero-init all bytes */
+		BoolVec(std::index_sequence<Is...>) : m_data{(Is && false)...} {}
+
+	public:
 		template<typename ...Args>
 		BoolVec(Args... _args) : BoolVec()
 		{
@@ -31,12 +34,12 @@ namespace fhl
 
 		constexpr bool operator[](std::size_t _idx) const
 		{
-			return static_cast<bool>( (m_data >> _idx) & 1 );
+			return static_cast<bool>( (m_data[_idx / 8] >> (_idx % 8)) & 1u );
 		}
 
 		BoolVec & set(std::size_t _i, bool _val)
 		{
-			m_data ^= (-byte(_val) ^ m_data) & (1 << _i);
+			m_data[_i / 8] ^= (-byte(_val) ^ m_data[_i / 8]) & (1u << (_i % 8));
 			return *this;
 		}
 
@@ -73,7 +76,7 @@ namespace fhl
 		{
 			static_assert(sizeof...(Rest) < _N, "fhl::BoolVec: Cannot initialize more then `Dimensions` bits");
 
-			set(_N - sizeof...(Rest)-1, _first);
+			set(_N - sizeof...(Rest) - 1, _first);
 			initBits(bool(_rest)...);
 		}
 		void initBits(bool _val)
@@ -81,17 +84,18 @@ namespace fhl
 			set(_N - 1, _val);
 		}
 
-		friend std::ostream & operator<<(std::ostream & _out, BoolVec<_N> _v)
-		{
-			_out << "{ ";
-			for (std::size_t i = 0; i < _N; i++)
-				_out << _v[i] << (i < _N - 1 ? ", " : " }");
-			return _out;
-		}
-
 	private:
-		ubyte m_data;
+		ubyte m_data[_N / 8 + 1];
 	};
+
+	template<std::size_t N>
+	std::ostream & operator<<(std::ostream & _out, BoolVec<N> _v)
+	{
+		_out << "{ ";
+		for (std::size_t i = 0; i < N; i++)
+			_out << _v[i] << (i < N - 1 ? ", " : " }");
+		return _out;
+	}
 
 }
 
