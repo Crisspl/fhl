@@ -30,8 +30,8 @@ namespace fhl
 		static constexpr Vec3<_T> left(_T n = _T(1)) { return{ -n, 0, 0 }; }
 		static constexpr Vec3<_T> forward(_T n = _T(1)) { return{ 0, 0, n }; }
 		static constexpr Vec3<_T> back(_T n = _T(1)) { return{ 0, 0, -n }; }
-		static constexpr Vec3<_T> zero() { return Vec3<_T>(_T(0)); }
-		static constexpr Vec3<_T> one() { return Vec3<_T>(_T(1)); }
+		static constexpr Vec3<_T> zero(_T = _T(1)) { return Vec3<_T>(_T(0)); }
+		static constexpr Vec3<_T> one(_T n = _T(1)) { return Vec3<_T>(n); }
 
 		constexpr Vec3<_T> cross(const Vec3<_T> & _rhs) const
 		{

@@ -29,8 +29,8 @@ namespace fhl
 		static constexpr Vec4<_T> yAxis(_T n = _T(1)) { return{ 0, n, 0, 0 }; }
 		static constexpr Vec4<_T> zAxis(_T n = _T(1)) { return{ 0, 0, n, 0 }; }
 		static constexpr Vec4<_T> wAxis(_T n = _T(1)) { return{ 0, 0, 0, n }; }
-		static constexpr Vec4<_T> zero() { return Vec4<_T>(_T(0)); }
-		static constexpr Vec4<_T> one() { return Vec4<_T>(_T(1)); }
+		static constexpr Vec4<_T> zero(_T = _T(1)) { return Vec4<_T>(_T(0)); }
+		static constexpr Vec4<_T> one(_T n = _T(1)) { return Vec4<_T>(n); }
 
 		_T & x() { return (*this)[0]; }
 		constexpr _T x() const { return (*this)[0]; }

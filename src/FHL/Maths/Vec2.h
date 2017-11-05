@@ -26,8 +26,8 @@ namespace fhl
 		static constexpr Vec2<_T> down(_T n = _T(1)) { return{ 0, -n }; }
 		static constexpr Vec2<_T> right(_T n = _T(1)) { return{ n, 0 }; }
 		static constexpr Vec2<_T> left(_T n = _T(1)) { return{ -n, 0 }; }
-		static constexpr Vec2<_T> zero() { return Vec2<_T>(_T(0)); }
-		static constexpr Vec2<_T> one() { return Vec2<_T>(_T(1)); }
+		static constexpr Vec2<_T> zero(_T = _T(1)) { return Vec2<_T>(_T(0)); }
+		static constexpr Vec2<_T> one(_T n = _T(1)) { return Vec2<_T>(n); }
 
 		constexpr Vec2<_T> perpendicular() const { return {y(), -x()}; }
 
