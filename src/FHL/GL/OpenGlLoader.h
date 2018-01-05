@@ -14,7 +14,7 @@ namespace fhl { namespace impl {
 #if defined(FHL_PLATFORM_WINDOWS)
 		using fptr_t = PROC;
 #else 
-		using fptr = void(*)();
+		using fptr_t = void(*)();
 #endif
 		OpenGlLoader();
 		~OpenGlLoader();
