@@ -141,8 +141,13 @@ find_package(assimp REQUIRED)
 find_package(SOIL REQUIRED)
 find_package(OpenGL REQUIRED)
 
+set(LINK_LIBS ${ASSIMP_LIBRARY} ${SOIL_LIBRARIES} ${OPENGL_gl_LIBRARY})
+if (UNIX)
+	list(APPEND LINK_LIBS "{CMAKE_DL_LIBS}")
+endif()
+
 target_include_directories(fhl PUBLIC ${ASSIMP_INCLUDE_DIR} ${SOIL_INCLUDE_PATH} src/)
-target_link_libraries(fhl ${ASSIMP_LIBRARY} ${SOIL_LIBRARIES} ${OPENGL_gl_LIBRARY})
+target_link_libraries(fhl ${LINK_LIBS})
 
 set_target_properties(fhl PROPERTIES DEBUG_POSTFIX -d)
 
